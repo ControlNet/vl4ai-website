@@ -14,7 +14,7 @@
    <body>
       <div class="container">
          <header class="jumbotron subhead" id="overview">
-            <p class="lead"> Monash University </p>
+            <!--<p class="lead"> Monash University </p>-->
             <h1>VISION & LEARNING FOR AUTONOMOUS AI LAB</h1>
          </header>
          <div class="masthead">
@@ -40,43 +40,44 @@
             <!-- <h3>This page is under construction</h3> -->
             <div class="span3 bs-docs-sidebar" id="navparent">
                <ul class="nav nav-list bs-docs-sidenav" data-spy="affix" data-offset-top="200" data-offset-bottom="260">
-                  <li><a href="#statemet"> Lorem Ipsum </a></li>
-                  <li><a href="#nano"> Enim Raesent Elementum </a></li>
-                  <li><a class="subhead" href="#Penatibus"> Penatibus </a></li>
-                  <li><a class="subhead" href="#QuamIdLeo"> Quam Id Leo  </a></li>
-                  <li><a class="subhead" href="#Ullamcorper"> Ullamcorper </a></li>
-                  <li><a href="#Facilisis">Facilisis</a></li>
-                  <li><a class="subhead" href="#Volutpat"> Volutpat </a></li>
-                  <li><a class="subhead" href="#ElementumTempus"> Elementum Tempus </a></li>
-                  <li><a class="subhead" href="#FacilisisMagna"> Facilisis Magna </a></li>
+                  <li><a href="#intro"> Introduction </a></li>
+                  <li><a href="#research"> Active Research Topics </a></li>
+                  <li><a class="subhead" href="#tracking"> Multi-Object Tracking </a></li>
+                  <li><a class="subhead" href="#somof"> Human Motion Forecasting </a></li>
+                  <li><a class="subhead" href="#activity"> Human Social Activity </a></li>
+                  <li><a class="subhead" href="#3D-reconstruction"> 3D Reconstruction </a></li>
+                  <li><a class="subhead" href="#jr-perception"> Multi-task Visual Perception </a></li>
+                  <li><a class="subhead" href="#visual-navigation"> Active Visual Navigation </a></li>
+                  <li><a href="#benchmark"> Datasets and Benchmarks </a></li>
+                  <li><a class="subhead" href="#jrdb"> JRDB </a></li>
+                  <li><a class="subhead" href="#motchallenge"> MOT20 </a></li>
+                  <li><a class="subhead" href="#somof-ben"> SoMoF </a></li>
+                  <li><a class="subhead" href="#completion3d"> Completion3D </a></li>
+                  <li><a class="subhead" href="#lisc"> LISC </a></li>
                </ul>
             </div>
             
             
             <div class="span8 offset1">
-               <section id="statemet">
+               <section id="intro">
                   <div class="page-header">
-                     <h3>Lorem Ipsum</h3>
+                     <h3>Introduction</h3>
                      <hr>
-                     <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas 
-                        molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et 
-                        dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil 
-                        impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam 
-                        et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum 
-                        rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+                     <p>This section contains some information about our lab's active research projects, our public datasets and benchmarks.
                      </p>
                   </div>
                </section>
-               <section id="Active Research">
+               <section id="research">
                   <div class="page-header">
                      <h3>Active Research Topics</h3>
                   </div>
-                  <section id="Multi-Object Tracking">
+                  <section id="tracking">
                            <h4>Multi-Object Tracking</h4>
                            <br/>
-                           <img src="images/slider/MOT.png" class="float-right" alt="Multi-Object Tracking"/>
+                           <img src="images/slider/MOT2.png" class="float-right" alt="Multi-Object Tracking"/>
                            <p>
-                              .
+                              Visually discriminating the identity of multiple (similar looking) objects in a scene and creating individual tracks of their movements over time, namely multi-object tracking (MOT), is one of the basic yet most crucial vision tasks, imperative to tackle many real-world problems in surveillance, robotics/autonomous driving, health and biology. While being a classical AI problem, it is still very challenging to design a reliable multi-object tracking (MOT) system capable of tracking an unknown and time-varying number of objects moving through unconstrained environments, directly from spurious and ambiguous measurements and in presence of many other complexities such as occlusion, detection failure and data (measurement-to-objects) association uncertainty.
+                              In this project, we aim to design a reliable end-to-end MOT framework (without the use of heuristics or postprocessing), addressing the key tasks like track initiation and termination, as well as occlusion handling.
                            </p>
                            <p>
                               .
@@ -85,45 +86,57 @@
                         <hr>
                   <div class="row-fluid">
                      <div class="span12">
-                         <section id="Human Body Motion Forecasting">
-                           <h4>Human Body Motion Forecasting</h4>
+                         <section id="somof">
+                           <h4>Human Trajectory/Body Motion Forecasting</h4>
                            <br/>
-                           <img src="images/slider/SoPhie.png" class="float-right" alt="Human Body Motion Forecasting"/>
+                           <img src="images/slider/TRiPOD-SoPhie.png" class="float-right" alt="Human Trajectory/Body Motion Forecasting"/>
                            <p>
-                              The ability to forecast human body motion (i.e. pose dynamics and trajectory) is an essential component for many real-world applications, including robotics, healthcare, detection of perilous behavioral patterns in surveillance systems.
+                              The ability to forecast human trajectory and/or body motion (i.e. pose dynamics and trajectory) is an essential component for many real-world applications, including robotics, healthcare, detection of perilous behavioral patterns in surveillance systems.
                               However, this problem is very challenging; becasue there could potenitally exist several valid possibilities for a future human body motion in many similar situations and human motion is naturally influneced by the context and the component of the scene/ environment and the other people's behaviour and activities. In this project, we aim to develop such a physically and socially plausible framework for this problem. 
                            </p>
                         </section>
                          <hr>
-                        <section id="Robot Visual Perception">
-                           <h4>3D Visual Perception for a Mobile Robot in Human Environments</h4>
+                        <section id="activity">
+                           <h4> Human Spatio-temporal Action, Social Group and Activity Detection</h4>
                            <br/>
-                           <img src="images/slider/JRMOT.png" class="float-right" alt="Robot Visual Perception"/>
+                           <img src="images/slider/JRDB-ACT.png" class="float-right" alt="Human Social Activity"/>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 
-                           </p>
-                           <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 
+                               In this project, we tackle the problem of simultaneously grouping people by their social interactions, predicting their individual actions and the social activity of each social group, which we call the social task. 
                            </p>
                         </section>
                         <hr>
-                        <section id="Human Social Activity">
-                           <h4>Human Social Activity</h4>
+                        <section id="3D-reconstruction">
+                           <h4>3D Reconstruction of Human and Objects in Dynamic Scenes</h4>
                            <br/>
-                           <img src="images/slider/JRMOT.png" class="float-right" alt="Human Social Activity"/>
+                           <img src="images/slider/3Drec.png" class="float-right" alt="Robot Visual Perception"/>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                              eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis 
-                              hendrerit dolor magna eget est lorem ipsum dolor sit. Id ornare 
-                              arcu odio ut. At lectus urna duis convallis convallis. Fermentum 
-                              posuere urna nec tincidunt praesent semper. Ullamcorper dignissim 
-                              cras tincidunt lobortis feugiat vivamus. Eget lorem dolor sed 
-                              viverra ipsum nunc aliquet bibendum. Enim lobortis scelerisque 
-                              fermentum dui faucibus in ornare. Proin nibh nisl condimentum id 
-                              venenatis a. Ipsum dolor sit amet consectetur adipiscing elit 
-                              pellentesque.
+                              3D localisation, reconstruction and mapping of the objects and human body in dynamic environments are important steps towards high-level 3D scene understanding, which has many applications in autonomous driving, robotics interaction and navigation. This project focuses on creating the scene representation in 3D which gives a complete scene understanding i.e pose, shape and size of different scene elements (humans and objects) and their spatio-temporal relationship.
+                           </p>
+                           <!--<p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 
+                           </p>-->
+                        </section>
+                        <hr>
+                        <section id="jr-perception">
+                           <h4>A Dataset and Multi-task 3D Visual Perception System for a Mobile Robot in Human Environments</h4>
+                           <br/>
+                           <img src="images/slider/JRMOT.png" class="float-right" alt="Robot Visual Perception"/>
+                           <p>
+                              To operate, interact and navigate safely in dynamic human environments, an autonomous agent, e.g. a mobile social robot, must be equipped with a reliable perception system, which is not only able to understand the static environment around it, but also perceive and predict intricate human behaviours in this environment while considering their physical and social decorum and interactions. 
                            </p>
                            <p>
+                              Our aim is to design a multitask perception system for an autonomous agent, e.g. social robot. This framework includes different levels and modules, from basic-level perception problems to high-level perception and reasoning.  This project also work on creating a large-scale dataset, used for the training and evaluation of such a multi-task perception system.  
+                           </p>
+                        </section>
+                        <hr>
+                        <section id="visual-navigation">
+                           <h4>Active Visual Navigation in an Unexplored Environment</h4>
+                           <br/>
+                           <img src="images/slider/VN.png" class="float-right" alt="Human Social Activity"/>
+                           <p>
+                              In this project, the goal is to develop a new method (using computer vision and machine learning techniques) for robotic navigation in which goals can be specified at a much higher level of abstraction than has previously been possible. This will be achieved using deep learning to make informed predictions about a scene layout and navigating as an active observer in which the predictions inform actions. The outcome will be robotic agents capable of effective and efficient navigation and operation in previously unseen environments, and the ability to control such agents with more human-like instructions. Such capabilities are desirable, and in some cases essential, for autonomous robots in a variety of important application areas including automated warehousing and high-level control of autonomous vehicles.
+                           </p>
+                           <!--<p>
                               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
                               do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
                               Sit amet mauris commodo quis. Nisl rhoncus mattis rhoncus urna 
@@ -142,103 +155,73 @@
                               feugiat vivamus. Lorem ipsum dolor sit amet consectetur adipiscing 
                               elit duis. Accumsan tortor posuere ac ut consequat semper viverra. 
                               Mattis nunc sed blandit libero volutpat sed.
-                           </p>
+                           </p>-->
                         </section>
                      </div>
                   </div>
                </section>
                <hr>
-               <section id="Facilisis">
+               <section id="benchmarks">
                   <div class="page-header">
-                     <h3>Facilisis</h3>
+                     <h3>Datasets and Benchmarks</h3>
                   </div>
                   <div class="row-fluid">
                      <div class="span12">
-                        <section id="Volutpat">
-                           <h4>Volutpat</h4>
-                           <br/>
-                           <img src="images/solar-2.jpg" class="float-right" alt="Volutpat"/>
+                        <section id="jrdb">
+                           <h4>JRDB: JackRabbot Dataset and Benchmark</h4>
+                           <a href="https://jrdb.stanford.edu/" class="thumbnail">                      
+                           <img src="images/slider/JRDB-Benchmark.png" class="float-right" alt="Volutpat">
+                             </a>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                              tempor incididunt ut labore et dolore magna aliqua. Ultricies mi quis 
-                              hendrerit dolor. Non odio euismod lacinia at quis risus sed vulputate odio. 
-                              Amet volutpat consequat mauris nunc congue nisi. Netus et malesuada fames 
-                              ac turpis egestas maecenas. Mauris in aliquam sem fringilla ut morbi tincidunt. 
-                              Arcu bibendum at varius vel. Vel eros donec ac odio tempor. Nec ullamcorper 
-                              sit amet risus nullam eget. Volutpat blandit aliquam etiam erat velit 
-                              scelerisque in dictum. Eu facilisis sed odio morbi quis. Justo eget magna 
-                              fermentum iaculis eu. Orci eu lobortis elementum nibh tellus molestie nunc non 
-                              blandit. Bibendum arcu vitae elementum curabitur vitae nunc sed. Iaculis eu non 
-                              diam phasellus vestibulum lorem. Auctor augue mauris augue neque gravida. Sit 
-                              amet purus gravida quis blandit. In nulla posuere sollicitudin aliquam ultrices. 
+                             . 
                            </p>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                              incididunt ut labore et dolore magna aliqua. Nisi quis eleifend quam adipiscing 
-                              vitae proin. Metus vulputate eu scelerisque felis imperdiet proin fermentum. 
-                              Consectetur adipiscing elit duis tristique sollicitudin. Faucibus ornare 
-                              suspendisse sed nisi lacus sed viverra. Odio tempor orci dapibus ultrices in 
-                              iaculis nunc sed augue. Laoreet non curabitur gravida arcu ac tortor dignissim 
-                              convallis aenean. Posuere sollicitudin aliquam ultrices sagittis orci. Tellus 
-                              orci ac auctor augue. Tristique risus nec feugiat in. In est ante in nibh mauris. 
-                              Neque gravida in fermentum et sollicitudin ac. Commodo viverra maecenas accumsan 
-                              lacus vel facilisis volutpat. Aliquam malesuada bibendum arcu vitae elementum.
+                              .
                            </p>
                         </section>
                         <hr>
-                        <section id="ElementumTempus">
-                           <h4>Elementum Tempus</h4>
-                           <br/>
-                           <img src="images/energy.jpg" class="float-right" alt="Elementum Tempus"/>
+                        <section id="motchallenge">
+                           <h4>MOT20: A Benchmark for Multi-object Tracking in Crowded Scenes</h4>
+                           <a href="https://motchallenge.net/data/MOT20/" class="thumbnail">                      
+                           <img src="images/slider/MOT20.png" class="float-right" alt="Elementum Tempus">
+                             </a>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                              incididunt ut labore et dolore magna aliqua. Quisque sagittis purus sit amet 
-                              volutpat consequat mauris nunc congue. Arcu ac tortor dignissim convallis aenean. 
-                              Etiam non quam lacus suspendisse faucibus interdum posuere lorem ipsum. Lorem 
-                              mollis aliquam ut porttitor leo a diam sollicitudin. Convallis aenean et tortor 
-                              at risus viverra adipiscing at. Nibh cras pulvinar mattis nunc sed blandit libero. 
-                              Venenatis a condimentum vitae sapien pellentesque. Diam maecenas ultricies mi eget 
-                              mauris. Facilisis volutpat est velit egestas dui id. Ut ornare lectus sit amet est 
-                              placerat in egestas erat. Vel elit scelerisque mauris pellentesque pulvinar 
-                              pellentesque habitant.
+                             .
                            </p>
                            <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                              incididunt ut labore et dolore magna aliqua. Donec ac odio tempor orci dapibus 
-                              ultrices. Venenatis a condimentum vitae sapien. Ante in nibh mauris cursus mattis 
-                              molestie a iaculis at. Egestas quis ipsum suspendisse ultrices gravida dictum fusce. 
-                              Pellentesque elit eget gravida cum. Duis ultricies lacus sed turpis tincidunt id 
-                              aliquet risus. Aliquet risus feugiat in ante metus dictum at. Id leo in vitae turpis. 
-                              Nec nam aliquam sem et tortor consequat id porta nibh. Sagittis eu volutpat odio 
-                              facilisis mauris sit amet massa. Facilisis mauris sit amet massa. Amet risus nullam 
-                              eget felis eget nunc lobortis mattis. Ut sem nulla pharetra diam sit. Mattis molestie 
-                              a iaculis at erat pellentesque adipiscing commodo. Enim neque volutpat ac tincidunt 
-                              vitae semper quis lectus nulla. Lectus sit amet est placerat in egestas erat. Aliquet 
-                              nibh praesent tristique magna sit amet purus gravida. At volutpat diam ut venenatis. 
-                              Nibh ipsum consequat nisl vel pretium lectus.
+                             .
                            </p>
                         </section>
                         <hr>
-                        <section id="FacilisisMagna">
-                           <h4>Facilisis Magna</h4>
-                           <br/>
-                           <ol class="resources">
-                              <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                                 incididunt ut labore et dolore magna aliqua. p. 413-417, 2010.
-                              </li>
-                              <li>Sed ullamcorper morbi tincidunt ornare massa eget egestas. Suscipit tellus mauris 
-                                 a diam. Facilisis magna etiam tempor orci eu lobortis elementum nibh tellus.  
-                              </li>
-                              <li>Tellus molestie nunc non blandit massa enim nec dui. Eget duis at tellus at urna 
-                                 condimentum mattis pellentesque id. At urna condimentum mattis pellentesque id nibh 
-                                 tortor. Placerat duis ultricies lacus sed turpis tincidunt id aliquet risus. 
-                              </li>
-                              <li>Laoreet non curabitur gravida arcu ac. Ultricies tristique nulla aliquet enim. Auctor 
-                                 elit sed vulputate mi. Pellentesque diam volutpat commodo sed egestas egestas fringilla. 
-                                 Eleifend donec pretium vulputate sapien nec sagittis. 38(5), p. 397-406, 2013.
-                              </li>
-                           </ol>
+                        <section id="somof-ben">
+                           <h4> Social Motion Forecasting Benchmark </h4>
+                           <a href="https://somof.stanford.edu/" class="thumbnail">
+                           <img " src="images/slider/SoMoF-Benchmark.png" class="float-right" alt="Elementum Tempus">
+                           </a> 
+                           <p>
+                            .
+                           </p>
                         </section>
+                        <hr>
+                        <section id="completion3d">
+                           <h4>Completion3D: Stanford 3D Point Cloud Completion Benchmark</h4>
+                             <a href="https://completion3d.stanford.edu/" class="thumbnail">                      
+                           <img src="images/slider/completion3d.png" class="float-right" alt="Elementum Tempus">
+                             </a>
+                           <p>
+                            .
+                           </p>
+                        </section>
+                        <hr>   
+                         <section id="lisc">
+                           <h4> LISC: Leukocyte Images for Segmentation and Classification </h4>
+                           <a href="https://users.cecs.anu.edu.au/~hrezatofighi/Data/Leukocyte%20Data.htm" class="thumbnail">
+                           <img " src="images/slider/LISC.png" class="float-right" alt="Elementum Tempus">
+                           </a> 
+                           <p>
+                            .
+                           </p>
+                        </section>                                                                                       
                      </div>
                   </div>
                </section>
@@ -252,8 +235,8 @@
                <div class="span5">
                   <h3>Contact Information</h3>
                   <p><b>Office Hours: </b>Monday-Friday (8.00am - 5.00pm)</p>
-                  <p><b>Phone: </b>TBA</p>
-                  <p><b>Cell: </b>TBA</p>
+                  <p><b>Phone: </b>+61 3 9905 2059</p>
+                  <!-- <p><b>Cell: </b>TAB</p>
                   <!-- <a href="mailto:your.email@uni.edu">Email</a> -->
                </div>
                <div class="span2">
