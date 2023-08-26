@@ -390,6 +390,26 @@ body>.navbar .brand:hover {
 	text-align: left;
 	border-bottom: 1px solid #ddd;
 }
+.subhead-1 {
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #d7e1ee;
+}
+.subhead-2 {
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #b0dbde;
+}
+.subhead-3 {
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #CBC3E3;
+}
+.subhead-4 {
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	background-color: #FFE0b0
+}
 
 .jumbotron {
 	position: relative;
@@ -494,7 +514,22 @@ li.publication {
 .page-header h3 a:hover {
 	text-decoration: none;
 }
-
+.page-section-1 {
+	text-decoration: none;
+	background-color: #d7e1ee;
+}
+.page-section-2 {
+	text-decoration: none;
+	background-color: #b0dbde;
+}
+.page-section-3 {
+	text-decoration: none;
+	background-color: #CBC3E3;
+}
+.page-section-4 {
+	text-decoration: none;
+	background-color: #FFE0b0
+}
 iframe.map-frame {
 	border: none;
 	overflow: hidden;
