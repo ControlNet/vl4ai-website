@@ -18,12 +18,6 @@ interface NavItem {
   testId?: string;
 }
 
-interface NavCta {
-  label: string;
-  href: string;
-  testId?: string;
-}
-
 interface FooterActionLink {
   label: string;
   href: string;
@@ -49,9 +43,8 @@ interface Props {
   metaRefreshPath?: string;
   activeNav?: string;
   navItems?: readonly NavItem[];
-  navCta?: NavCta;
   footerNavItems?: readonly NavItem[];
-  footerUtilityLink?: NavCta;
+  footerUtilityLink?: { label: string; href: string; testId?: string };
 }
 
 const {
@@ -64,7 +57,6 @@ const {
   metaRefreshPath,
   activeNav,
   navItems = [],
-  navCta,
   footerNavItems = [],
   footerUtilityLink,
 } = Astro.props;
@@ -120,13 +112,12 @@ const normalizeNavItems = (items: readonly NavItem[]) => {
     } satisfies NavItem;
   });
 };
-const normalizeContactLink = (link: NavCta | undefined, fallback: NavCta) => ({
+const normalizeContactLink = (link: typeof footerUtilityLink, fallback: typeof canonicalFooterUtilityLink) => ({
   label: link?.label ?? fallback.label,
   href: fallback.href,
   testId: link?.testId ?? fallback.testId,
 });
 const resolvedNavItems = normalizeNavItems(navItems);
-const resolvedNavCta = normalizeContactLink(navCta, canonicalNavContactCta);
 const resolvedFooterNavItems = normalizeNavItems(footerNavItems.length > 0 ? footerNavItems : resolvedNavItems);
 const resolvedFooterUtilityLink = normalizeContactLink(footerUtilityLink, canonicalFooterUtilityLink);
 const footerStreetLine = contactEntry.data.addressLines[1] ?? contactEntry.data.addressLines[0] ?? '';
@@ -255,7 +246,7 @@ const structuredData = [
     }
   </head>
   <body class="flex min-h-screen flex-col bg-white text-gray-900 antialiased">
-    <SiteNav activeItem={activeNav} items={resolvedNavItems} cta={resolvedNavCta} />
+    <SiteNav activeItem={activeNav} items={resolvedNavItems} />
     <main id="main-content" class="flex-1 overflow-x-clip" data-testid="site-main">
       <slot />
     </main>

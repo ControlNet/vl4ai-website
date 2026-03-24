@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { toContentAssetUrl } from '../../lib/content-assets';
 import { routeSeo } from '../../lib/page-seo';
@@ -178,7 +178,6 @@ if (!benchmarkSpotlight) {
   socialImageAlt={routeSeo.research.socialImageAlt}
   activeNav="research"
   navItems={publicNavItems}
-  navCta={navContactCta}
   footerNavItems={publicNavItems}
   footerUtilityLink={footerUtilityLink}
 >

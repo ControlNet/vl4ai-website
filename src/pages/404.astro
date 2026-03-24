@@ -5,12 +5,7 @@ import PageHeader from '../components/ui/PageHeader.astro';
 import SectionShell from '../components/ui/SectionShell.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { routeSeo } from '../lib/page-seo';
-import {
-  footerUtilityLink,
-  navContactCta,
-  publicNavItems,
-  publicRouteContract,
-} from '../data/route-contract';
+import { footerUtilityLink, publicNavItems, publicRouteContract } from '../data/route-contract';
 
 const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.html');
 ---
@@ -23,7 +18,6 @@ const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.
   socialImageAlt={routeSeo.notFound.socialImageAlt}
   robots="noindex,follow"
   navItems={publicNavItems}
-  navCta={navContactCta}
   footerNavItems={publicNavItems}
   footerUtilityLink={footerUtilityLink}
 >

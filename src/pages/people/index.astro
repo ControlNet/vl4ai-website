@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 import MemberLinkIcon from '../../components/home/MemberLinkIcon.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import { toContentAssetUrl } from '../../lib/content-assets';
 import { routeSeo } from '../../lib/page-seo';
 
@@ -73,7 +73,6 @@ const getTrackLabel = (entry: PersonEntry) => {
   socialImageAlt={routeSeo.people.socialImageAlt}
   activeNav="people"
   navItems={publicNavItems}
-  navCta={navContactCta}
   footerNavItems={publicNavItems}
   footerUtilityLink={footerUtilityLink}
 >

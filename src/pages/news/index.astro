@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { resolveRouteDestination } from '../../lib/route-destination';
 import { routeSeo } from '../../lib/page-seo';
@@ -107,7 +107,6 @@ const archiveAction = newsRouteCopy.data.actions[0];
   socialImageAlt={routeSeo.newsArchive.socialImageAlt}
   activeNav="news"
   navItems={publicNavItems}
-  navCta={navContactCta}
   footerNavItems={publicNavItems}
   footerUtilityLink={footerUtilityLink}
 >

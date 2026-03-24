@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { routeSeo } from '../../lib/page-seo';
 
@@ -128,7 +128,6 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
   socialImageAlt={routeSeo.publicationsArchive.socialImageAlt}
   activeNav="publications"
   navItems={publicNavItems}
-  navCta={navContactCta}
   footerNavItems={publicNavItems}
   footerUtilityLink={footerUtilityLink}
 >

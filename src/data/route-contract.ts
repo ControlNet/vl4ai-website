@@ -92,12 +92,14 @@ export const publicNavItems: NavContractItem[] = [
   },
   { key: 'news', label: 'News', href: '/news/', testId: 'site-nav-link-news' },
   { key: 'positions', label: 'Positions', href: '/positions/', testId: 'site-nav-link-positions' },
+  { key: 'contact', label: 'Contact', href: '/contact/', testId: 'site-nav-link-contact' },
 ];
 
+/** Canonical contact href/label (footer meta, redirects). Nav uses `publicNavItems` entry `key: 'contact'`. */
 export const navContactCta: NavContractCta = {
   label: 'Contact',
   href: '/contact/',
-  testId: 'site-nav-cta-contact',
+  testId: 'site-nav-link-contact',
 };
 
 export const footerUtilityLink: NavContractCta = {

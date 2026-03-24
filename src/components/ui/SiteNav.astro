@@ -6,20 +6,13 @@ interface NavItem {
   testId?: string;
 }
 
-interface NavCta {
-  label: string;
-  href: string;
-  testId?: string;
-}
-
 interface Props {
   activeItem?: string;
   items?: readonly NavItem[];
-  cta?: NavCta;
   logoHref?: string;
 }
 
-const { activeItem, items = [], cta, logoHref = '/' } = Astro.props;
+const { activeItem, items = [], logoHref = '/' } = Astro.props;
 const normalizePath = (value: string) => {
   if (value === '/' || value.endsWith('/') || value.endsWith('.html')) {
     return value;
@@ -30,7 +23,6 @@ const normalizePath = (value: string) => {
 const currentPath = normalizePath(Astro.url.pathname);
 const isItemActive = (item: NavItem) =>
   activeItem ? activeItem === item.key : normalizePath(item.href) === currentPath;
-const isCtaActive = cta ? activeItem === 'contact' || normalizePath(cta.href) === currentPath : false;
 ---
 
 <nav
@@ -73,20 +65,6 @@ const isCtaActive = cta ? activeItem === 'contact' || normalizePath(cta.href) ==
         </a>
       ))
     }
-    {cta && (
-      <a
-        href={cta.href}
-        class:list={[
-          'inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-[11px] font-black uppercase tracking-widest text-white shadow-lg shadow-black/5 transition lg:ml-4 lg:w-auto lg:py-2',
-          isCtaActive ? 'is-active bg-blue-800' : 'bg-black hover:bg-blue-800',
-        ]}
-        aria-current={isCtaActive ? 'page' : undefined}
-        data-mobile-menu-link
-        data-testid={cta.testId ?? 'site-nav-cta'}
-      >
-        {cta.label}
-      </a>
-    )}
   </div>
 
   <button

@@ -224,7 +224,6 @@ const expectContractDrivenChrome = async (page: Page) => {
     await expect(siteFooter.getByTestId(item.testId)).toHaveAttribute('href', item.href);
   }
 
-  await expect(siteNav.getByTestId(navContactCta.testId)).toHaveAttribute('href', navContactCta.href);
   await expect(siteFooter.getByTestId(footerUtilityLink.testId)).toHaveAttribute('href', footerUtilityLink.href);
 
   const internalNavAndFooterLinks = await page.locator('[data-testid="site-nav"] a, [data-testid="site-footer"] a').evaluateAll(
@@ -259,6 +258,7 @@ test('defines the canonical public route matrix and exposes it on the not-found 
     '/publications/',
     '/news/',
     '/positions/',
+    '/contact/',
   ]);
   expect(navContactCta.href).toBe('/contact/');
   expect(footerUtilityLink.href).toBe('/contact/');
@@ -800,7 +800,7 @@ test('contact route renders collection-backed location blocks, canonical chrome,
   });
 
   await expectContractDrivenChrome(page);
-  await expect(page.getByTestId('site-nav').getByTestId(navContactCta.testId ?? 'site-nav-cta')).toHaveClass(/is-active/);
+  await expect(page.getByTestId('site-nav').getByTestId('site-nav-link-contact')).toHaveClass(/is-active/);
   await expect(page.getByTestId('contact-page-header')).toBeVisible();
   await expectNonEmptyText(page.getByTestId('contact-page-header').locator('h1'));
   await expectNonEmptyText(page.getByTestId('contact-page-header').locator('p').last());
