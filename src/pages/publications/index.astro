@@ -174,33 +174,33 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
             {group.label}
             <div class="h-px flex-grow bg-gray-100"></div>
           </h2>
-          <div class="space-y-4">
+          <div
+            class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 md:gap-5 lg:grid-cols-3 xl:grid-cols-4"
+          >
             {group.items.map((item) => (
               <article
-                class="group flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-4 shadow-md transition-all duration-300 hover:border-blue-200 hover:shadow-xl sm:flex-row sm:p-5"
+                class="group flex h-full min-h-0 flex-col gap-3 rounded-2xl border border-gray-100 bg-white p-3 shadow-md transition-all duration-300 hover:border-blue-200 hover:shadow-xl sm:gap-4 sm:p-4"
                 data-publication-slug={item.id}
                 data-testid="publication-archive-item"
               >
-                <div class="shrink-0">
-                  <div class="overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-500 group-hover:scale-[1.02]">
-                    <img
-                      src={item.image}
-                      alt={`${item.title} preview`}
-                      class="h-auto w-full object-cover sm:w-48 lg:w-56"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                <div class="aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-500 group-hover:scale-[1.02]">
+                  <img
+                    src={item.image}
+                    alt={`${item.title} preview`}
+                    class="block h-full w-full max-w-none origin-center scale-105 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
 
-                <div class="flex min-w-0 flex-1 flex-col justify-between gap-4">
+                <div class="flex min-w-0 flex-1 flex-col justify-between gap-3">
                   <div class="min-w-0 space-y-2">
                     <div class="flex items-center gap-3">
                       <span class="rounded-[4px] bg-blue-50 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-[#003087] ring-1 ring-blue-100/50">
                         {item.badgeLabel}
                       </span>
                     </div>
-                    <h4 class="text-lg font-bold leading-tight text-gray-900 transition group-hover:text-[#003087] md:text-xl">
+                    <h4 class="text-sm font-bold leading-snug text-gray-900 transition group-hover:text-[#003087] sm:text-base">
                       {item.title}
                     </h4>
                     <p class="text-sm font-medium text-gray-500/80">{item.authorLine}</p>
