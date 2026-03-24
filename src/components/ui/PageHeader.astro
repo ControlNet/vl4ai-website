@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  accent?: string;
+  description?: string;
+  testId?: string;
+}
+
+const { title, accent, description, testId = 'page-header' } = Astro.props;
+---
+
+<section class="page-header" data-testid={testId}>
+  <div class="page-header__inner">
+    <h1 class="page-header__title">
+      {title}
+      {accent && <span> {accent}</span>}
+    </h1>
+    {description && <p class="page-header__description">{description}</p>}
+  </div>
+</section>

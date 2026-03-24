@@ -1,0 +1,137 @@
+:root {
+  --font-sans: 'Inter', sans-serif;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-monash-blue: #003087;
+  --color-accent-blue: #006dae;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-400: #60a5fa;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-red-600: #dc2626;
+  --color-green-100: #dcfce7;
+  --color-green-700: #15803d;
+
+  --text-micro: 0.5625rem;
+  --text-tiny: 0.625rem;
+  --text-xs: 0.75rem;
+  --text-label: 0.6875rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-8xl: 6rem;
+
+  /* Default line heights per step (Tailwind v3 font-size presets) */
+  --line-height-xs: 1rem;
+  --line-height-sm: 1.25rem;
+  --line-height-base: 1.5rem;
+  --line-height-lg: 1.75rem;
+  --line-height-xl: 1.75rem;
+  --line-height-2xl: 2rem;
+  --line-height-4xl: 2.5rem;
+
+  /* Line heights aligned with Tailwind v3 defaults */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-copy: 1.625;
+  --leading-loose: 2;
+  --leading-hero: 0.9;
+
+  /* Letter-spacing aligned with Tailwind v3 */
+  --tracking-tight: -0.025em;
+  --tracking-tighter: -0.05em;
+  --tracking-widest: 0.2em;
+  --tracking-eyebrow: 0.3em;
+  --tracking-section: 0.4em;
+  --tracking-banner: 0.5em;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
+
+  --space-1: 0.25rem;
+  --space-1-5: 0.375rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  --radius-sm: 0.125rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 3rem;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-card-hover: 0 20px 40px -15px rgb(0 48 135 / 0.15);
+  --shadow-hero-cta: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* Tailwind shadow-lg shadow-black/5 (nav contact pill) */
+  --shadow-nav-cta: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+
+  --border-subtle: 1px solid var(--color-gray-100);
+  --border-muted: 1px solid var(--color-gray-200);
+  --border-dark: 1px solid rgb(31 41 55 / 1);
+
+  --surface-glass: rgb(255 255 255 / 0.8);
+  --surface-hero: radial-gradient(circle at 70% 30%, rgb(0 48 135 / 0.05) 0%, var(--color-white) 100%);
+  --surface-dark: linear-gradient(135deg, rgb(30 64 175 / 0.5) 0%, rgb(0 0 0 / 1) 100%);
+
+  --container-medium: 64rem;
+  --container-wide: 80rem;
+  --container-narrow: 48rem;
+
+  --page-inline: var(--space-6);
+  --page-inline-md: var(--space-12);
+  --section-space: var(--space-32);
+  --section-space-compact: var(--space-24);
+  --page-header-top: 10rem;
+  --page-header-bottom: 5rem;
+  --nav-blur: 12px;
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 700ms;
+  --ease-standard: ease;
+  --ease-emphasized: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --page-inline: var(--page-inline-md);
+  }
+}

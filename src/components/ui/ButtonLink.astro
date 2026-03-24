@@ -1,0 +1,19 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'quiet';
+  class?: string;
+  testId?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  class: className,
+  testId = 'button-link',
+} = Astro.props;
+---
+
+<a href={href} class:list={['button-link', `button-link--${variant}`, className]} data-testid={testId}>
+  <slot />
+</a>

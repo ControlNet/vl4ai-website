@@ -1,0 +1,23 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'default' | 'muted' | 'dark';
+  width?: 'wide' | 'medium' | 'narrow';
+  class?: string;
+  testId?: string;
+}
+
+const {
+  id,
+  tone = 'default',
+  width = 'wide',
+  class: className,
+  testId = 'section-shell',
+} = Astro.props;
+---
+
+<section id={id} class:list={['section-shell', tone !== 'default' && `section-shell--${tone}`]} data-testid={testId}>
+  <div class:list={['section-shell__inner', `section-shell__inner--${width}`, className]}>
+    <slot />
+  </div>
+</section>

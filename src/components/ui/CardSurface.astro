@@ -1,0 +1,31 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'outlined' | 'elevated' | 'muted' | 'impact' | 'dashed';
+  class?: string;
+  testId?: string;
+}
+
+const {
+  href,
+  variant = 'outlined',
+  class: className,
+  testId = 'card-surface',
+} = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class:list={['card-surface', `card-surface--${variant}`, 'card-surface--link', className]}
+      data-testid={testId}
+    >
+      <slot />
+    </a>
+  ) : (
+    <div class:list={['card-surface', `card-surface--${variant}`, className]} data-testid={testId}>
+      <slot />
+    </div>
+  )
+}

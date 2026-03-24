@@ -1,0 +1,159 @@
+---
+interface FooterNavItem {
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface FooterUtilityLink {
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface FooterActionLink {
+  label: string;
+  href: string;
+  icon: 'email' | 'map' | 'institution';
+  external?: boolean;
+  testId?: string;
+}
+
+interface FooterMetaLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  testId?: string;
+}
+
+interface Props {
+  navItems?: readonly FooterNavItem[];
+  utilityLink?: FooterUtilityLink;
+  logoHref?: string;
+  description?: string;
+  addressLines?: readonly string[];
+  actionLinks?: readonly FooterActionLink[];
+  metaLinks?: readonly FooterMetaLink[];
+}
+
+const {
+  navItems = [],
+  utilityLink,
+  logoHref = '/',
+  description = '',
+  addressLines = [],
+  actionLinks = [],
+  metaLinks = [],
+} = Astro.props;
+---
+
+<footer class="border-t border-gray-800 bg-gray-900 px-6 py-24 text-white" id="site-footer" data-testid="site-footer">
+  <div class="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <a href={logoHref} class="mb-8 inline-flex items-center gap-3" data-testid="site-footer-brand">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white">
+          <span class="text-sm font-extrabold text-black">VL</span>
+        </div>
+        <span class="text-2xl font-black uppercase tracking-tighter">
+          VL4AI <span class="font-light text-gray-500">Lab</span>
+        </span>
+      </a>
+      {description && <p class="max-w-md leading-relaxed font-light text-gray-400">{description}</p>}
+      {
+        actionLinks.length > 0 && (
+          <div class="mt-10 flex gap-6" aria-label="Footer quick links">
+            {actionLinks.map((link) => (
+              <a
+                href={link.href}
+                class="text-xl text-gray-500 transition hover:text-white"
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noreferrer' : undefined}
+                aria-label={link.label}
+                data-testid={link.testId}
+              >
+                {
+                  link.icon === 'email' ? (
+                    <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25zm1.5.132v.176l7.5 5.204 7.5-5.204v-.176a.25.25 0 0 0-.25-.25H4.75a.25.25 0 0 0-.25.25m15 1.994-7.072 4.911a.75.75 0 0 1-.856 0L4.5 8.876v8.374c0 .138.112.25.25.25h14.5a.25.25 0 0 0 .25-.25z"></path>
+                    </svg>
+                  ) : link.icon === 'map' ? (
+                    <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 1.75a7.25 7.25 0 0 0-7.25 7.25c0 5.536 6.224 11.904 6.489 12.172a1.07 1.07 0 0 0 1.522 0c.265-.268 6.489-6.636 6.489-12.172A7.25 7.25 0 0 0 12 1.75m0 9.5A2.25 2.25 0 1 1 14.25 9 2.252 2.252 0 0 1 12 11.25"></path>
+                    </svg>
+                  ) : (
+                    <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m12 2-9 4.91V21h18V6.91Zm5.5 17.5h-3.75v-6h-3.5v6H6.5V7.81L12 4.82l5.5 2.99Z"></path>
+                    </svg>
+                  )
+                }
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div>
+      <h2 class="mb-8 text-xs font-black uppercase tracking-[0.3em] text-gray-500">Navigation</h2>
+      <ul class="space-y-4 text-sm font-bold uppercase tracking-widest text-gray-400">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="transition hover:text-white"
+                data-testid={item.testId ?? `footer-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="mb-8 text-xs font-black uppercase tracking-[0.3em] text-gray-500">Find Us</h2>
+      {addressLines.length > 0 && (
+        <p class="text-sm leading-loose font-light text-gray-400">
+          {addressLines.map((line, index) => (
+            <>
+              {index > 0 && <br />}
+              {line}
+            </>
+          ))}
+        </p>
+      )}
+      {utilityLink && (
+        <a
+          href={utilityLink.href}
+          class="mt-5 inline-flex text-[10px] font-black uppercase tracking-widest text-gray-500 transition hover:text-white"
+          data-testid={utilityLink.testId ?? 'footer-utility-link'}
+        >
+          {utilityLink.label}
+        </a>
+      )}
+    </div>
+  </div>
+
+  <div class="mx-auto mt-24 max-w-7xl border-t border-gray-800 pt-8 text-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
+    <p>© 2026 Vision &amp; Language for Autonomous AI Group.</p>
+    {
+      metaLinks.length > 0 && (
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-4">
+          {metaLinks.map((link) => (
+            <a
+              href={link.href}
+              class="transition hover:text-white"
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noreferrer' : undefined}
+              data-testid={link.testId}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</footer>

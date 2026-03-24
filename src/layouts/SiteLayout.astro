@@ -1,0 +1,271 @@
+---
+import { getCollection } from 'astro:content';
+
+import '../styles/tailwind.css';
+import SiteFooter from '../components/ui/SiteFooter.astro';
+import SiteNav from '../components/ui/SiteNav.astro';
+import {
+  footerUtilityLink as canonicalFooterUtilityLink,
+  navContactCta as canonicalNavContactCta,
+  publicNavItems,
+} from '../data/route-contract';
+import { toContentAssetUrl } from '../lib/content-assets';
+
+interface NavItem {
+  key?: string;
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface NavCta {
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface FooterActionLink {
+  label: string;
+  href: string;
+  icon: 'email' | 'map' | 'institution';
+  external?: boolean;
+  testId?: string;
+}
+
+interface FooterMetaLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  testId?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
+  robots?: string;
+  metaRefreshPath?: string;
+  activeNav?: string;
+  navItems?: readonly NavItem[];
+  navCta?: NavCta;
+  footerNavItems?: readonly NavItem[];
+  footerUtilityLink?: NavCta;
+}
+
+const {
+  title,
+  description = 'The static VL4AI website for Vision & Learning for Autonomous AI at Monash University.',
+  canonicalPath,
+  socialImage,
+  socialImageAlt = 'VL4AI logo',
+  robots = 'index,follow',
+  metaRefreshPath,
+  activeNav,
+  navItems = [],
+  navCta,
+  footerNavItems = [],
+  footerUtilityLink,
+} = Astro.props;
+
+const siteUrl = Astro.site;
+
+if (!siteUrl) {
+  throw new Error('SiteLayout requires Astro.site to be configured in astro.config.ts.');
+}
+
+const siteEntries = await getCollection('site');
+const labEntry = siteEntries.find((entry) => entry.data.kind === 'lab');
+const contactEntry = siteEntries.find((entry) => entry.data.kind === 'contact');
+
+if (!labEntry || labEntry.data.kind !== 'lab') {
+  throw new Error('Expected a lab entry in the site collection for shared metadata.');
+}
+
+if (!contactEntry || contactEntry.data.kind !== 'contact') {
+  throw new Error('Expected a contact entry in the site collection for shared metadata.');
+}
+
+const normalizeSitePath = (value: string) => (value.startsWith('/') ? value : `/${value}`);
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, siteUrl);
+const socialImageUrl = new URL(socialImage ?? toContentAssetUrl(labEntry.data.logo), siteUrl);
+const organizationId = new URL('/#organization', siteUrl).href;
+const websiteId = new URL('/#website', siteUrl).href;
+const homepageUrl = new URL('/', siteUrl).href;
+const localityMatch = contactEntry.data.addressLines.at(-2)?.match(/^(.*)\s+([A-Z]{2,4})\s+(\d{4})$/u);
+const streetAddressLines = localityMatch
+  ? contactEntry.data.addressLines.slice(0, -2)
+  : contactEntry.data.addressLines.slice(0, -1);
+const resolveCanonicalNavItem = (item: NavItem) =>
+  publicNavItems.find(
+    (canonicalItem) =>
+      canonicalItem.key === item.key || canonicalItem.label.toLowerCase() === item.label.toLowerCase(),
+  );
+const normalizeNavItems = (items: readonly NavItem[]) => {
+  const sourceItems = items.length > 0 ? items : publicNavItems;
+
+  return sourceItems.map((item) => {
+    const canonicalItem = resolveCanonicalNavItem(item);
+
+    if (!canonicalItem) {
+      return item;
+    }
+
+    return {
+      ...item,
+      key: item.key ?? canonicalItem.key,
+      href: canonicalItem.href,
+      testId: item.testId ?? canonicalItem.testId,
+    } satisfies NavItem;
+  });
+};
+const normalizeContactLink = (link: NavCta | undefined, fallback: NavCta) => ({
+  label: link?.label ?? fallback.label,
+  href: fallback.href,
+  testId: link?.testId ?? fallback.testId,
+});
+const resolvedNavItems = normalizeNavItems(navItems);
+const resolvedNavCta = normalizeContactLink(navCta, canonicalNavContactCta);
+const resolvedFooterNavItems = normalizeNavItems(footerNavItems.length > 0 ? footerNavItems : resolvedNavItems);
+const resolvedFooterUtilityLink = normalizeContactLink(footerUtilityLink, canonicalFooterUtilityLink);
+const footerStreetLine = contactEntry.data.addressLines[1] ?? contactEntry.data.addressLines[0] ?? '';
+const footerLocality = localityMatch?.[1] ?? labEntry.data.primaryLocation.split(',')[0] ?? '';
+const footerRegionLine = [localityMatch?.[2], localityMatch?.[3]].filter(Boolean).join(' ');
+const footerCountry = contactEntry.data.addressLines.at(-1) ?? '';
+const footerAddressLines = [
+  footerStreetLine,
+  [labEntry.data.institution, footerLocality].filter(Boolean).join(' '),
+  [footerRegionLine, footerCountry].filter(Boolean).join(', '),
+].filter((line): line is string => line.length > 0);
+const footerDescription =
+  'Vision & Language for Autonomous AI Group at Monash University. Dedicated to pushing the boundaries of machine perception and embodied intelligence.';
+const footerActionLinks: FooterActionLink[] = [
+  {
+    label: 'Email the lab',
+    href: `mailto:${contactEntry.data.email}`,
+    icon: 'email',
+    testId: 'site-footer-action-email',
+  },
+  {
+    label: 'Open the campus map',
+    href: contactEntry.data.mapUrl,
+    icon: 'map',
+    external: true,
+    testId: 'site-footer-action-map',
+  },
+  {
+    label: labEntry.data.institution,
+    href: 'https://www.monash.edu/',
+    icon: 'institution',
+    external: true,
+    testId: 'site-footer-action-monash',
+  },
+];
+const footerMetaLinks: FooterMetaLink[] = [
+  {
+    label: canonicalNavContactCta.label,
+    href: canonicalNavContactCta.href,
+    testId: 'site-footer-meta-contact',
+  },
+  {
+    label: labEntry.data.institution,
+    href: 'https://www.monash.edu/',
+    external: true,
+    testId: 'site-footer-meta-monash',
+  },
+];
+const organizationAddress = {
+  '@type': 'PostalAddress',
+  streetAddress: streetAddressLines.join(', '),
+  ...(localityMatch?.[1] ? { addressLocality: localityMatch[1] } : {}),
+  ...(localityMatch?.[2] ? { addressRegion: localityMatch[2] } : {}),
+  ...(localityMatch?.[3] ? { postalCode: localityMatch[3] } : {}),
+  ...(contactEntry.data.addressLines.at(-1) ? { addressCountry: contactEntry.data.addressLines.at(-1) } : {}),
+};
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': organizationId,
+    name: labEntry.data.fullName,
+    alternateName: [labEntry.data.shortName, ...labEntry.data.alternateNames],
+    description: labEntry.data.description,
+    url: homepageUrl,
+    logo: new URL(normalizeSitePath(toContentAssetUrl(labEntry.data.logo)), siteUrl).href,
+    address: organizationAddress,
+    department: labEntry.data.department,
+    parentOrganization: {
+      '@type': 'CollegeOrUniversity',
+      name: labEntry.data.institution,
+    },
+    telephone: contactEntry.data.phone,
+    email: contactEntry.data.email,
+    location: labEntry.data.primaryLocation,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': websiteId,
+    name: labEntry.data.shortName,
+    alternateName: labEntry.data.fullName,
+    description: labEntry.data.description,
+    url: homepageUrl,
+    inLanguage: 'en',
+    publisher: {
+      '@id': organizationId,
+    },
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonicalUrl.href} />
+    <meta property="og:site_name" content={labEntry.data.shortName} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta property="og:image" content={socialImageUrl.href} />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl.href} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+    {metaRefreshPath && <meta http-equiv="refresh" content={`0;url=${metaRefreshPath}`} />}
+    {
+      structuredData.map((entry) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
+      ))
+    }
+  </head>
+  <body class="flex min-h-screen flex-col bg-white text-gray-900 antialiased">
+    <SiteNav activeItem={activeNav} items={resolvedNavItems} cta={resolvedNavCta} />
+    <main id="main-content" class="flex-1 overflow-x-clip" data-testid="site-main">
+      <slot />
+    </main>
+    <SiteFooter
+      navItems={resolvedFooterNavItems}
+      utilityLink={resolvedFooterUtilityLink}
+      description={footerDescription}
+      addressLines={footerAddressLines}
+      actionLinks={footerActionLinks}
+      metaLinks={footerMetaLinks}
+    />
+  </body>
+</html>

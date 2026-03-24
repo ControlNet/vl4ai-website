@@ -1,0 +1,180 @@
+---
+interface NavItem {
+  key?: string;
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface NavCta {
+  label: string;
+  href: string;
+  testId?: string;
+}
+
+interface Props {
+  activeItem?: string;
+  items?: readonly NavItem[];
+  cta?: NavCta;
+  logoHref?: string;
+}
+
+const { activeItem, items = [], cta, logoHref = '/' } = Astro.props;
+const normalizePath = (value: string) => {
+  if (value === '/' || value.endsWith('/') || value.endsWith('.html')) {
+    return value;
+  }
+
+  return `${value}/`;
+};
+const currentPath = normalizePath(Astro.url.pathname);
+const isItemActive = (item: NavItem) =>
+  activeItem ? activeItem === item.key : normalizePath(item.href) === currentPath;
+const isCtaActive = cta ? activeItem === 'contact' || normalizePath(cta.href) === currentPath : false;
+---
+
+<nav
+  class="glass-nav fixed top-0 left-0 z-50 flex w-full items-center justify-between border-b border-gray-100 px-6 py-4 md:px-12"
+  id="site-nav"
+  data-testid="site-nav"
+>
+  <div class="flex items-center gap-3">
+    <a href={logoHref} class="group flex items-center gap-3" data-testid="site-nav-home">
+      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-black transition-transform group-hover:scale-110">
+        <span class="text-sm font-extrabold text-white">VL</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xl leading-none font-black uppercase tracking-tighter">VL4AI</span>
+        <span class="mt-1 text-[10px] leading-none font-bold uppercase tracking-[0.2em] text-gray-400">Laboratory</span>
+      </div>
+    </a>
+  </div>
+
+  <div
+    id="site-nav-mobile-panel"
+    class="absolute top-full left-6 right-6 hidden flex-col gap-5 rounded-3xl border border-gray-100 bg-white/95 p-6 text-[11px] font-black uppercase tracking-widest shadow-2xl shadow-black/5 backdrop-blur lg:static lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-10 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+    aria-label="Primary navigation"
+    aria-hidden="true"
+    data-mobile-menu-panel
+  >
+    {
+      items.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'nav-link w-fit transition',
+            isItemActive(item) ? 'is-active text-black' : 'text-gray-500 hover:text-black',
+          ]}
+          aria-current={isItemActive(item) ? 'page' : undefined}
+          data-mobile-menu-link
+          data-testid={item.testId ?? `site-nav-link-${item.key ?? item.label.toLowerCase().replace(/\s+/g, '-')}`}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    {cta && (
+      <a
+        href={cta.href}
+        class:list={[
+          'inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-[11px] font-black uppercase tracking-widest text-white shadow-lg shadow-black/5 transition lg:ml-4 lg:w-auto lg:py-2',
+          isCtaActive ? 'is-active bg-blue-800' : 'bg-black hover:bg-blue-800',
+        ]}
+        aria-current={isCtaActive ? 'page' : undefined}
+        data-mobile-menu-link
+        data-testid={cta.testId ?? 'site-nav-cta'}
+      >
+        {cta.label}
+      </a>
+    )}
+  </div>
+
+  <button
+    class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-gray-100 lg:hidden"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="site-nav-mobile-panel"
+    data-mobile-menu-button
+    data-testid="site-nav-menu-button"
+  >
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M4 7h16"></path>
+      <path d="M7 12h13"></path>
+      <path d="M10 17h10"></path>
+    </svg>
+  </button>
+
+</nav>
+
+<script is:inline>
+  (() => {
+    const mobileNav = document.getElementById('site-nav');
+
+    if (!(mobileNav instanceof HTMLElement)) {
+      return;
+    }
+
+    const mobileMenuButton = mobileNav.querySelector('[data-mobile-menu-button]');
+    const mobileMenuPanel = mobileNav.querySelector('[data-mobile-menu-panel]');
+    const mobileMenuLinks = mobileNav.querySelectorAll('[data-mobile-menu-link]');
+
+    if (!(mobileMenuButton instanceof HTMLButtonElement) || !(mobileMenuPanel instanceof HTMLElement)) {
+      return;
+    }
+
+    const desktopMediaQuery = window.matchMedia('(min-width: 64rem)');
+
+    const setMenuState = (isOpen) => {
+      const menuIsOpen = isOpen && !desktopMediaQuery.matches;
+
+      mobileNav.dataset.mobileMenuOpen = menuIsOpen ? 'true' : 'false';
+      mobileMenuButton.setAttribute('aria-expanded', String(menuIsOpen));
+      mobileMenuButton.setAttribute('aria-label', menuIsOpen ? 'Close navigation menu' : 'Open navigation menu');
+      mobileMenuPanel.setAttribute('aria-hidden', desktopMediaQuery.matches ? 'false' : String(!menuIsOpen));
+      mobileMenuPanel.classList.toggle('hidden', !menuIsOpen && !desktopMediaQuery.matches);
+    };
+
+    const closeMenu = () => {
+      setMenuState(false);
+    };
+
+    setMenuState(false);
+
+    mobileMenuButton.addEventListener('click', () => {
+      setMenuState(mobileNav.dataset.mobileMenuOpen !== 'true');
+    });
+
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (desktopMediaQuery.matches || mobileNav.dataset.mobileMenuOpen !== 'true') {
+        return;
+      }
+
+      if (event.target instanceof Node && !mobileNav.contains(event.target)) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    const handleBreakpointChange = () => {
+      closeMenu();
+    };
+
+    if (typeof desktopMediaQuery.addEventListener === 'function') {
+      desktopMediaQuery.addEventListener('change', handleBreakpointChange);
+    } else {
+      desktopMediaQuery.addListener(handleBreakpointChange);
+    }
+  })();
+</script>
