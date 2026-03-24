@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 import { contentAssetExists, isNormalizedContentAssetReference } from './lib/content-assets';
 
 const canonicalIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const yearBucketPattern = /^\d{4}(?:-\d{4})?$/;
+const archiveGroupPattern = /^\d{4}(?:-\d{4})?$/;
 const localAssetPattern = /^(?!new_design\/)(?:public\/.+|(?:images|img|files)\/.+)$/;
 const legacyPathPattern = /^(?:\/|(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+\.(?:html|pdf))$/;
 const canonicalSiteRoutePattern = /^\/(?:$|(?:[a-z0-9-]+\/)+)$/;
@@ -167,6 +167,8 @@ const inferNewsEntryIdBase = (date: string, title: string) =>
 const inferPeopleEntryIdBase = (tableType: 'member' | 'alumni', name: string) =>
   `${tableType}-${canonicalizeIdentifierSegment(name.trim())}`;
 
+const inferPublicationEntryIdBase = (year: number, title: string) => `${String(year)}-${canonicalizeIdentifierSegment(title.trim())}`;
+
 const getCompactTomlNestingDepth = (value: string) => {
   let squareBracketDepth = 0;
   let curlyBracketDepth = 0;
@@ -229,6 +231,10 @@ const parseCompactTomlValue = (collectionName: string, fieldName: string, rawVal
     }
   }
 
+  if (/^-?\d+$/u.test(rawValueLiteral)) {
+    return Number.parseInt(rawValueLiteral, 10);
+  }
+
   if (rawValueLiteral.startsWith('[')) {
     const jsonLikeLiteral = rawValueLiteral
       .replace(/(^|[{,]\s*)([A-Za-z][A-Za-z0-9_-]*)\s*=/gmu, '$1"$2":')
@@ -242,7 +248,7 @@ const parseCompactTomlValue = (collectionName: string, fieldName: string, rawVal
   }
 
   throw new Error(
-    `[content:${collectionName}] Only quoted strings and arrays are supported for ${fieldName} at line ${lineNumber}.`,
+    `[content:${collectionName}] Only quoted strings, integers, and arrays are supported for ${fieldName} at line ${lineNumber}.`,
   );
 };
 
@@ -343,6 +349,117 @@ type RawCompactPeopleEntry = {
   tableType: CompactPeopleTableType;
   lineNumber: number;
   fields: Record<string, unknown>;
+};
+
+const compactPublicationFieldNames = ['title', 'year', 'authors', 'venue', 'image', 'links', 'note', 'homeRank', 'archiveGroup'] as const;
+
+type RawCompactPublicationEntry = {
+  lineNumber: number;
+  fields: Record<string, unknown>;
+};
+
+const parseCompactPublicationEntries = (text: string): Record<string, Record<string, unknown>> => {
+  const rawEntries: RawCompactPublicationEntry[] = [];
+  let currentEntry: RawCompactPublicationEntry | undefined;
+  const lines = text.split(/\r?\n/u);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const lineNumber = index + 1;
+    const line = lines[index] ?? '';
+    const trimmedLine = line.trim();
+
+    if (trimmedLine.length === 0 || trimmedLine.startsWith('#')) {
+      continue;
+    }
+
+    if (trimmedLine === '[[item]]') {
+      currentEntry = {
+        lineNumber,
+        fields: {},
+      };
+      rawEntries.push(currentEntry);
+      continue;
+    }
+
+    if (!currentEntry) {
+      throw new Error(`[content:publications] Expected [[item]] before properties at line ${lineNumber}.`);
+    }
+
+    const fieldMatch = trimmedLine.match(/^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*(.+)$/u);
+
+    if (!fieldMatch) {
+      throw new Error(`[content:publications] Could not parse line ${lineNumber}: ${trimmedLine}`);
+    }
+
+    const [, fieldName, initialRawValueLiteral] = fieldMatch;
+
+    if (!(compactPublicationFieldNames as readonly string[]).includes(fieldName)) {
+      throw new Error(
+        `[content:publications] Unsupported field "${fieldName}" in [[item]] at line ${lineNumber}. ` +
+          `Allowed fields: ${compactPublicationFieldNames.join(', ')}.`,
+      );
+    }
+
+    if (fieldName in currentEntry.fields) {
+      throw new Error(`[content:publications] Duplicate field "${fieldName}" in [[item]] at line ${lineNumber}.`);
+    }
+
+    let rawValueLiteral = initialRawValueLiteral;
+    let nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+
+    while (nestingDepth > 0) {
+      index += 1;
+      const continuationLine = lines[index];
+
+      if (continuationLine === undefined) {
+        throw new Error(`[content:publications] Unterminated value for ${fieldName} in [[item]] starting at line ${lineNumber}.`);
+      }
+
+      rawValueLiteral += `\n${continuationLine.trim()}`;
+      nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+    }
+
+    currentEntry.fields[fieldName] = parseCompactTomlValue('publications', fieldName, rawValueLiteral, lineNumber);
+  }
+
+  if (rawEntries.length === 0) {
+    throw new Error('[content:publications] Expected src/content/publications/index.toml to define at least one [[item]] entry.');
+  }
+
+  const seenIds = new Map<string, number>();
+
+  return Object.fromEntries(
+    rawEntries.map((rawEntry, sequence) => {
+      const entry = toRecord(rawEntry.fields);
+      const rawTitle = entry.title;
+      const rawYear = entry.year;
+
+      if (typeof rawTitle !== 'string' || rawTitle.trim().length === 0) {
+        throw new Error(`[content:publications] [[item]] starting at line ${rawEntry.lineNumber} is missing a non-empty string title field.`);
+      }
+
+      if (typeof rawYear !== 'number' || !Number.isInteger(rawYear)) {
+        throw new Error(`[content:publications] [[item]] "${rawTitle}" must include an integer year field.`);
+      }
+
+      const year = rawYear;
+      const baseId = inferPublicationEntryIdBase(year, rawTitle);
+      const nextCollisionCount = (seenIds.get(baseId) ?? 0) + 1;
+      seenIds.set(baseId, nextCollisionCount);
+
+      const id = nextCollisionCount === 1 ? baseId : `${baseId}-${nextCollisionCount}`;
+
+      return [
+        id,
+        {
+          ...entry,
+          sequence,
+          year,
+          archiveGroup: typeof entry.archiveGroup === 'string' ? entry.archiveGroup : String(year),
+        },
+      ];
+    }),
+  );
 };
 
 const parseCompactPeopleEntries = (text: string): Record<string, Record<string, unknown>> => {
@@ -593,41 +710,23 @@ const people = defineCollection({
 });
 
 const publications = defineCollection({
-  loader: withDuplicateIdentifierValidation(file('src/content/publications/index.toml'), ['localeKey', 'slug']),
+  loader: file('src/content/publications/index.toml', {
+    parser: parseCompactPublicationEntries,
+  }),
   schema: z
     .object({
-      localeKey: canonicalId(),
-      slug: canonicalId(),
-      sortOrder: positiveSortOrder,
       year: z.number().int().min(2015).max(2030),
-      yearBucket: trimmedString().regex(yearBucketPattern, 'Use a year bucket like 2025 or 2015-2018.'),
+      sequence: nonNegativeIntegerSchema,
       title: trimmedString(),
       authors: z.array(trimmedString()).min(1),
       venue: trimmedString(),
       image: assetPathSchema,
       links: z.array(linkSchema).min(1),
-      notes: z.array(trimmedString()).optional(),
-      featuredOnHome: z.boolean().optional(),
-      featuredOrder: positiveSortOrder.optional(),
+      note: trimmedString().optional(),
+      homeRank: positiveSortOrder.optional(),
+      archiveGroup: trimmedString().regex(archiveGroupPattern, 'Use an archive group like 2025 or 2015-2018.'),
     })
-    .strict()
-    .superRefine((value, ctx) => {
-      enforceCanonicalSlug(value, ctx);
-      if (value.featuredOnHome && !value.featuredOrder) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Featured publications must declare a featuredOrder.',
-          path: ['featuredOrder'],
-        });
-      }
-      if (!value.featuredOnHome && value.featuredOrder) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'featuredOrder is only valid when featuredOnHome is true.',
-          path: ['featuredOrder'],
-        });
-      }
-    }),
+    .strict(),
 });
 
 const news = defineCollection({

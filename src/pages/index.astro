@@ -37,7 +37,7 @@ type SiteHomeEntry = CollectionEntry<'site'> & { data: SiteHomeCopyData };
 type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
 
 interface FeaturedPublicationItemData {
-  slug: string;
+  id: string;
   title: string;
   venueLabel: string;
   highlightLabel?: string;
@@ -134,9 +134,9 @@ const extractVenueBadgeLabel = (venue: string) => {
 };
 
 const sortFeaturedPublicationEntries = (left: PublicationEntry, right: PublicationEntry) =>
-  (left.data.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (right.data.featuredOrder ?? Number.MAX_SAFE_INTEGER) ||
+  (left.data.homeRank ?? Number.MAX_SAFE_INTEGER) - (right.data.homeRank ?? Number.MAX_SAFE_INTEGER) ||
   right.data.year - left.data.year ||
-  left.data.sortOrder - right.data.sortOrder ||
+  left.data.sequence - right.data.sequence ||
   left.id.localeCompare(right.id);
 
 const sortFeaturedNewsEntries = (left: NewsEntry, right: NewsEntry) =>
@@ -169,17 +169,17 @@ if (!researchHeroAction || !publicationsHeroAction) {
 }
 
 const featuredPublicationItems: FeaturedPublicationItemData[] = publicationEntries
-  .filter((entry) => entry.data.featuredOnHome)
+  .filter((entry) => entry.data.homeRank !== undefined)
   .sort(sortFeaturedPublicationEntries)
   .slice(0, 4)
   .map((entry) => {
     const primaryLink = entry.data.links[0];
 
     return {
-      slug: entry.data.slug,
+      id: entry.id,
       title: normalizeText(entry.data.title),
       venueLabel: `${extractVenueBadgeLabel(entry.data.venue)} ${entry.data.year}`,
-      highlightLabel: entry.data.notes?.[0],
+      highlightLabel: entry.data.note,
       ...(primaryLink ? resolveRouteDestination(primaryLink.url) : { href: '/publications/', external: false }),
     };
   });
@@ -338,7 +338,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
     <div class="mx-auto max-w-4xl space-y-4">
       {
         featuredPublicationItems.map((item, index) => (
-          <article class="seminal-work-item rounded-xl border border-gray-100 bg-white p-6 shadow-sm" data-publication-slug={item.slug}>
+          <article class="seminal-work-item rounded-xl border border-gray-100 bg-white p-6 shadow-sm" data-publication-slug={item.id}>
             <a
               href={item.href}
               class="block"

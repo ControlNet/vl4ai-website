@@ -1,9 +1,5 @@
-["mata-a-trainable-hierarchical-automaton-system-for-multi-agent-visual-reasoning"]
-localeKey = "mata-a-trainable-hierarchical-automaton-system-for-multi-agent-visual-reasoning"
-slug = "mata-a-trainable-hierarchical-automaton-system-for-multi-agent-visual-reasoning"
-sortOrder = 1
+[[item]]
 year = 2026
-yearBucket = "2026"
 title = "MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning"
 authors = ["Zhixi Cai", "Fucai Ke", "Kevin Leo", "Sukai Huang", "Maria Garcia de la Banda", "Peter J Stuckey", "Hamid Rezatofighi"]
 venue = "International Conference on Learning Representations (ICLR), 2026"
@@ -12,12 +8,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2601.19204" },
 ]
 
-["jrdb-pose3d-a-multi-person-3d-human-pose-and-shape-estimation-dataset-for-robotics"]
-localeKey = "jrdb-pose3d-a-multi-person-3d-human-pose-and-shape-estimation-dataset-for-robotics"
-slug = "jrdb-pose3d-a-multi-person-3d-human-pose-and-shape-estimation-dataset-for-robotics"
-sortOrder = 2
+[[item]]
 year = 2026
-yearBucket = "2026"
 title = "JRDB-Pose3D: A Multi-person 3D Human Pose and Shape Estimation Dataset for Robotics"
 authors = ["Sandika Biswas", "Kian Izadpanah", "Hamid Rezatofighi"]
 venue = "Arxiv, 2026"
@@ -26,12 +18,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2602.03064" },
 ]
 
-["aeroseg-plus-plus-scale-aware-and-texture-guided-open-vocabulary-segmentation-with-sam-features-for-remote-sensing-images"]
-localeKey = "aeroseg-plus-plus-scale-aware-and-texture-guided-open-vocabulary-segmentation-with-sam-features-for-remote-sensing-images"
-slug = "aeroseg-plus-plus-scale-aware-and-texture-guided-open-vocabulary-segmentation-with-sam-features-for-remote-sensing-images"
-sortOrder = 3
+[[item]]
 year = 2026
-yearBucket = "2026"
 title = "AerOSeg++: Scale-Aware and Texture-Guided Open-Vocabulary Segmentation with SAM Features for Remote Sensing Images"
 authors = ["Saikat Dutta", "Akhil Vasim", "Hamid Rezatofighi", "Biplab Banerjee"]
 venue = "ACM Transactions on Multimedia Computing, Communications and Applications, 2026"
@@ -40,12 +28,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://dl.acm.org/doi/pdf/10.1145/3787522" },
 ]
 
-["marginalized-generalized-iou-mgiou-a-unified-objective-function-for-optimizing-any-convex-parametric-shapes"]
-localeKey = "marginalized-generalized-iou-mgiou-a-unified-objective-function-for-optimizing-any-convex-parametric-shapes"
-slug = "marginalized-generalized-iou-mgiou-a-unified-objective-function-for-optimizing-any-convex-parametric-shapes"
-sortOrder = 1
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Marginalized Generalized IoU (MGIoU): A Unified Objective Function for Optimizing Any Convex Parametric Shapes"
 authors = ["Duy-Tho Le", "Trung Pham", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "Annual Conference on Artificial Intelligence (AAAI), 2025"
@@ -54,12 +38,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2504.16443" },
 ]
 
-["jrdb-reasoning-a-difficulty-graded-benchmark-for-visual-reasoning-in-robotics"]
-localeKey = "jrdb-reasoning-a-difficulty-graded-benchmark-for-visual-reasoning-in-robotics"
-slug = "jrdb-reasoning-a-difficulty-graded-benchmark-for-visual-reasoning-in-robotics"
-sortOrder = 2
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "JRDB-Reasoning: A Difficulty-Graded Benchmark for Visual Reasoning in Robotics"
 authors = ["Simindokht Jahangard", "Mehrzad Mohammadi", "Yi Shen", "Zhixi Cai", "Hamid Rezatofighi"]
 venue = "Annual Conference on Artificial Intelligence (AAAI), 2025"
@@ -68,12 +48,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2508.10287" },
 ]
 
-["asset-driven-sematic-reconstruction-of-dynamic-scene-with-multi-human-object-interactions"]
-localeKey = "asset-driven-sematic-reconstruction-of-dynamic-scene-with-multi-human-object-interactions"
-slug = "asset-driven-sematic-reconstruction-of-dynamic-scene-with-multi-human-object-interactions"
-sortOrder = 3
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Asset-Driven Sematic Reconstruction of Dynamic Scene with Multi-Human-Object Interactions"
 authors = ["Sandika Biswas", "Qianyi Wu", "Biplab Banerjee", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -82,12 +58,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2512.00547" },
 ]
 
-["vq-va-world-towards-high-quality-visual-question-visual-answering"]
-localeKey = "vq-va-world-towards-high-quality-visual-question-visual-answering"
-slug = "vq-va-world-towards-high-quality-visual-question-visual-answering"
-sortOrder = 4
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "VQ-VA World: Towards High-Quality Visual Question-Visual Answering"
 authors = ["Chenhui Gou", "Zilong Chen", "Zeyu Wang", "Feng Li", "Deyao Zhu", "Zicheng Duan", "Kunchang Li", "Chaorui Deng", "Hongyi Yuan", "Haoqi Fan", "Cihang Xie", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -96,12 +68,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/abs/2511.20573" },
 ]
 
-["a-multi-modal-neuro-symbolic-approach-for-spatial-reasoning-based-visual-grounding-in-robotics"]
-localeKey = "a-multi-modal-neuro-symbolic-approach-for-spatial-reasoning-based-visual-grounding-in-robotics"
-slug = "a-multi-modal-neuro-symbolic-approach-for-spatial-reasoning-based-visual-grounding-in-robotics"
-sortOrder = 5
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "A Multi-Modal Neuro-Symbolic Approach for Spatial Reasoning-Based Visual Grounding in Robotics"
 authors = ["Simindokht Jahangard", "Mehrzad Mohammadi", "Abhinav Dhall", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -110,12 +78,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2510.27033" },
 ]
 
-["naver-a-neuro-symbolic-compositional-automaton-for-visual-grounding-with-explicit-logic-reasoning"]
-localeKey = "naver-a-neuro-symbolic-compositional-automaton-for-visual-grounding-with-explicit-logic-reasoning"
-slug = "naver-a-neuro-symbolic-compositional-automaton-for-visual-grounding-with-explicit-logic-reasoning"
-sortOrder = 6
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "NAVER: A Neuro-Symbolic Compositional Automaton for Visual Grounding with Explicit Logic Reasoning"
 authors = ["Zhixi Cai", "Fucai Ke", "Simindokht Jahangard", "Maria Garcia de la Banda", "Reza Haffari", "Peter J Stuckey", "Hamid Rezatofighi"]
 venue = "IEEE International Conference on Computer Vision (ICCV), 2025"
@@ -124,12 +88,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2502.00372" },
 ]
 
-["dwim-towards-tool-aware-visual-reasoning-via-discrepancy-aware-workflow-generation-and-instruct-masking-tuning"]
-localeKey = "dwim-towards-tool-aware-visual-reasoning-via-discrepancy-aware-workflow-generation-and-instruct-masking-tuning"
-slug = "dwim-towards-tool-aware-visual-reasoning-via-discrepancy-aware-workflow-generation-and-instruct-masking-tuning"
-sortOrder = 7
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "DWIM: Towards Tool-aware Visual Reasoning via Discrepancy-aware Workflow Generation & Instruct-Masking Tuning"
 authors = ["Fucai Ke", "Vijay Kumar B G", "Xingjian Leng", "Zhixi Cai", "Zaid Khan", "Weiqing Wang", "Pari Delir Haghighi", "Hamid Rezatofighi", "Manmohan Chandraker"]
 venue = "IEEE International Conference on Computer Vision (ICCV), 2025"
@@ -138,12 +98,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/abs/2503.19263" },
 ]
 
-["neusis-a-compositional-neuro-symbolic-framework-for-autonomous-perception-reasoning-and-planning-in-complex-uav-search-missions"]
-localeKey = "neusis-a-compositional-neuro-symbolic-framework-for-autonomous-perception-reasoning-and-planning-in-complex-uav-search-missions"
-slug = "neusis-a-compositional-neuro-symbolic-framework-for-autonomous-perception-reasoning-and-planning-in-complex-uav-search-missions"
-sortOrder = 8
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "NEUSIS: A Compositional Neuro-Symbolic Framework for Autonomous Perception, Reasoning, and Planning in Complex UAV Search Missions"
 authors = ["Zhixi Cai", "Cristian Rojas Cardenas", "Kevin Leo", "Chenyuan Zhang", "Kal Backman", "Hanbing Li", "Boying Li", "Mahsa Ghorbanali", "Stavya Datta", "Lizhen Qu", "Julian Gutierrez Santiago", "Alexey Ignatiev", "Yuan-Fang Li", "Mor Vered", "Peter J Stuckey", "Maria Garcia de la Banda", "Hamid Rezatofighi"]
 venue = "IEEE Robotics and Automation Letters (RA-L), 2025"
@@ -152,12 +108,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2409.10196" },
 ]
 
-["explain-before-you-answer-a-survey-on-compositional-visual-reasoning"]
-localeKey = "explain-before-you-answer-a-survey-on-compositional-visual-reasoning"
-slug = "explain-before-you-answer-a-survey-on-compositional-visual-reasoning"
-sortOrder = 9
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Explain Before You Answer: A Survey on Compositional Visual Reasoning"
 authors = ["Fucai Ke", "Joy Hsu", "Zhixi Cai", "Zixian Ma", "Xin Zheng", "Xindi Wu", "Sukai Huang", "Weiqing Wang", "Pari Delir Haghighi", "Gholamreza Haffari", "Ranjay Krishna", "Jiajun Wu", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -166,12 +118,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2508.17298" },
 ]
 
-["an-empirical-study-on-how-video-llms-answer-video-questions"]
-localeKey = "an-empirical-study-on-how-video-llms-answer-video-questions"
-slug = "an-empirical-study-on-how-video-llms-answer-video-questions"
-sortOrder = 10
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "An Empirical Study on How Video-LLMs Answer Video Questions"
 authors = ["Chenhui Gou", "Ziyu Ma", "Zicheng Duan", "Haoyu He", "Feng Chen", "Akide Liu", "Bohan Zhuang", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -180,12 +128,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2508.15360" },
 ]
 
-["probabilistic-active-goal-recognition"]
-localeKey = "probabilistic-active-goal-recognition"
-slug = "probabilistic-active-goal-recognition"
-sortOrder = 11
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Probabilistic Active Goal Recognition"
 authors = ["Chenyuan Zhang", "Cristian Rojas Cardenas", "Hamid Rezatofighi", "Mor Vered", "Buser Say"]
 venue = "International Conference on Principles of Knowledge Representation and Reasoning (KR), 2025"
@@ -194,12 +138,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2507.21846" },
 ]
 
-["physics-grounded-motion-forecasting-via-equation-discovery-for-trajectory-guided-image-to-video-generation"]
-localeKey = "physics-grounded-motion-forecasting-via-equation-discovery-for-trajectory-guided-image-to-video-generation"
-slug = "physics-grounded-motion-forecasting-via-equation-discovery-for-trajectory-guided-image-to-video-generation"
-sortOrder = 12
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Physics-Grounded Motion Forecasting via Equation Discovery for Trajectory-Guided Image-to-Video Generation"
 authors = ["Tao Feng", "Xianbing Zhao", "Zhenhua Chen", "Tien Tsin Wong", "Hamid Rezatofighi", "Gholamreza Haffari", "Lizhen Qu"]
 venue = "Arxiv, 2025"
@@ -208,12 +148,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2507.06830" },
 ]
 
-["ecore-energy-conscious-optimized-routing-for-deep-learning-models-at-the-edge"]
-localeKey = "ecore-energy-conscious-optimized-routing-for-deep-learning-models-at-the-edge"
-slug = "ecore-energy-conscious-optimized-routing-for-deep-learning-models-at-the-edge"
-sortOrder = 13
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "ECORE: Energy-Conscious Optimized Routing for Deep Learning Models at the Edge"
 authors = ["Daghash K Alqahtani", "Maria A Rodriguez", "Muhammad Aamir Cheema", "Hamid Rezatofighi", "Adel N Toosi"]
 venue = "Arxiv, 2025"
@@ -222,12 +158,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2507.06011" },
 ]
 
-["drvideo-document-retrieval-based-long-video-understanding"]
-localeKey = "drvideo-document-retrieval-based-long-video-understanding"
-slug = "drvideo-document-retrieval-based-long-video-understanding"
-sortOrder = 14
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "DrVideo: Document Retrieval Based Long Video Understanding"
 authors = ["Ziyu Ma", "Chenhui Gou", "Hengcan Shi", "Bin Sun", "Shutao Li", "Hamid Rezatofighi", "Jianfei Cai"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2025"
@@ -236,12 +168,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2406.12846" },
 ]
 
-["deep-learning-classification-integrating-embryo-images-with-associated-clinical-information-from-art-cycles"]
-localeKey = "deep-learning-classification-integrating-embryo-images-with-associated-clinical-information-from-art-cycles"
-slug = "deep-learning-classification-integrating-embryo-images-with-associated-clinical-information-from-art-cycles"
-sortOrder = 15
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Deep learning classification integrating embryo images with associated clinical information from ART cycles"
 authors = ["Mohamed Salih", "Christopher Austin", "Krishna Mantravadi", "Eva Seow", "Sutthipat Jitanantawittaya", "Sandeep Reddy", "Beverley Vollenhoven", "Hamid Rezatofighi", "Fabrizzio Horta"]
 venue = "Scientific Reports, 2025"
@@ -250,12 +178,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://www.nature.com/articles/s41598-025-02076-x" },
 ]
 
-["aeroseg-harnessing-sam-for-open-vocabulary-segmentation-in-remote-sensing-images"]
-localeKey = "aeroseg-harnessing-sam-for-open-vocabulary-segmentation-in-remote-sensing-images"
-slug = "aeroseg-harnessing-sam-for-open-vocabulary-segmentation-in-remote-sensing-images"
-sortOrder = 16
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "AerOSeg: Harnessing SAM for Open-Vocabulary Segmentation in Remote Sensing Images"
 authors = ["Saikat Dutta", "Akhil Vasim", "Siddhant Gole", "Hamid Rezatofighi", "Biplab Banerjee"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR, Workshop), 2025"
@@ -264,12 +188,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2504.09203" },
 ]
 
-["acoustic-to-hyper-spectral-hyper-spectral-image-construction-from-frequency-spectrums-through-simulated-annealing-student-abstract"]
-localeKey = "acoustic-to-hyper-spectral-hyper-spectral-image-construction-from-frequency-spectrums-through-simulated-annealing-student-abstract"
-slug = "acoustic-to-hyper-spectral-hyper-spectral-image-construction-from-frequency-spectrums-through-simulated-annealing-student-abstract"
-sortOrder = 17
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Acoustic-to-Hyper-Spectral: Hyper-Spectral Image Construction from Frequency Spectrums through Simulated Annealing (Student Abstract)"
 authors = ["Ruth-Emely Pierau", "Alaster Meehan", "Hamid Rezatofighi", "Peter J Stuckey"]
 venue = "Proceedings of the AAAI Conference on Artificial Intelligence, 2025"
@@ -278,12 +198,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://ojs.aaai.org/index.php/AAAI/article/view/35290/37445" },
 ]
 
-["mobile-videogpt-fast-and-accurate-video-understanding-language-model"]
-localeKey = "mobile-videogpt-fast-and-accurate-video-understanding-language-model"
-slug = "mobile-videogpt-fast-and-accurate-video-understanding-language-model"
-sortOrder = 18
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Mobile-VideoGPT: Fast and Accurate Video Understanding Language Model"
 authors = ["Abdelrahman Shaker", "Muhammad Maaz", "Chenhui Gou", "Hamid Rezatofighi", "Salman Khan", "Fahad Shahbaz Khan"]
 venue = "Arxiv, 2025"
@@ -292,12 +208,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/abs/2503.21782" },
 ]
 
-["hier-slam-plus-plus-neuro-symbolic-semantic-slam-with-a-hierarchically-categorical-gaussian-splatting"]
-localeKey = "hier-slam-plus-plus-neuro-symbolic-semantic-slam-with-a-hierarchically-categorical-gaussian-splatting"
-slug = "hier-slam-plus-plus-neuro-symbolic-semantic-slam-with-a-hierarchically-categorical-gaussian-splatting"
-sortOrder = 19
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Hier-SLAM++: Neuro-Symbolic Semantic SLAM with a Hierarchically Categorical Gaussian Splatting"
 authors = ["Boying Li", "Vuong Chi Hao", "Peter J Stuckey", "Ian Reid", "Hamid Rezatofighi"]
 venue = "Arxiv, 2025"
@@ -306,12 +218,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2502.14931" },
 ]
 
-["hier-slam-scaling-up-semantics-in-slam-with-a-hierarchically-categorical-gaussian-splatting"]
-localeKey = "hier-slam-scaling-up-semantics-in-slam-with-a-hierarchically-categorical-gaussian-splatting"
-slug = "hier-slam-scaling-up-semantics-in-slam-with-a-hierarchically-categorical-gaussian-splatting"
-sortOrder = 20
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Hier-SLAM: Scaling-up Semantics in SLAM with a Hierarchically Categorical Gaussian Splatting"
 authors = ["Boying Li", "Zhixi Cai", "Yuan-Fang Li", "Ian Reid", "Hamid Rezatofighi"]
 venue = "IEEE International Conference on Robotics and Automation (ICRA), 2025"
@@ -320,12 +228,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2409.12518" },
 ]
 
-["social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning"]
-localeKey = "social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning"
-slug = "social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning"
-sortOrder = 21
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Social-MAE: Social Masked Autoencoder for Multi-person Motion Representation Learning"
 authors = ["Mahsa Ehsanpour", "Ian Reid", "Hamid Rezatofighi"]
 venue = "IEEE International Conference on Robotics and Automation (ICRA), 2025"
@@ -334,12 +238,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2404.05578" },
 ]
 
-["acoustic-to-hyper-spectral-real-time-perimeter-intrusion-detection-system-monitoring-through-learnable-filters-and-hyper-spectral-image-generation-from-distributed-acoustic-sensing-systems"]
-localeKey = "acoustic-to-hyper-spectral-real-time-perimeter-intrusion-detection-system-monitoring-through-learnable-filters-and-hyper-spectral-image-generation-from-distributed-acoustic-sensing-systems"
-slug = "acoustic-to-hyper-spectral-real-time-perimeter-intrusion-detection-system-monitoring-through-learnable-filters-and-hyper-spectral-image-generation-from-distributed-acoustic-sensing-systems"
-sortOrder = 22
+[[item]]
 year = 2025
-yearBucket = "2025"
 title = "Acoustic-to-hyper-spectral: real-time perimeter intrusion detection system monitoring through learnable filters and hyper-spectral image generation from distributed acoustic sensing systems"
 authors = ["Ruth-Emely Pierau", "Jim Katsifolis", "Alaster Meehan", "Hamid Rezatofighi", "and Peter J. Stuckey"]
 venue = "Optics Express, 2025"
@@ -348,12 +248,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://opg.optica.org/directpdfaccess/e18f4b02-630e-4565-b3eda4aca4f947f3_567475/oe-33-3-4109.pdf?da=1&id=567475&seq=0&mobile=no" },
 ]
 
-["tfs-nerf-template-free-nerf-for-semantic-3d-reconstruction-of-dynamic-scene"]
-localeKey = "tfs-nerf-template-free-nerf-for-semantic-3d-reconstruction-of-dynamic-scene"
-slug = "tfs-nerf-template-free-nerf-for-semantic-3d-reconstruction-of-dynamic-scene"
-sortOrder = 1
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "TFS-NeRF: Template-Free NeRF for Semantic 3D Reconstruction of Dynamic Scene"
 authors = ["Sandika Biswas", "Qianyi Wu", "Biplab Banerjee", "Hamid Rezatofighi"]
 venue = "Advances in Neural Information Processing Systems (NeurIPS), 2024"
@@ -362,12 +258,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2409.17459" },
 ]
 
-["normal-gs-3d-gaussian-splatting-with-normal-involved-rendering"]
-localeKey = "normal-gs-3d-gaussian-splatting-with-normal-involved-rendering"
-slug = "normal-gs-3d-gaussian-splatting-with-normal-involved-rendering"
-sortOrder = 2
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "Normal-GS: 3D Gaussian Splatting with Normal-Involved Rendering"
 authors = ["Meng Wei", "Qianyi Wu", "Jianmin Zheng", "Hamid Rezatofighi", "Jianfei Cai"]
 venue = "Advances in Neural Information Processing Systems (NeurIPS), 2024"
@@ -376,12 +268,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2410.20593" },
 ]
 
-["gyrocopter-differential-bearing-measuring-trajectory-planner-for-tracking-and-localizing-radio-frequency-sources"]
-localeKey = "gyrocopter-differential-bearing-measuring-trajectory-planner-for-tracking-and-localizing-radio-frequency-sources"
-slug = "gyrocopter-differential-bearing-measuring-trajectory-planner-for-tracking-and-localizing-radio-frequency-sources"
-sortOrder = 3
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "GyroCopter: Differential Bearing Measuring Trajectory Planner for Tracking and Localizing Radio Frequency Sources"
 authors = ["Fei Chen", "S Hamid Rezatofighi", "Damith C Ranasinghe"]
 venue = "IEEE Robotics and Automation Letters (RA-L), 2024"
@@ -390,12 +278,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2410.13081" },
 ]
 
-["shape-prior-free-space-time-neural-radiance-field-for-4d-semantic-reconstruction-of-dynamic-scene-from-sparse-view-rgb-videos"]
-localeKey = "shape-prior-free-space-time-neural-radiance-field-for-4d-semantic-reconstruction-of-dynamic-scene-from-sparse-view-rgb-videos"
-slug = "shape-prior-free-space-time-neural-radiance-field-for-4d-semantic-reconstruction-of-dynamic-scene-from-sparse-view-rgb-videos"
-sortOrder = 4
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "Shape-prior Free Space-time Neural Radiance Field for 4D Semantic Reconstruction of Dynamic Scene from Sparse-View RGB Videos"
 authors = ["Sandika Biswas", "Biplab Banerjee", "Hamid Rezatofighi"]
 venue = "IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024"
@@ -404,12 +288,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://ieeexplore.ieee.org/abstract/document/10802221" },
 ]
 
-["hydra-a-hyper-agent-for-dynamic-compositional-visual-reasoning"]
-localeKey = "hydra-a-hyper-agent-for-dynamic-compositional-visual-reasoning"
-slug = "hydra-a-hyper-agent-for-dynamic-compositional-visual-reasoning"
-sortOrder = 5
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "HYDRA: A Hyper Agent for Dynamic Compositional Visual Reasoning"
 authors = ["Fucai Ke", "Zhixi Cai", "Simindokht Jahangard", "Weiqing Wang", "Pari Delir Haghighi", "Hamid Rezatofighi"]
 venue = "European Conference On Computer Vision (ECCV), 2024"
@@ -418,12 +298,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2403.12884" },
 ]
 
-["diffuser-diffusion-model-for-robust-multi-sensor-fusion-in-3d-object-detection-and-bev-segmentation"]
-localeKey = "diffuser-diffusion-model-for-robust-multi-sensor-fusion-in-3d-object-detection-and-bev-segmentation"
-slug = "diffuser-diffusion-model-for-robust-multi-sensor-fusion-in-3d-object-detection-and-bev-segmentation"
-sortOrder = 6
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "DifFUSER: Diffusion Model for Robust Multi-Sensor Fusion in 3D Object Detection and BEV Segmentation"
 authors = ["Duy-Tho Le", "Hengcan Shi", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "European Conference On Computer Vision (ECCV), 2024"
@@ -432,12 +308,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2404.04629" },
 ]
 
-["multi-objective-multi-agent-planning-for-discovering-and-tracking-multiple-mobile-objects"]
-localeKey = "multi-objective-multi-agent-planning-for-discovering-and-tracking-multiple-mobile-objects"
-slug = "multi-objective-multi-agent-planning-for-discovering-and-tracking-multiple-mobile-objects"
-sortOrder = 7
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "Multi-objective multi-agent planning for discovering and tracking multiple mobile objects"
 authors = ["Hoa Van Nguyen", "Ba-Ngu Vo", "Ba-Tuong Vo", "Hamid Rezatofighi", "Damith C Ranasinghe"]
 venue = "IEEE Transactions on Signal Processing, 2024"
@@ -446,12 +318,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2203.04551" },
 ]
 
-["jrdb-social-a-multifaceted-robotic-dataset-for-understanding-of-context-and-dynamics-of-human-interactions-within-social-groups"]
-localeKey = "jrdb-social-a-multifaceted-robotic-dataset-for-understanding-of-context-and-dynamics-of-human-interactions-within-social-groups"
-slug = "jrdb-social-a-multifaceted-robotic-dataset-for-understanding-of-context-and-dynamics-of-human-interactions-within-social-groups"
-sortOrder = 8
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "JRDB-Social: A Multifaceted Robotic Dataset for Understanding of Context and Dynamics of Human Interactions Within Social Groups"
 authors = ["Simindokht Jahangard", "Zhixi Cai", "Shiki Wen", "Hamid Rezatofighi"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2024"
@@ -460,12 +328,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2404.04458" },
 ]
 
-["jrdb-panotrack-an-open-world-panoptic-segmentation-and-tracking-robotic-dataset-in-crowded-human-environments"]
-localeKey = "jrdb-panotrack-an-open-world-panoptic-segmentation-and-tracking-robotic-dataset-in-crowded-human-environments"
-slug = "jrdb-panotrack-an-open-world-panoptic-segmentation-and-tracking-robotic-dataset-in-crowded-human-environments"
-sortOrder = 9
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "JRDB-PanoTrack: An Open-world Panoptic Segmentation and Tracking Robotic Dataset in Crowded Human Environments"
 authors = ["Duy-Tho Le", "Chenhui Gou", "Stavya Datta", "Hengcan Shi", "Ian Reid", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2024"
@@ -474,12 +338,9 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2404.01686" },
 ]
 
-["series2vec-similarity-based-self-supervised-representation-learning-for-time-series-classification"]
-localeKey = "series2vec-similarity-based-self-supervised-representation-learning-for-time-series-classification"
-slug = "series2vec-similarity-based-self-supervised-representation-learning-for-time-series-classification"
-sortOrder = 10
+[[item]]
 year = 2023
-yearBucket = "2024"
+archiveGroup = "2024"
 title = "Series2Vec: Similarity-based Self-supervised Representation Learning for Time Series Classification"
 authors = ["Navid Mohammadi Foumani", "Chang Wei Tan", "Geoffrey I Webb", "Hamid Rezatofighi", "Mahsa Salehi"]
 venue = "Data Mining and Knowledge Discovery, 2023"
@@ -488,12 +349,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://www.researchgate.net/profile/Navid-Mohammadi-Foumani/publication/376683892_Series2Vec_Similarity-based_Self-supervised_Representation_Learning_for_Time_Series_Classification/links/6583a4c70bb2c7472bfbd4d2/Series2Vec-Similarity-based-Self-supervised-Representation-Learning-for-Time-Series-Classification.pdf" },
 ]
 
-["social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning-2"]
-localeKey = "social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning-2"
-slug = "social-mae-social-masked-autoencoder-for-multi-person-motion-representation-learning-2"
-sortOrder = 11
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "Social-MAE: Social Masked Autoencoder for Multi-person Motion Representation Learning"
 authors = ["Mahsa Ehsanpour", "Ian Reid", "Hamid Rezatofighi"]
 venue = "arxiv, 2024"
@@ -502,12 +359,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2404.05578" },
 ]
 
-["improving-visual-perception-of-a-social-robot-for-controlled-and-in-the-wild-human-robot-interaction"]
-localeKey = "improving-visual-perception-of-a-social-robot-for-controlled-and-in-the-wild-human-robot-interaction"
-slug = "improving-visual-perception-of-a-social-robot-for-controlled-and-in-the-wild-human-robot-interaction"
-sortOrder = 12
+[[item]]
 year = 2024
-yearBucket = "2024"
 title = "Improving Visual Perception of a Social Robot for Controlled and In-the-wild Human-robot Interaction"
 authors = ["Wangjie Zhong", "Leimin Tian", "Duy Tho Le", "Hamid Rezatofighi"]
 venue = "ACM/IEEE International Conference on Human-Robot Interaction (HRI24)"
@@ -516,12 +369,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2403.01766.pdf" },
 ]
 
-["conservationbots-autonomous-aerial-robot-for-fast-robust-wildlife-tracking-in-complex-terrains"]
-localeKey = "conservationbots-autonomous-aerial-robot-for-fast-robust-wildlife-tracking-in-complex-terrains"
-slug = "conservationbots-autonomous-aerial-robot-for-fast-robust-wildlife-tracking-in-complex-terrains"
-sortOrder = 1
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "ConservationBots: Autonomous Aerial Robot for Fast Robust Wildlife Tracking in Complex Terrains"
 authors = ["Fei Chen", "Hoa Van Nguyen", "David A. Taggart", "Katrina Falkner", "S. Hamid Rezatofighi", "Damith C. Ranasinghe"]
 venue = "Journal of Field Robotics, 2023"
@@ -530,12 +379,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://onlinelibrary.wiley.com/doi/pdf/10.1002/rob.22270" },
 ]
 
-["reply-to-artificial-intelligence-as-a-door-opener-for-a-new-era-of-human-reproduction"]
-localeKey = "reply-to-artificial-intelligence-as-a-door-opener-for-a-new-era-of-human-reproduction"
-slug = "reply-to-artificial-intelligence-as-a-door-opener-for-a-new-era-of-human-reproduction"
-sortOrder = 2
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Reply to: Artificial intelligence as a door opener for a new era of human reproduction"
 authors = ["F Horta", "M Salih", "C Austin", "R Warty", "V Smith", "DL Rolnik", "S Reddy", "H Rezatofighi", "B Vollenhoven"]
 venue = "Human Reproduction Open, 2023"
@@ -544,12 +389,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://academic.oup.com/hropen/article/2023/4/hoad045/7451016" },
 ]
 
-["unifying-flow-stereo-and-depth-estimation"]
-localeKey = "unifying-flow-stereo-and-depth-estimation"
-slug = "unifying-flow-stereo-and-depth-estimation"
-sortOrder = 3
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Unifying Flow, Stereo and Depth Estimation"
 authors = ["Haofei Xu", "Jing Zhang", "Jianfei Cai", "Hamid Rezatofighi", "Fisher Yu", "Dacheng Tao", "Andreas Geiger"]
 venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023"
@@ -559,15 +400,10 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/autonomousvision/unimatch" },
   { kind = "project", label = "Project page", url = "https://haofeixu.github.io/unimatch" },
 ]
-featuredOnHome = true
-featuredOrder = 1
+homeRank = 1
 
-["jrdb-traj-a-dataset-and-benchmark-for-trajectory-forecasting-in-crowds"]
-localeKey = "jrdb-traj-a-dataset-and-benchmark-for-trajectory-forecasting-in-crowds"
-slug = "jrdb-traj-a-dataset-and-benchmark-for-trajectory-forecasting-in-crowds"
-sortOrder = 4
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "JRDB-Traj: A Dataset and Benchmark for Trajectory Forecasting in Crowds"
 authors = ["Saeed Saadatnejad", "Yang Gao", "Hamid Rezatofighi", "Alexandre Alahi"]
 venue = "arXiv preprint arXiv:2311.02736, 2023"
@@ -576,12 +412,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2311.02736.pdf" },
 ]
 
-["energy-based-self-training-and-normalization-for-unsupervised-domain-adaptation"]
-localeKey = "energy-based-self-training-and-normalization-for-unsupervised-domain-adaptation"
-slug = "energy-based-self-training-and-normalization-for-unsupervised-domain-adaptation"
-sortOrder = 5
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Energy-based Self-Training and Normalization for Unsupervised Domain Adaptation"
 authors = ["Samitha Herath", "Basura Fernando", "Ehsan Abbasnejad", "Munawar Hayat", "Shahram Khadivi", "Mehrtash Harandi", "Hamid Rezatofighi", "Gholamreza Haffari"]
 venue = "IEEE/CVF International Conference on Computer Vision, 2023"
@@ -590,12 +422,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://openaccess.thecvf.com/content/ICCV2023/papers/Herath_Energy-based_Self-Training_and_Normalization_for_Unsupervised_Domain_Adaptation_ICCV_2023_paper.pdf" },
 ]
 
-["physically-plausible-3d-human-scene-reconstruction-from-monocular-rgb-image-using-an-adversarial-learning-approach"]
-localeKey = "physically-plausible-3d-human-scene-reconstruction-from-monocular-rgb-image-using-an-adversarial-learning-approach"
-slug = "physically-plausible-3d-human-scene-reconstruction-from-monocular-rgb-image-using-an-adversarial-learning-approach"
-sortOrder = 6
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Physically Plausible 3D Human-Scene Reconstruction from Monocular RGB Image using an Adversarial Learning Approach"
 authors = ["Sandika Biswas", "Kejie Li", "Biplab Banerjee", "Subhasis Chaudhuri", "Hamid Rezatoﬁghi"]
 venue = "IEEE Robotics and Automation Letters (RA-L), 2023"
@@ -604,12 +432,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "http://arxiv.org/abs/2307.14570" },
 ]
 
-["exploring-the-utility-of-artificial-intelligence-of-intrapartum-cardiotocography-a-systematic-review"]
-localeKey = "exploring-the-utility-of-artificial-intelligence-of-intrapartum-cardiotocography-a-systematic-review"
-slug = "exploring-the-utility-of-artificial-intelligence-of-intrapartum-cardiotocography-a-systematic-review"
-sortOrder = 7
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Exploring the utility of artificial intelligence of intrapartum cardiotocography: a systematic review"
 authors = ["Mohamed Salih", "Ritesh Rikain Warty", "Hamsaveni Kalina Murday", "Arjun Kaushik", "Yuxin Zhang", "Fabrizzio Horta", "Sandeep Reddy", "Beverley Vollenhoven", "Hamid Rezatofighi", "Wenlong Cheng", "Vinayak Smith"]
 venue = "Research Square, 2023"
@@ -618,12 +442,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://www.researchsquare.com/article/rs-3405992/v1" },
 ]
 
-["real-time-trajectory-based-social-group-detection"]
-localeKey = "real-time-trajectory-based-social-group-detection"
-slug = "real-time-trajectory-based-social-group-detection"
-sortOrder = 8
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Real-time Trajectory-based Social Group Detection"
 authors = ["Simindokht Jahangard", "Munawar Hayat", "Hamid Rezatofighi"]
 venue = "International Conference on Intelligent Robots and Systems (IROS), 2023"
@@ -632,12 +452,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2304.05678.pdf" },
 ]
 
-["tracking-different-ant-species-an-unsupervised-domain-adaptation-framework-and-a-dataset-for-multi-object-tracking"]
-localeKey = "tracking-different-ant-species-an-unsupervised-domain-adaptation-framework-and-a-dataset-for-multi-object-tracking"
-slug = "tracking-different-ant-species-an-unsupervised-domain-adaptation-framework-and-a-dataset-for-multi-object-tracking"
-sortOrder = 9
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Tracking Different Ant Species: An Unsupervised Domain Adaptation Framework and a Dataset for Multi-object Tracking"
 authors = ["Chamath Abeysinghe", "Chris Reid", "Hamid Rezatofighi", "Bernd Meyer"]
 venue = "International Joint Conference on Artificial Intelligence (IJCAI), 2023"
@@ -647,12 +463,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/chamathabeysinghe/da-tracker" },
 ]
 
-["embryo-selection-through-artificial-intelligence-versus-embryologists-a-systematic-review"]
-localeKey = "embryo-selection-through-artificial-intelligence-versus-embryologists-a-systematic-review"
-slug = "embryo-selection-through-artificial-intelligence-versus-embryologists-a-systematic-review"
-sortOrder = 10
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Embryo selection through artificial intelligence versus embryologists: a systematic review"
 authors = ["M. Salih", "C. Austin", "R.R. Warty", "C. Tiktin", "D.L. Rolnik", "M. Momeni", "H. Rezatofighi", "S. Reddy", "V. Smith", "B. Vollenhoven", "F. Horta"]
 venue = "Human Reproduction Open, 2023"
@@ -661,12 +473,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://academic.oup.com/hropen/article/2023/3/hoad031/7234076" },
 ]
 
-["jrdb-pose-a-large-scale-dataset-for-multi-person-pose-estimation-and-tracking"]
-localeKey = "jrdb-pose-a-large-scale-dataset-for-multi-person-pose-estimation-and-tracking"
-slug = "jrdb-pose-a-large-scale-dataset-for-multi-person-pose-estimation-and-tracking"
-sortOrder = 11
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "JRDB-Pose: A Large-scale Dataset for Multi-Person Pose Estimation and Tracking"
 authors = ["Edward Vendrow", "Duy Tho Le", "Jianfei Cai", "Hamid Rezatofighi"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023"
@@ -676,12 +484,8 @@ links = [
   { kind = "project", label = "Project page", url = "https://jrdb.erc.monash.edu/dataset/pose" },
 ]
 
-["knowledge-combination-to-learn-rotated-detection-without-rotated-annotation"]
-localeKey = "knowledge-combination-to-learn-rotated-detection-without-rotated-annotation"
-slug = "knowledge-combination-to-learn-rotated-detection-without-rotated-annotation"
-sortOrder = 12
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Knowledge Combination to Learn Rotated Detection Without Rotated Annotation"
 authors = ["Tianyu Zhu", "Bryce Ferenczi", "Pulak Purkait", "Tom Drummond", "Hamid Rezatofighi", "Anton van den Hengel"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023"
@@ -690,12 +494,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://assets.amazon.science/3d/4f/045e29e145cfac5420190cfb2cae/knowledge-combination-to-learn-rotated-detection-without-rotated-annotation.pdf" },
 ]
 
-["protocon-pseudo-label-refinement-via-online-clustering-and-prototypical-consistency-for-efficient-semi-supervised-learning"]
-localeKey = "protocon-pseudo-label-refinement-via-online-clustering-and-prototypical-consistency-for-efficient-semi-supervised-learning"
-slug = "protocon-pseudo-label-refinement-via-online-clustering-and-prototypical-consistency-for-efficient-semi-supervised-learning"
-sortOrder = 13
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "ProtoCon: Pseudo-label Refinement via Online Clustering and Prototypical Consistency for Efficient Semi-supervised Learning"
 authors = ["Islam Nassar", "Munawar Hayat", "Ehsan Abbasnejad", "Hamid Rezatofighi", "Gholamreza Haffari"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023"
@@ -703,14 +503,10 @@ image = "images/pub/CVPR2023_Nassar.png"
 links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2303.13556.pdf" },
 ]
-notes = ["Spotlight Presentation (2.5% of submissions)"]
+note = "Spotlight Presentation (2.5% of submissions)"
 
-["marlin-masked-autoencoder-for-facial-video-representation-learning"]
-localeKey = "marlin-masked-autoencoder-for-facial-video-representation-learning"
-slug = "marlin-masked-autoencoder-for-facial-video-representation-learning"
-sortOrder = 14
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "MARLIN: Masked Autoencoder for facial video Representation LearnINg"
 authors = ["Zhixi Cai", "Shreya Ghosh", "Kalin Stefanov", "Abhinav Dhall", "Jianfei Cai", "Hamid Rezatofighi", "Reza Haffari", "Munawar Hayat"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2023"
@@ -720,12 +516,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/ControlNet/MARLIN" },
 ]
 
-["accurate-and-real-time-3d-pedestrian-detection-using-an-efficient-attentive-pillar-network"]
-localeKey = "accurate-and-real-time-3d-pedestrian-detection-using-an-efficient-attentive-pillar-network"
-slug = "accurate-and-real-time-3d-pedestrian-detection-using-an-efficient-attentive-pillar-network"
-sortOrder = 15
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "Accurate and Real-time 3D Pedestrian Detection Using an Efficient Attentive Pillar Network"
 authors = ["Duy Tho Le", "Hengcan Shi", "Hamid Rezatofighi", "Jianfei Cai"]
 venue = "IEEE Robotics and Automation Letters (RA-L), 2023"
@@ -735,12 +527,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/ldtho/PiFeNet" },
 ]
 
-["how-trustworthy-are-the-existing-performance-evaluations-for-basic-vision-tasks"]
-localeKey = "how-trustworthy-are-the-existing-performance-evaluations-for-basic-vision-tasks"
-slug = "how-trustworthy-are-the-existing-performance-evaluations-for-basic-vision-tasks"
-sortOrder = 16
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "How trustworthy are the existing performance evaluations for basic vision tasks?"
 authors = ["Hamid Rezatofighi*", "Tran Thien Dat Nguyen*", "Ba-Ngu Vo", "Ba-Tuong Vo", "Silvio Savarese", "Ian Reid"]
 venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI) , 2023"
@@ -749,12 +537,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2008.03533.pdf" },
 ]
 
-["lava-label-efficient-visual-learning-and-adaptation"]
-localeKey = "lava-label-efficient-visual-learning-and-adaptation"
-slug = "lava-label-efficient-visual-learning-and-adaptation"
-sortOrder = 17
+[[item]]
 year = 2023
-yearBucket = "2023"
 title = "LAVA: Label-efficient Visual Learning and Adaptation"
 authors = ["I Nassar", "M Hayat", "E Abbasnejad", "H Rezatofighi", "M Harandi", "G Haffari"]
 venue = "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2023"
@@ -764,12 +548,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/islam-nassar/lava" },
 ]
 
-["looking-beyond-two-frames-end-to-end-multi-object-tracking-using-spatial-and-temporal-transformers"]
-localeKey = "looking-beyond-two-frames-end-to-end-multi-object-tracking-using-spatial-and-temporal-transformers"
-slug = "looking-beyond-two-frames-end-to-end-multi-object-tracking-using-spatial-and-temporal-transformers"
-sortOrder = 1
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "Looking Beyond Two Frames: End-to-End Multi-Object Tracking Using Spatial and Temporal Transformers"
 authors = ["Tianyu Zhu", "Markus Hiller", "Mahsa Ehsanpour", "Rongkai Ma", "Tom Drummond", "Ian Reid", "Hamid Rezatofighi"]
 venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2022"
@@ -779,12 +559,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/alanzty/MO3TR" },
 ]
 
-["predicting-topological-maps-for-visual-navigation-in-unexplored-environments"]
-localeKey = "predicting-topological-maps-for-visual-navigation-in-unexplored-environments"
-slug = "predicting-topological-maps-for-visual-navigation-in-unexplored-environments"
-sortOrder = 2
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "Predicting Topological Maps for Visual Navigation in Unexplored Environments"
 authors = ["H Zhan", "H Rezatofighi", "I Reid"]
 venue = "arXiv preprint arXiv:2211.12649, 2022"
@@ -793,12 +569,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2211.12649.pdf" },
 ]
 
-["activermap-radiance-field-for-active-mapping-and-planning"]
-localeKey = "activermap-radiance-field-for-active-mapping-and-planning"
-slug = "activermap-radiance-field-for-active-mapping-and-planning"
-sortOrder = 3
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "ActiveRMAP: Radiance Field for Active Mapping And Planning"
 authors = ["H Zhan", "J Zheng", "Y Xu", "I Reid", "H Rezatofighi"]
 venue = "arXiv preprint arXiv:2211.12656, 2022"
@@ -807,12 +579,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2211.12656.pdf" },
 ]
 
-["somoformer-multi-person-pose-forecasting-with-transformers"]
-localeKey = "somoformer-multi-person-pose-forecasting-with-transformers"
-slug = "somoformer-multi-person-pose-forecasting-with-transformers"
-sortOrder = 4
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "SoMoFormer: Multi-Person Pose Forecasting with Transformers"
 authors = ["Edward Vendrow", "Satyajit Kumar", "Ehsan Adeli", "Hamid Rezatofighi"]
 venue = "arXiv preprint arXiv:2208.14023, 2022"
@@ -822,12 +590,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/evendrow/somoformer" },
 ]
 
-["jrdb-act-a-large-scale-multi-modal-dataset-for-spatio-temporal-action-social-group-and-activity-detection"]
-localeKey = "jrdb-act-a-large-scale-multi-modal-dataset-for-spatio-temporal-action-social-group-and-activity-detection"
-slug = "jrdb-act-a-large-scale-multi-modal-dataset-for-spatio-temporal-action-social-group-and-activity-detection"
-sortOrder = 5
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "JRDB-Act: A Large-scale Multi-modal Dataset for Spatio-temporal Action, Social Group and Activity Detection"
 authors = ["Mahsa Ehsanpour", "Fatemeh Saleh", "Silvio Savarese", "Ian Reid", "Hamid Rezatofighi"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022"
@@ -837,12 +601,8 @@ links = [
   { kind = "project", label = "Project page", url = "https://jrdb.erc.monash.edu/" },
 ]
 
-["gmflow-learning-optical-flow-via-global-matching"]
-localeKey = "gmflow-learning-optical-flow-via-global-matching"
-slug = "gmflow-learning-optical-flow-via-global-matching"
-sortOrder = 6
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "GMFlow: Learning Optical Flow via Global Matching"
 authors = ["Haofei Xu", "Jing Zhang", "Jianfei Cai", "Hamid Rezatofighi", "Dacheng Tao"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022"
@@ -851,16 +611,11 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2111.13680.pdf" },
   { kind = "github", label = "GitHub", url = "https://github.com/haofeixu/gmflow" },
 ]
-notes = ["Oral Presentation"]
-featuredOnHome = true
-featuredOrder = 2
+note = "Oral Presentation"
+homeRank = 2
 
-["learning-of-global-objective-for-network-flow-in-multi-object-tracking"]
-localeKey = "learning-of-global-objective-for-network-flow-in-multi-object-tracking"
-slug = "learning-of-global-objective-for-network-flow-in-multi-object-tracking"
-sortOrder = 7
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "Learning of Global Objective for Network Flow in Multi-Object Tracking"
 authors = ["Shuai Li", "Yu Kong", "Hamid Rezatofighi"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2022"
@@ -869,12 +624,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2203.16210.pdf" },
 ]
 
-["multi-objective-multi-agent-planning-for-discovering-and-tracking-unknown-and-varying-number-of-mobile-objects"]
-localeKey = "multi-objective-multi-agent-planning-for-discovering-and-tracking-unknown-and-varying-number-of-mobile-objects"
-slug = "multi-objective-multi-agent-planning-for-discovering-and-tracking-unknown-and-varying-number-of-mobile-objects"
-sortOrder = 8
+[[item]]
 year = 2022
-yearBucket = "2022"
 title = "Multi-Objective Multi-Agent Planning for Discovering and Tracking Unknown and Varying Number of Mobile Objects"
 authors = ["Hoa Van Nguyen", "Ba-Ngu Vo", "Ba-Tuong Vo", "Hamid Rezatofighi", "Damith C Ranasinghe"]
 venue = "arXiv preprint arXiv:2203.04551, 2022"
@@ -883,12 +634,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2203.04551.pdf" },
 ]
 
-["learn-to-predict-sets-using-feed-forward-neural-networks"]
-localeKey = "learn-to-predict-sets-using-feed-forward-neural-networks"
-slug = "learn-to-predict-sets-using-feed-forward-neural-networks"
-sortOrder = 1
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Learn to predict sets using feed-forward neural networks"
 authors = ["Hamid Rezatofighi", "Tianyu Zhu", "Roman Kaskman", "Farbod T Motlagh", "Qinfeng Shi", "Anton Milan", "Daniel Cremers", "Laura Leal-Taixé", "Ian Reid"]
 venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2021"
@@ -897,12 +644,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2001.11845.pdf" },
 ]
 
-["guided-gan-adversarial-representation-learning-for-activity-recognition-with-wearables"]
-localeKey = "guided-gan-adversarial-representation-learning-for-activity-recognition-with-wearables"
-slug = "guided-gan-adversarial-representation-learning-for-activity-recognition-with-wearables"
-sortOrder = 2
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Guided-GAN: Adversarial Representation Learning for Activity Recognition with Wearables"
 authors = ["Alireza Abedin", "Hamid Rezatofighi", "Damith C. Ranasinghe"]
 venue = "arXiv preprint arXiv:2110.05732, 2021"
@@ -911,12 +654,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2110.05732.pdf" },
 ]
 
-["odam-object-detection-association-and-mapping-using-posed-rgb-video"]
-localeKey = "odam-object-detection-association-and-mapping-using-posed-rgb-video"
-slug = "odam-object-detection-association-and-mapping-using-posed-rgb-video"
-sortOrder = 3
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "ODAM: Object Detection, Association, and Mapping using Posed RGB Video"
 authors = ["Kejie Li", "Daniel DeTone", "Steven Chen", "Minh Vo", "Ian Reid", "Hamid Rezatofighi", "Chris Sweeney", "Julian Straub", "Richard Newcombe"]
 venue = "IEEE international conference on computer vision (ICCV), 2021"
@@ -925,14 +664,10 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2108.10165.pdf" },
   { kind = "github", label = "GitHub", url = "https://github.com/likojack/odam" },
 ]
-notes = ["Oral Presentation"]
+note = "Oral Presentation"
 
-["tripod-human-trajectory-and-pose-dynamics-forecasting-in-the-wild"]
-localeKey = "tripod-human-trajectory-and-pose-dynamics-forecasting-in-the-wild"
-slug = "tripod-human-trajectory-and-pose-dynamics-forecasting-in-the-wild"
-sortOrder = 4
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "TRiPOD: Human Trajectory and Pose Dynamics Forecasting in the Wild"
 authors = ["Vida Adeli", "Mahsa Ehsanpour", "Ian Reid", "Juan Carlos Niebles", "Silvio Savarese", "Ehsan Adeli", "Hamid Rezatofighi"]
 venue = "IEEE international conference on computer vision (ICCV), 2021"
@@ -943,12 +678,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/vadeli/TRiPOD" },
 ]
 
-["distributed-multi-object-tracking-under-limited-field-of-view-sensors"]
-localeKey = "distributed-multi-object-tracking-under-limited-field-of-view-sensors"
-slug = "distributed-multi-object-tracking-under-limited-field-of-view-sensors"
-sortOrder = 5
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Distributed Multi-object Tracking under Limited Field of View Sensors"
 authors = ["Hoa Van Nguyen", "Hamid Rezatofighi", "Ba-Ngu Vo", "Damith C Ranasinghe"]
 venue = "IEEE Transactions on Signal Processing (TSP), 2021"
@@ -958,12 +689,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/AdelaideAuto-IDLab/Distributed-limitedFoV-MOT" },
 ]
 
-["unsupervised-image-segmentation-by-mutual-information-maximization-and-adversarial-regularization"]
-localeKey = "unsupervised-image-segmentation-by-mutual-information-maximization-and-adversarial-regularization"
-slug = "unsupervised-image-segmentation-by-mutual-information-maximization-and-adversarial-regularization"
-sortOrder = 6
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Unsupervised Image Segmentation by Mutual Information Maximization and Adversarial Regularization"
 authors = ["S. Ehsan Mirsadeghi", "Ali Royat", "Hamid Rezatofighi"]
 venue = "IEEE Robotics and Automation Letters (RA-L) & International Conference on Intelligent Robots and Systems (IROS), 2021"
@@ -972,12 +699,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2107.00691.pdf" },
 ]
 
-["jrdb-a-dataset-and-benchmark-of-egocentric-robot-visual-perception-of-humans-in-built-environments"]
-localeKey = "jrdb-a-dataset-and-benchmark-of-egocentric-robot-visual-perception-of-humans-in-built-environments"
-slug = "jrdb-a-dataset-and-benchmark-of-egocentric-robot-visual-perception-of-humans-in-built-environments"
-sortOrder = 7
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "JRDB: A Dataset and Benchmark of Egocentric Robot Visual Perception of Humans in Built Environments"
 authors = ["Roberto Martín-Martín*", "Mihir Patel*", "Hamid Rezatofighi*", "Abhijeet Shenoi", "JunYoung Gwak", "Eric Frankel", "Amir Sadeghian", "Silvio Savarese"]
 venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2021"
@@ -986,15 +709,10 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/1910.11792.pdf" },
   { kind = "project", label = "Project page", url = "https://jrdb.erc.monash.edu/" },
 ]
-featuredOnHome = true
-featuredOrder = 3
+homeRank = 3
 
-["probabilistic-tracklet-scoring-and-inpainting-for-multiple-object-tracking"]
-localeKey = "probabilistic-tracklet-scoring-and-inpainting-for-multiple-object-tracking"
-slug = "probabilistic-tracklet-scoring-and-inpainting-for-multiple-object-tracking"
-sortOrder = 8
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Probabilistic Tracklet Scoring and Inpainting for Multiple Object Tracking"
 authors = ["Fatemeh Saleh", "Sadegh Aliakbarian", "Hamid Rezatofighi", "Mathieu Salzmann", "Stephen Gould"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2021"
@@ -1003,14 +721,10 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2012.02337.pdf" },
   { kind = "github", label = "GitHub", url = "https://github.com/fatemeh-slh/ArTIST" },
 ]
-notes = ["Oral Presentation"]
+note = "Oral Presentation"
 
-["attend-and-discriminate-beyond-the-state-of-the-art-for-human-activity-recognition-using-wearable-sensors"]
-localeKey = "attend-and-discriminate-beyond-the-state-of-the-art-for-human-activity-recognition-using-wearable-sensors"
-slug = "attend-and-discriminate-beyond-the-state-of-the-art-for-human-activity-recognition-using-wearable-sensors"
-sortOrder = 9
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "Attend And Discriminate: Beyond the State-of-the-Art for Human Activity Recognition using Wearable Sensors"
 authors = ["Alireza Abedin", "Mahsa Ehsanpour", "Qinfeng Shi", "Hamid Rezatofighi", "Damith C Ranasinghe"]
 venue = "The Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies (IMWUT), 2021"
@@ -1020,12 +734,8 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/AdelaideAuto-IDLab/Attend-And-Discriminate" },
 ]
 
-["mo-ltr-multiple-object-localization-tracking-and-reconstruction-from-monocular-rgb-videos"]
-localeKey = "mo-ltr-multiple-object-localization-tracking-and-reconstruction-from-monocular-rgb-videos"
-slug = "mo-ltr-multiple-object-localization-tracking-and-reconstruction-from-monocular-rgb-videos"
-sortOrder = 10
+[[item]]
 year = 2021
-yearBucket = "2021"
 title = "MO-LTR: Multiple Object Localization, Tracking, and Reconstruction from Monocular RGB Videos"
 authors = ["Kejie Li", "Hamid Rezatofighi", "Ian Reid"]
 venue = "IEEE Robotics and Automation Letters (RA-L) & International Conference on Robotics and Automation (ICRA), 2021"
@@ -1035,12 +745,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=aF3XcWGf7X0" },
 ]
 
-["towards-deep-clustering-of-human-activities-from-wearables"]
-localeKey = "towards-deep-clustering-of-human-activities-from-wearables"
-slug = "towards-deep-clustering-of-human-activities-from-wearables"
-sortOrder = 1
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Towards Deep Clustering of Human Activities from Wearables"
 authors = ["Alireza Abedin", "Farbod Motlagh", "Qinfeng Shi", "S. Hamid Rezatofighi", "Damith C. Ranasinghe"]
 venue = "The ACM international joint conference on pervasive and ubiquitous computing (UBICOMP/ISWC), 2020"
@@ -1049,12 +755,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2008.01659.pdf" },
 ]
 
-["joint-learning-of-social-groups-individuals-action-and-sub-group-activities-in-videos"]
-localeKey = "joint-learning-of-social-groups-individuals-action-and-sub-group-activities-in-videos"
-slug = "joint-learning-of-social-groups-individuals-action-and-sub-group-activities-in-videos"
-sortOrder = 2
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Joint learning of Social Groups, Individuals Action and Sub-group Activities in Videos"
 authors = ["Mahsa Ehsanpour", "Alireza Abedin", "Fatemeh Saleh", "Javen Shi", "Ian Reid", "Hamid Rezatofighi"]
 venue = "European Conference On Computer Vision (ECCV), 2020"
@@ -1064,12 +766,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=_tRtFFMf6sA" },
 ]
 
-["socially-and-contextually-aware-human-motion-and-pose-forecasting"]
-localeKey = "socially-and-contextually-aware-human-motion-and-pose-forecasting"
-slug = "socially-and-contextually-aware-human-motion-and-pose-forecasting"
-sortOrder = 3
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Socially and contextually aware human motion and pose forecasting"
 authors = ["Vida Adeli", "Ehsan Adeli", "Ian Reid", "Juan Carlos Niebles", "Hamid Rezatofighi"]
 venue = "IEEE Robotics and Automation Letters (RA-L) & International Conference on Intelligent Robots and Systems (IROS), 2020"
@@ -1079,12 +777,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=sTBNdBco1Yo" },
 ]
 
-["lavapilot-lightweight-uav-trajectory-planner-with-situational-awareness-for-embedded-autonomy-to-track-and-locate-radio-tags"]
-localeKey = "lavapilot-lightweight-uav-trajectory-planner-with-situational-awareness-for-embedded-autonomy-to-track-and-locate-radio-tags"
-slug = "lavapilot-lightweight-uav-trajectory-planner-with-situational-awareness-for-embedded-autonomy-to-track-and-locate-radio-tags"
-sortOrder = 4
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "LAVAPilot: Lightweight UAV Trajectory Planner with Situational Awareness for Embedded Autonomy to Track and Locate Radio-tags"
 authors = ["Hoa Van Nguyen", "Fei Chen", "Joshua Chesser", "Hamid Rezatofighi", "Damith Ranasinghe"]
 venue = "International Conference on Intelligent Robots and Systems (IROS), 2020"
@@ -1095,12 +789,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=uGNxgIx6-dg" },
 ]
 
-["jrmot-a-real-time-3d-multi-object-tracker-and-a-new-large-scale-dataset"]
-localeKey = "jrmot-a-real-time-3d-multi-object-tracker-and-a-new-large-scale-dataset"
-slug = "jrmot-a-real-time-3d-multi-object-tracker-and-a-new-large-scale-dataset"
-sortOrder = 5
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "JRMOT: A Real-Time 3D Multi-Object Tracker and a New Large-Scale Dataset"
 authors = ["Abhijeet Shenoi", "Mihir Patel", "JunYoung Gwak", "Patrick Goebel", "Amir Sadeghian", "Hamid Rezatofighi", "Roberto Martín-Martín", "Silvio Savarese"]
 venue = "International Conference on Intelligent Robots and Systems (IROS), 2020"
@@ -1112,12 +802,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=ySfhecY3DY0&t=3s" },
 ]
 
-["meta-learning-with-differentiable-closed-form-solver-for-fast-video-object-segmentation"]
-localeKey = "meta-learning-with-differentiable-closed-form-solver-for-fast-video-object-segmentation"
-slug = "meta-learning-with-differentiable-closed-form-solver-for-fast-video-object-segmentation"
-sortOrder = 6
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Meta Learning with Differentiable Closed-form Solver for Fast Video Object Segmentation"
 authors = ["Yu Liu", "Lingqiao Liu", "Haokui Zhang", "Hamid Rezatofighi", "Ian Reid"]
 venue = "International Conference on Intelligent Robots and Systems (IROS), 2020"
@@ -1128,12 +814,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=RUSLrShnQy8" },
 ]
 
-["mot20-a-benchmark-for-multi-object-tracking-in-crowded-scenes"]
-localeKey = "mot20-a-benchmark-for-multi-object-tracking-in-crowded-scenes"
-slug = "mot20-a-benchmark-for-multi-object-tracking-in-crowded-scenes"
-sortOrder = 7
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Mot20: A benchmark for multi object tracking in crowded scenes"
 authors = ["Patrick Dendorfer", "Hamid Rezatofighi", "Anton Milan", "Javen Shi", "Daniel Cremers", "Ian Reid", "Stefan Roth", "Konrad Schindler", "Laura Leal-Taixé"]
 venue = "arXiv preprint arXiv:2008.03533, 2020"
@@ -1143,12 +825,8 @@ links = [
   { kind = "project", label = "Project page", url = "https://motchallenge.net/" },
 ]
 
-["multi-objective-multi-agent-planning-for-jointly-discovering-and-tracking-mobile-object"]
-localeKey = "multi-objective-multi-agent-planning-for-jointly-discovering-and-tracking-mobile-object"
-slug = "multi-objective-multi-agent-planning-for-jointly-discovering-and-tracking-mobile-object"
-sortOrder = 8
+[[item]]
 year = 2020
-yearBucket = "2020"
 title = "Multi-Objective Multi-Agent Planning for Jointly Discovering and Tracking Mobile Object"
 authors = ["Hoa Van Nguyen", "Hamid Rezatofighi", "Ba-Ngu Vo", "Damith C. Ranasinghe"]
 venue = "Thirty-Forth AAAI Conference on Artificial Intelligence (AAAI), 2020"
@@ -1157,12 +835,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://ojs.aaai.org/index.php/AAAI/article/download/6213/6069" },
 ]
 
-["approximating-the-permanent-by-sampling-from-adaptive-partitions"]
-localeKey = "approximating-the-permanent-by-sampling-from-adaptive-partitions"
-slug = "approximating-the-permanent-by-sampling-from-adaptive-partitions"
-sortOrder = 1
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "Approximating the Permanent by Sampling from Adaptive Partitions"
 authors = ["Jonathan Kuck", "Tri Dao", "Hamid Rezatofighi", "Ashish Sabharwal", "Stefano Ermon"]
 venue = "Advances in Neural Information Processing Systems (NeurIPS), 2019"
@@ -1171,12 +845,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://proceedings.neurips.cc/paper/2019/file/d914a6c6d93c8df063b9099a076a488c-Paper.pdf" },
 ]
 
-["social-bigat-multimodal-trajectory-forecasting-using-bicycle-gan-and-graph-attention-networks"]
-localeKey = "social-bigat-multimodal-trajectory-forecasting-using-bicycle-gan-and-graph-attention-networks"
-slug = "social-bigat-multimodal-trajectory-forecasting-using-bicycle-gan-and-graph-attention-networks"
-sortOrder = 2
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "Social-BiGAT: Multimodal Trajectory Forecasting using Bicycle-GAN and Graph Attention Networks"
 authors = ["Vineet Kosaraju", "Amir Sadeghian", "Roberto Martín-Martín", "Ian Reid", "S Hamid Rezatofighi", "Silvio Savarese"]
 venue = "Advances in Neural Information Processing Systems (NeurIPS), 2019"
@@ -1184,15 +854,10 @@ image = "images/pub/d09bf41544a3365a46c9077ebb5e35c3-Paper.jpg"
 links = [
   { kind = "pdf", label = "PDF", url = "https://papers.nips.cc/paper/2019/file/d09bf41544a3365a46c9077ebb5e35c3-Paper.pdf" },
 ]
-featuredOnHome = true
-featuredOrder = 6
+homeRank = 6
 
-["online-uav-path-planning-for-joint-detection-and-tracking-of-multiple-radio-tagged-objects"]
-localeKey = "online-uav-path-planning-for-joint-detection-and-tracking-of-multiple-radio-tagged-objects"
-slug = "online-uav-path-planning-for-joint-detection-and-tracking-of-multiple-radio-tagged-objects"
-sortOrder = 3
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "Online UAV path planning for joint detection and tracking of multiple radio-tagged objects"
 authors = ["Hoa Van Nguyen", "Hamid Rezatofighi", "Ba-Ngu Vo", "Damith C. Ranasinghe"]
 venue = "IEEE Transactions on Signal Processing (TSP), 2019"
@@ -1202,12 +867,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=e0LsM_0gYQk" },
 ]
 
-["sparsesense-human-activity-recognition-from-highly-sparse-sensor-data-streams-using-set-based-neural-networks"]
-localeKey = "sparsesense-human-activity-recognition-from-highly-sparse-sensor-data-streams-using-set-based-neural-networks"
-slug = "sparsesense-human-activity-recognition-from-highly-sparse-sensor-data-streams-using-set-based-neural-networks"
-sortOrder = 4
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "SparseSense: Human Activity Recognition from Highly Sparse Sensor Data-streams Using Set-based Neural Networks"
 authors = ["Alireza Abedin", "S Hamid Rezatofighi", "Qinfeng Shi", "Damith C. Ranasinghe"]
 venue = "International Joint Conference on Artificial Intelligence (IJCAI), 2019"
@@ -1216,12 +877,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/1906.02399.pdf" },
 ]
 
-["model-free-tracker-for-multiple-objects-using-joint-appearance-and-motion-inference"]
-localeKey = "model-free-tracker-for-multiple-objects-using-joint-appearance-and-motion-inference"
-slug = "model-free-tracker-for-multiple-objects-using-joint-appearance-and-motion-inference"
-sortOrder = 5
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "Model-Free Tracker for Multiple Objects Using Joint Appearance and Motion Inference"
 authors = ["Chongyu Liu", "Rui Yao", "S. Hamid Rezatofighi", "Ian Reid", "Qinfeng Shi"]
 venue = "IEEE Transactions on Image Processing (TIP), 2019"
@@ -1230,12 +887,8 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://ieeexplore.ieee.org/document/8765607" },
 ]
 
-["trackerbots-autonomous-unmanned-aerial-vehicle-for-real-time-localization-and-tracking-of-multiple-radio-tagged"]
-localeKey = "trackerbots-autonomous-unmanned-aerial-vehicle-for-real-time-localization-and-tracking-of-multiple-radio-tagged"
-slug = "trackerbots-autonomous-unmanned-aerial-vehicle-for-real-time-localization-and-tracking-of-multiple-radio-tagged"
-sortOrder = 6
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "TrackerBots - Autonomous unmanned aerial vehicle for real-time localization and tracking of multiple radio-tagged"
 authors = ["Hoa Van Nguyen", "Michael Chesser", "Lian Pin Koh", "Hamid Rezatofighi", "Damith C. Ranasinghe"]
 venue = "Journal of Field Robotics (JoFR), 2019"
@@ -1246,12 +899,8 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=mHMOWIHFmcY" },
 ]
 
-["generalized-intersection-over-union-a-metric-and-a-loss-for-bounding-box-regression"]
-localeKey = "generalized-intersection-over-union-a-metric-and-a-loss-for-bounding-box-regression"
-slug = "generalized-intersection-over-union-a-metric-and-a-loss-for-bounding-box-regression"
-sortOrder = 7
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "Generalized Intersection over Union: A Metric and A Loss for Bounding Box Regression"
 authors = ["Hamid Rezatofighi", "Nathan Tsoi", "JunYoung Gwak", "Amir Sadeghian", "Ian Reid", "Silvio Savarese"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2019"
@@ -1262,16 +911,11 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/generalized-iou" },
   { kind = "project", label = "Project page", url = "https://giou.stanford.edu/" },
 ]
-notes = ["The top 7 highly cited CVPR 2019 paper. (Source: Google Scholar/Metrics)"]
-featuredOnHome = true
-featuredOrder = 4
+note = "The top 7 highly cited CVPR 2019 paper. (Source: Google Scholar/Metrics)"
+homeRank = 4
 
-["topnet-structural-point-cloud-decoder"]
-localeKey = "topnet-structural-point-cloud-decoder"
-slug = "topnet-structural-point-cloud-decoder"
-sortOrder = 8
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "TopNet: Structural Point Cloud Decoder"
 authors = ["Lyne P. Tchapmi", "Vineet Kosaraju", "Hamid Rezatofighi", "Ian Reid", "Silvio Savarese"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2019"
@@ -1282,12 +926,8 @@ links = [
   { kind = "project", label = "Project page", url = "https://completion3d.stanford.edu/" },
 ]
 
-["sophie-an-attentive-gan-for-predicting-paths-compliant-to-social-and-physical-constraints"]
-localeKey = "sophie-an-attentive-gan-for-predicting-paths-compliant-to-social-and-physical-constraints"
-slug = "sophie-an-attentive-gan-for-predicting-paths-compliant-to-social-and-physical-constraints"
-sortOrder = 9
+[[item]]
 year = 2019
-yearBucket = "2019"
 title = "SoPhie: An Attentive GAN for Predicting Paths Compliant to Social and Physical Constraints"
 authors = ["Amir Sadeghian", "Vineet Kosaraju", "Ali Sadeghian", "Noriaki Hirose", "Hamid Rezatofighi", "Silvio Savarese"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2019"
@@ -1295,15 +935,11 @@ image = "images/pub/SoPhie.jpg"
 links = [
   { kind = "pdf", label = "PDF", url = "https://openaccess.thecvf.com/content_CVPR_2019/papers/Sadeghian_SoPhie_An_Attentive_GAN_for_Predicting_Paths_Compliant_to_Social_CVPR_2019_paper.pdf" },
 ]
-featuredOnHome = true
-featuredOrder = 5
+homeRank = 5
 
-["deep-auto-set-a-deep-auto-encoder-set-network-for-activity-recognition-using-wearables"]
-localeKey = "deep-auto-set-a-deep-auto-encoder-set-network-for-activity-recognition-using-wearables"
-slug = "deep-auto-set-a-deep-auto-encoder-set-network-for-activity-recognition-using-wearables"
-sortOrder = 1
+[[item]]
 year = 2018
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Deep Auto-Set: A Deep Auto-Encoder-Set Network for Activity Recognition Using Wearables"
 authors = ["Alireza Abedin Varamin", "Ehsan Abbasnejad", "Qinfeng Shi", "Damith C. Ranasinghe", "Hamid Rezatofighi"]
 venue = "EAI International Conference on Mobile and Ubiquitous Systems. Computing, Networking and Services, 2018"
@@ -1312,12 +948,9 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/1811.08127.pdf" },
 ]
 
-["autonomous-uav-sensor-system-for-searching-and-locating-vhf-radio-tagged-wildlife"]
-localeKey = "autonomous-uav-sensor-system-for-searching-and-locating-vhf-radio-tagged-wildlife"
-slug = "autonomous-uav-sensor-system-for-searching-and-locating-vhf-radio-tagged-wildlife"
-sortOrder = 2
+[[item]]
 year = 2018
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Autonomous UAV sensor system for searching and locating VHF radio-tagged wildlife"
 authors = ["Hoa Van Nguyen", "Michael Chesser", "Fei Chen", "S Hamid Rezatofighi", "Damith C. Ranasinghe"]
 venue = "ACM Conference on Embedded Networked Sensor Systems, 2018"
@@ -1326,12 +959,9 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://www.researchgate.net/profile/Hoa-Nguyen-114/publication/328547885_Autonomous_UAV_sensor_system_for_searching_and_locating_VHF_radio-tagged_wildlife/links/5c0729ab299bf169ae332286/Autonomous-UAV-sensor-system-for-searching-and-locating-VHF-radio-tagged-wildlife.pdf" },
 ]
 
-["deep-perm-set-net-learn-to-predict-sets-with-unknown-permutation-and-cardinality-using-deep-neural-networks"]
-localeKey = "deep-perm-set-net-learn-to-predict-sets-with-unknown-permutation-and-cardinality-using-deep-neural-networks"
-slug = "deep-perm-set-net-learn-to-predict-sets-with-unknown-permutation-and-cardinality-using-deep-neural-networks"
-sortOrder = 3
+[[item]]
 year = 2018
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Deep perm-set net: Learn to predict sets with unknown permutation and cardinality using deep neural networks"
 authors = ["S Hamid Rezatofighi", "Roman Kaskman", "Farbod T Motlagh", "Qinfeng Shi", "Daniel Cremers", "Laura Leal-Taixé", "Ian Reid"]
 venue = "arXiv preprint arXiv:1805.00613, 2018"
@@ -1341,12 +971,9 @@ links = [
   { kind = "project", label = "Project page", url = "http://demo.cs.adelaide.edu.au/tagging" },
 ]
 
-["joint-learning-of-set-cardinality-and-state-distribution"]
-localeKey = "joint-learning-of-set-cardinality-and-state-distribution"
-slug = "joint-learning-of-set-cardinality-and-state-distribution"
-sortOrder = 4
+[[item]]
 year = 2018
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Joint Learning of Set Cardinality and State Distribution"
 authors = ["S Hamid Rezatofighi", "Anton Milan", "Qinfeng Shi", "Anthony Dick", "Ian Reid"]
 venue = "Thirty-Second AAAI Conference on Artificial Intelligence (AAAI), 2018"
@@ -1356,12 +983,9 @@ links = [
   { kind = "project", label = "Project page", url = "http://demo.cs.adelaide.edu.au/tagging" },
 ]
 
-["data-driven-approximations-to-np-hard-problems"]
-localeKey = "data-driven-approximations-to-np-hard-problems"
-slug = "data-driven-approximations-to-np-hard-problems"
-sortOrder = 5
+[[item]]
 year = 2017
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Data-driven approximations to NP-hard problems"
 authors = ["Anton Milan", "S. Hamid Rezatofighi", "Ravi Garg", "Anthony Dick", "Ian Reid"]
 venue = "Thirty-First AAAI Conference on Artificial Intelligence (AAAI), 2017"
@@ -1369,14 +993,11 @@ image = "images/pub/Data-Driven Approximations.jpg"
 links = [
   { kind = "pdf", label = "PDF", url = "https://ojs.aaai.org/index.php/AAAI/article/download/10750/10609" },
 ]
-notes = ["Oral Presentation"]
+note = "Oral Presentation"
 
-["multi-object-model-free-tracking-with-joint-appearance-and-motion-inference"]
-localeKey = "multi-object-model-free-tracking-with-joint-appearance-and-motion-inference"
-slug = "multi-object-model-free-tracking-with-joint-appearance-and-motion-inference"
-sortOrder = 6
+[[item]]
 year = 2017
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Multi-object model-free tracking with joint appearance and motion inference"
 authors = ["Chongyu Liu", "Rui Yao", "S. Hamid Rezatofighi", "Ian Reid", "Qinfeng Shi"]
 venue = "International Conference on Digital Image Computing. Techniques and Applications (DICTA), 2017"
@@ -1385,12 +1006,9 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://ieeexplore.ieee.org/document/8227468" },
 ]
 
-["deepsetnet-predicting-sets-with-deep-neural-networks"]
-localeKey = "deepsetnet-predicting-sets-with-deep-neural-networks"
-slug = "deepsetnet-predicting-sets-with-deep-neural-networks"
-sortOrder = 7
+[[item]]
 year = 2017
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "DeepSetNet: Predicting Sets With Deep Neural Networks"
 authors = ["S. Hamid Rezatofighi", "BG Kumar", "Anton Milan", "Ehsan Abbasnejad", "Anthony Dick", "Ian Reid"]
 venue = "IEEE International Conference on Computer Vision (ICCV), 2017"
@@ -1400,14 +1018,11 @@ links = [
   { kind = "project", label = "Project page", url = "http://demo.cs.adelaide.edu.au/tagging" },
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=9ymIqU4XnhY" },
 ]
-notes = ["Spotlight Presentation"]
+note = "Spotlight Presentation"
 
-["online-multi-target-tracking-using-recurrent-neural-networks"]
-localeKey = "online-multi-target-tracking-using-recurrent-neural-networks"
-slug = "online-multi-target-tracking-using-recurrent-neural-networks"
-sortOrder = 8
+[[item]]
 year = 2017
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Online multi-target tracking using recurrent neural networks"
 authors = ["Anton Milan", "S. Hamid Rezatofighi", "Anthony Dick", "Ian Reid", "Konrad Schindler"]
 venue = "Thirty-First AAAI Conference on Artificial Intelligence (AAAI), 2017"
@@ -1417,16 +1032,12 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/viewFile/14184/14304" },
   { kind = "github", label = "GitHub", url = "https://github.com/antonmil/rnntracking" },
 ]
-notes = ["One of the most influential AAAI papers in 2017"]
-featuredOnHome = true
-featuredOrder = 7
+note = "One of the most influential AAAI papers in 2017"
+homeRank = 7
 
-["joint-probabilistic-matching-using-m-best-solutions"]
-localeKey = "joint-probabilistic-matching-using-m-best-solutions"
-slug = "joint-probabilistic-matching-using-m-best-solutions"
-sortOrder = 9
+[[item]]
 year = 2016
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Joint probabilistic matching using m-best solutions"
 authors = ["S. Hamid Rezatofighi", "Anton Milan", "Zhen Zhang", "Qinfeng Shi", "Anthony Dick", "Ian Reid"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016"
@@ -1434,16 +1045,13 @@ image = "images/pub/JPM.jpg"
 links = [
   { kind = "pdf", label = "PDF", url = "https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Rezatofighi_Joint_Probabilistic_Matching_CVPR_2016_paper.pdf" },
   { kind = "github", label = "GitHub", url = "https://github.com/antonmil/m-best" },
-  { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=rvgrTteb4xQ" },
+  { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=rvgrTteb4xQk" },
 ]
-notes = ["Oral Presentation"]
+note = "Oral Presentation"
 
-["efficient-point-process-inference-for-large-scale-object-detection"]
-localeKey = "efficient-point-process-inference-for-large-scale-object-detection"
-slug = "efficient-point-process-inference-for-large-scale-object-detection"
-sortOrder = 10
+[[item]]
 year = 2016
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Efficient point process inference for large-scale object detection"
 authors = ["Trung T. Pham", "S. Hamid Rezatofighi", "Ian Reid", "Tat-Jun Chin"]
 venue = "IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016"
@@ -1453,12 +1061,9 @@ links = [
   { kind = "github", label = "GitHub", url = "https://github.com/trungtpham/point_process_optimisation" },
 ]
 
-["multi-target-tracking-with-time-varying-clutter-rate-and-detection-profile-application-to-time-lapse-cell-microscopy-sequences"]
-localeKey = "multi-target-tracking-with-time-varying-clutter-rate-and-detection-profile-application-to-time-lapse-cell-microscopy-sequences"
-slug = "multi-target-tracking-with-time-varying-clutter-rate-and-detection-profile-application-to-time-lapse-cell-microscopy-sequences"
-sortOrder = 11
+[[item]]
 year = 2015
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Multi-target tracking with time-varying clutter rate and detection profile. Application to time-lapse cell microscopy sequences"
 authors = ["S. Hamid Rezatofighi", "Stephen Gould", "Ba Tuong Vo", "Ba-Ngu Vo", "Katarina Mele", "Richard Hartley"]
 venue = "IEEE Transactions on Medical Imaging (TMI), 2015"
@@ -1467,12 +1072,9 @@ links = [
   { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/1507.06397.pdf" },
 ]
 
-["joint-probabilistic-data-association-revisited"]
-localeKey = "joint-probabilistic-data-association-revisited"
-slug = "joint-probabilistic-data-association-revisited"
-sortOrder = 12
+[[item]]
 year = 2015
-yearBucket = "2015-2018"
+archiveGroup = "2015-2018"
 title = "Joint probabilistic data association revisited"
 authors = ["S. Hamid Rezatofighi", "Anton Milan", "Zhen Zhang", "Qinfeng Shi", "Anthony Dick", "Ian Reid"]
 venue = "IEEE international conference on computer vision (ICCV), 2015"
@@ -1483,6 +1085,5 @@ links = [
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=labjLU02ros" },
   { kind = "video", label = "Video", url = "https://www.youtube.com/watch?v=mIGZiI7-glw" },
 ]
-notes = ["Between the top 150 ICCV papers in 2015-2020 (Source: Google Scholar/Metrics)"]
-featuredOnHome = true
-featuredOrder = 8
+note = "Between the top 150 ICCV papers in 2015-2020 (Source: Google Scholar/Metrics)"
+homeRank = 8

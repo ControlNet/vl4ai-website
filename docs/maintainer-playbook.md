@@ -41,7 +41,7 @@ Edit these files:
 
 Notes:
 
-- Homepage publications are selected with `featuredOnHome = true` and ordered with `featuredOrder`.
+- Homepage publications are selected from `src/content/publications/index.toml` items that declare `homeRank`.
 - Homepage news items are now selected automatically as the newest three entries in `src/content/news/index.toml`.
 
 ### People `/people/`
@@ -111,11 +111,51 @@ Edit these files:
 
 Important constraints:
 
-- `localeKey` and `slug` should match
+- use a compact `[[item]]` list in `src/content/publications/index.toml`
+- required fields are `title`, `year`, `authors`, `venue`, `image`, and `links`
+- optional escape hatches are `note`, `homeRank`, and `archiveGroup`
 - `year` must be a valid integer
-- `yearBucket` should stay in the existing archive format
 - `image` should point to an asset under `public/`
-- if `featuredOnHome = true`, also set `featuredOrder`
+- the site derives each internal publication id automatically from `year + title` and adds a numeric suffix only on collision
+- `/publications/` sorts items by year descending and preserves TOML file order within the same year
+- `archiveGroup` defaults to `String(year)` and should be set only when a legacy bucket label must be preserved, such as `2015-2018`
+- the homepage renders the four lowest `homeRank` values, sorted by ascending `homeRank`, then year, then TOML order
+
+Example:
+
+```toml
+[[item]]
+year = 2023
+title = "Unifying Flow, Stereo and Depth Estimation"
+authors = ["Haofei Xu", "Jing Zhang", "Jianfei Cai", "Hamid Rezatofighi", "Fisher Yu", "Dacheng Tao", "Andreas Geiger"]
+venue = "IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023"
+image = "images/pub/Screenshot-from-2023-01-0418-23-26.png"
+links = [
+  { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2211.05783" },
+  { kind = "github", label = "GitHub", url = "https://github.com/autonomousvision/unimatch" },
+  { kind = "project", label = "Project page", url = "https://haofeixu.github.io/unimatch" },
+]
+homeRank = 1
+
+[[item]]
+year = 2018
+archiveGroup = "2015-2018"
+title = "Deep Auto-Set: A Deep Auto-Encoder-Set Network for Activity Recognition Using Wearables"
+authors = ["Alireza Abedin Varamin", "Ehsan Abbasnejad", "Qinfeng Shi", "Damith C. Ranasinghe", "Hamid Rezatofighi"]
+venue = "EAI International Conference on Mobile and Ubiquitous Systems. Computing, Networking and Services, 2018"
+image = "images/pub/Deep-Auto-Set.jpg"
+links = [
+  { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/1811.08127.pdf" },
+]
+```
+
+Legacy parity helper:
+
+```bash
+node scripts/compare-publications-migration.mjs
+```
+
+The publications comparison script checks the compact TOML archive against `../vl4ai-website-old/publications.html` and tolerates only documented legacy anomalies, such as duplicate rows that appear twice in the old archive.
 
 ### News `/news/`
 

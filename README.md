@@ -86,6 +86,44 @@ Important rules:
 - `/people/` preserves TOML file order within each rendered section, so keep entries in the order you want them shown
 - the homepage reads the single `[[member]]` entry with `group = "director"`
 
+## Publications authoring format
+
+Publications now live in a compact `[[item]]` list in `src/content/publications/index.toml`.
+
+```toml
+[[item]]
+year = 2025
+title = "Marginalized Generalized IoU (MGIoU): A Unified Objective Function for Optimizing Any Convex Parametric Shapes"
+authors = ["Duy-Tho Le", "Trung Pham", "Jianfei Cai", "Hamid Rezatofighi"]
+venue = "Annual Conference on Artificial Intelligence (AAAI), 2025"
+image = "images/pub/tho_iccv.png"
+links = [
+  { kind = "pdf", label = "PDF", url = "https://arxiv.org/pdf/2504.16443" },
+]
+```
+
+Optional escape hatches are:
+
+- `note` for a single archive/homepage callout such as an oral or spotlight tag
+- `homeRank` for homepage featured ordering; the homepage renders the top four items sorted by ascending `homeRank`, then by `year` and TOML order
+- `archiveGroup` when a publication should render under a legacy bucket label instead of `String(year)`, such as `2015-2018` or the preserved `2024` bucket for a 2023 venue item
+
+Important rules:
+
+- maintain only `title`, `year`, `authors`, `venue`, `image`, and `links` unless one of the three optional fields is genuinely needed
+- the site derives each internal publication id automatically from `year + title` and adds a numeric suffix only on collision
+- `/publications/` sorts by year descending and then preserves TOML file order within the same year
+- `/publications/` groups by `archiveGroup` when present, otherwise by the publication year
+- the homepage no longer uses manual booleans; any item with `homeRank` is eligible for the featured list
+
+To compare the compact source against the legacy archive HTML, run:
+
+```bash
+node scripts/compare-publications-migration.mjs
+```
+
+The script compares grouped archive structure plus row metadata and reports only documented legacy anomalies, such as duplicate rows in the old `publications.html`.
+
 ## Verification order
 
 Run commands from the repo root in this order:
