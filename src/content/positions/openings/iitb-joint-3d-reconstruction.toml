@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "iitb-joint-3d-reconstruction"
+slug = "iitb-joint-3d-reconstruction"
+sortOrder = 11
+title = "Joint 3D Reconstruction of Human and Objects in a Dynamic Scene Using Monocular Video"
+positionType = "phd"
+status = "closed"
+shortDescription = "Archived IITB-Monash joint PhD position listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []

@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "research-fellow-robot-vision-and-reasoning"
+slug = "research-fellow-robot-vision-and-reasoning"
+sortOrder = 13
+title = "Research Fellow / Postdoc in robot vision and reasoning"
+positionType = "research-fellow"
+status = "closed"
+shortDescription = "Archived Research Fellow or Postdoc role listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []

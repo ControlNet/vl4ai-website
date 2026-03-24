@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "multispectral-detection-segmentation"
+slug = "multispectral-detection-segmentation"
+sortOrder = 12
+title = "Spatiotemporal Object Detection and Segmentation from Multi-Spectral Time Sequence Data"
+positionType = "phd"
+status = "closed"
+shortDescription = "Archived PhD position listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []

@@ -1,0 +1,18 @@
+kind = "opening"
+localeKey = "iitb-semantic-3d-reconstruction"
+slug = "iitb-semantic-3d-reconstruction"
+sortOrder = 2
+title = "Semantic 3D Reconstruction of Dynamic Scenes"
+positionType = "phd"
+status = "open"
+shortDescription = "Available funded IITB-Monash joint PhD project on semantic 3D reconstruction of dynamic scenes."
+employmentType = "Full-time doctoral program"
+location = "IITB-Monash joint PhD program"
+duration = "PhD candidature"
+heroImage = "images/slider/3Drec.png"
+primaryUrl = "https://iitb-monash-2022.s3.amazonaws.com/pdfs/research-projects/IMURA1233.pdf"
+legacyPaths = ["positions.html"]
+links = [
+  { kind = "website", label = "IITB-Monash program", url = "https://www.iitbmonash.org/" },
+  { kind = "pdf", label = "Project brief", url = "https://iitb-monash-2022.s3.amazonaws.com/pdfs/research-projects/IMURA1233.pdf" },
+]

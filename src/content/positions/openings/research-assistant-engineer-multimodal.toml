@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "research-assistant-engineer-multimodal"
+slug = "research-assistant-engineer-multimodal"
+sortOrder = 15
+title = "Multiple Research Assistant / Engineer positions in computer vision, natural language processing and speech processing"
+positionType = "research-engineer"
+status = "closed"
+shortDescription = "Archived multimodal research assistant and engineer openings listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []

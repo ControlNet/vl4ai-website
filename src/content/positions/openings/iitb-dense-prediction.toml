@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "iitb-dense-prediction"
+slug = "iitb-dense-prediction"
+sortOrder = 10
+title = "Self-Supervised Approaches for Dense Prediction Tasks From Images"
+positionType = "phd"
+status = "closed"
+shortDescription = "Archived IITB-Monash joint PhD position listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []

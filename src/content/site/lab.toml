@@ -1,0 +1,11 @@
+kind = "lab"
+localeKey = "lab"
+sortOrder = 1
+shortName = "VL4AI"
+fullName = "Vision & Language for Autonomous AI Group"
+description = "VL4AI is a Monash University research group focused on computer vision, machine learning, reasoning, forecasting, and planning for embodied AI systems."
+institution = "Monash University"
+department = "Department of Data Science & AI"
+primaryLocation = "Clayton, Victoria, Australia"
+logo = "images/logo.png"
+alternateNames = ["Vision & Learning for Autonomous AI (VL4AI) Group", "Vision & Learning for Autonomous AI Lab"]

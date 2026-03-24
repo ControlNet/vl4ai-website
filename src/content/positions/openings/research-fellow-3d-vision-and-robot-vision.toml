@@ -1,0 +1,10 @@
+kind = "opening"
+localeKey = "research-fellow-3d-vision-and-robot-vision"
+slug = "research-fellow-3d-vision-and-robot-vision"
+sortOrder = 14
+title = "Research Fellow / Postdoc in 3D vision and robot vision"
+positionType = "research-fellow"
+status = "closed"
+shortDescription = "Archived Research Fellow or Postdoc role listed on the legacy positions page."
+legacyPaths = ["positions.html"]
+links = []
