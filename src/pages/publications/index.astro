@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { toContentAssetUrl } from '../../lib/content-assets';
 import { routeSeo } from '../../lib/page-seo';
 
 type PublicationEntry = CollectionEntry<'publications'>;
@@ -39,6 +40,7 @@ interface PublicationRow {
   year: number;
   archiveGroup: string;
   badgeLabel: string;
+  image: string;
   links: PublicationActionLink[];
 }
 
@@ -88,6 +90,7 @@ const publicationRows: PublicationRow[] = publicationEntries.slice().sort(sortPu
   year: entry.data.year,
   archiveGroup: entry.data.archiveGroup,
   badgeLabel: extractVenueBadgeLabel(entry.data.venue),
+  image: toContentAssetUrl(entry.data.image),
   links: entry.data.links.map((link) => ({
     kind: link.kind,
     label: link.label,
@@ -142,7 +145,7 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
           {headerActions.map((action) => (
             <a
               href={action.url}
-              class="flex items-center gap-2 rounded-full bg-gray-100 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition hover:bg-black hover:text-white"
+              class="flex items-center gap-2 rounded-full bg-gray-100 px-6 py-3 text-[10px] font-black uppercase tracking-widest transition hover:bg-[#003087] hover:text-white"
               target={isExternalLink(action.url) ? '_blank' : undefined}
               rel={isExternalLink(action.url) ? 'noreferrer' : undefined}
               data-testid="publications-scholar-cta"
@@ -171,51 +174,71 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
             {group.label}
             <div class="h-px flex-grow bg-gray-100"></div>
           </h2>
-          <div class="space-y-6">
+          <div class="space-y-4">
             {group.items.map((item) => (
               <article
-                class="group flex flex-col justify-between gap-8 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg transition hover:border-blue-200 md:flex-row"
+                class="group flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-4 shadow-md transition-all duration-300 hover:border-blue-200 hover:shadow-xl sm:flex-row sm:p-5"
                 data-publication-slug={item.id}
                 data-testid="publication-archive-item"
               >
-                <div class="space-y-4">
-                  <div class="flex gap-2">
-                    <span class="rounded-sm bg-blue-700 px-3 py-1 text-[9px] font-black uppercase tracking-tighter text-white">
-                      {item.badgeLabel}
-                    </span>
+                <div class="shrink-0">
+                  <div class="overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-transform duration-500 group-hover:scale-[1.02]">
+                    <img
+                      src={item.image}
+                      alt={`${item.title} preview`}
+                      class="h-auto w-full object-cover sm:w-48 lg:w-56"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
-                  <h4 class="text-2xl font-bold transition group-hover:text-blue-800">{item.title}</h4>
-                  <p class="font-medium italic text-gray-500">{item.authorLine}</p>
-                  <p class="text-sm font-light text-gray-400">{item.venue}</p>
                 </div>
-                <div class="flex justify-center gap-4 md:flex-col" data-testid="publication-row-actions">
-                  {item.links.map((link) => (
-                    <a
-                      href={link.href}
-                      class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition hover:bg-gray-100 hover:text-black"
-                      target={link.external ? '_blank' : undefined}
-                      rel={link.external ? 'noreferrer' : undefined}
-                      aria-label={`${item.title} ${link.label}`}
-                      data-publication-link-kind={link.kind}
-                    >
-                      {
-                        link.kind === 'pdf' ? (
-                          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M6 2.75A2.25 2.25 0 0 0 3.75 5v14A2.25 2.25 0 0 0 6 21.25h12A2.25 2.25 0 0 0 20.25 19V8.19a2.25 2.25 0 0 0-.66-1.59l-3.19-3.19a2.25 2.25 0 0 0-1.59-.66Zm8 .5v4.5h4.5Z"></path>
+
+                <div class="flex min-w-0 flex-1 flex-col justify-between gap-4">
+                  <div class="min-w-0 space-y-2">
+                    <div class="flex items-center gap-3">
+                      <span class="rounded-[4px] bg-blue-50 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-[#003087] ring-1 ring-blue-100/50">
+                        {item.badgeLabel}
+                      </span>
+                    </div>
+                    <h4 class="text-lg font-bold leading-tight text-gray-900 transition group-hover:text-[#003087] md:text-xl">
+                      {item.title}
+                    </h4>
+                    <p class="text-sm font-medium text-gray-500/80">{item.authorLine}</p>
+                    <p class="text-xs font-light tracking-wide text-gray-400">{item.venue}</p>
+                  </div>
+
+                  <div class="flex flex-wrap gap-2" data-testid="publication-row-actions">
+                    {item.links.map((link) => (
+                      <a
+                        href={link.href}
+                        class="flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50/50 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest text-gray-400 transition-all hover:border-[#003087] hover:bg-[#003087] hover:text-white"
+                        target={link.external ? '_blank' : undefined}
+                        rel={link.external ? 'noreferrer' : undefined}
+                        aria-label={`${item.title} ${link.label}`}
+                        data-publication-link-kind={link.kind}
+                      >
+                        {link.kind === 'pdf' ? (
+                          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M6 2.75A2.25 2.25 0 0 0 3.75 5v14A2.25 2.25 0 0 0 6 21.25h12A2.25 2.25 0 0 0 20.25 19V8.19a2.25 2.25 0 0 0-.66-1.59l-3.19-3.19a2.25 2.25 0 0 0-1.59-.66Zm8 .5v4.5h4.5Z" />
                           </svg>
-                        ) : link.kind === 'website' ? (
-                          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2m6.93 9h-3.046a16.799 16.799 0 0 0-1.348-5.113A8.02 8.02 0 0 1 18.93 11M12 4.038c.962 1.102 1.912 3.377 2.337 6.962H9.663C10.088 7.415 11.038 5.14 12 4.038M9.464 5.887A16.799 16.799 0 0 0 8.116 11H5.07a8.02 8.02 0 0 1 4.394-5.113M4.264 13h3.852a16.799 16.799 0 0 0 1.348 5.113A8.02 8.02 0 0 1 4.264 13M12 19.962c-.962-1.102-1.912-3.377-2.337-6.962h4.674c-.425 3.585-1.375 5.86-2.337 6.962m2.536-1.849A16.799 16.799 0 0 0 15.884 13h3.852a8.02 8.02 0 0 1-5.2 5.113"></path>
+                        ) : link.kind === 'website' || link.kind === 'project' ? (
+                          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2m6.93 9h-3.046a16.799 16.799 0 0 0-1.348-5.113A8.02 8.02 0 0 1 18.93 11M12 4.038c.962 1.102 1.912 3.377 2.337 6.962H9.663C10.088 7.415 11.038 5.14 12 4.038M9.464 5.887A16.799 16.799 0 0 0 8.116 11H5.07a8.02 8.02 0 0 1 4.394-5.113M4.264 13h3.852a16.799 16.799 0 0 0 1.348 5.113A8.02 8.02 0 0 1 4.264 13M12 19.962c-.962-1.102-1.912-3.377-2.337-6.962h4.674c-.425 3.585-1.375 5.86-2.337 6.962m2.536-1.849A16.799 16.799 0 0 0 15.884 13h3.852a8.02 8.02 0 0 1-5.2 5.113" />
+                          </svg>
+                        ) : link.kind === 'github' ? (
+                          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2.247a10 10 0 0 0-3.162 19.487c.5.088.687-.212.687-.475 0-.237-.012-.862-.012-1.687-2.788.6-3.375-1.338-3.375-1.338-.45-1.15-1.1-1.463-1.1-1.463-.912-.625.062-.625.062-.625 1.013.075 1.538 1.038 1.538 1.038.9 1.537 2.35 1.1 2.925.837.087-.65.35-1.1.637-1.35-2.225-.25-4.55-1.112-4.55-4.937 0-1.088.387-1.987 1.025-2.688-.1-.25-.45-1.275.1-2.65 0 0 .837-.262 2.75 1.025a9.547 9.547 0 0 1 5 0c1.912-1.287 2.75-1.025 2.75-1.025.55 1.375.2 2.4.1 2.65.637.7 1.025 1.6 1.025 2.688 0 3.837-2.325 4.687-4.563 4.937.362.313.687.938.687 1.888 0 1.362-.012 2.462-.012 2.787 0 .263.187.575.687.475A10.001 10.001 0 0 0 12 2.247Z" />
                           </svg>
                         ) : (
-                          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z"></path>
-                            <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
+                          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z" />
+                            <path d="M5 5h6v2H7v10h10v-4h2v6H5z" />
                           </svg>
-                        )
-                      }
-                    </a>
-                  ))}
+                        )}
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </article>
             ))}

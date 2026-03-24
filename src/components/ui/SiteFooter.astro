@@ -65,7 +65,7 @@ const {
             {actionLinks.map((link) => (
               <a
                 href={link.href}
-                class="text-xl text-gray-500 transition hover:text-white"
+                class="text-xl text-gray-500 transition hover:text-blue-300"
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noreferrer' : undefined}
                 aria-label={link.label}
@@ -101,7 +101,7 @@ const {
             <li>
               <a
                 href={item.href}
-                class="transition hover:text-white"
+                class="transition hover:text-blue-300"
                 data-testid={item.testId ?? `footer-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 {item.label}
@@ -127,7 +127,7 @@ const {
       {utilityLink && (
         <a
           href={utilityLink.href}
-          class="mt-5 inline-flex text-[10px] font-black uppercase tracking-widest text-gray-500 transition hover:text-white"
+          class="mt-5 inline-flex text-[10px] font-black uppercase tracking-widest text-gray-500 transition hover:text-blue-300"
           data-testid={utilityLink.testId ?? 'footer-utility-link'}
         >
           {utilityLink.label}
@@ -144,7 +144,7 @@ const {
           {metaLinks.map((link) => (
             <a
               href={link.href}
-              class="transition hover:text-white"
+              class="transition hover:text-blue-300"
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noreferrer' : undefined}
               data-testid={link.testId}

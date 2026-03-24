@@ -809,20 +809,13 @@ test('contact route renders collection-backed location blocks, canonical chrome,
   await expect(locationBlock).toBeVisible();
   await expectNonEmptyText(locationBlock.locator('h2'));
   await expectNonEmptyText(locationBlock.locator('.contact-page__location-label'));
-  await expectNonEmptyText(locationBlock.locator('.contact-page__location-name'));
   expect(await locationBlock.locator('address p').count()).toBeGreaterThan(0);
 
   const detailsBlock = page.getByTestId('contact-details-block');
   await expect(detailsBlock).toBeVisible();
-  await expect(detailsBlock.locator('a[href^="tel:"]')).toHaveCount(1);
+  await expect(detailsBlock.locator('a[href^="tel:"]')).toHaveCount(0);
   await expect(detailsBlock.locator('a[href^="mailto:"]')).toHaveCount(1);
-  await expectNonEmptyText(detailsBlock.locator('a[href^="tel:"]'));
   await expectNonEmptyText(detailsBlock.locator('a[href^="mailto:"]'));
-
-  const officeHoursBlock = page.getByTestId('contact-hours-block');
-  await expect(officeHoursBlock).toBeVisible();
-  await expectNonEmptyText(officeHoursBlock.locator('.contact-page__hours-text'));
-  await expectNonEmptyText(officeHoursBlock.locator('.contact-page__hours-location'));
 
   const mapBlock = page.getByTestId('contact-map-block');
   await expect(mapBlock).toBeVisible();

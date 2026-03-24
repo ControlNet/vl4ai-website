@@ -47,6 +47,59 @@ body {
   width: 100%;
 }
 
+/* Shared CTA / ButtonLink — blue-forward hovers (brand: --monash-blue / --accent-blue) */
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.button-link--primary {
+  border: 1px solid var(--monash-blue);
+  background: var(--monash-blue);
+  color: #fff;
+}
+
+.button-link--primary:hover {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.button-link--secondary {
+  border: 1px solid rgb(229 231 235);
+  background: #fff;
+  color: rgb(17 24 39);
+}
+
+.button-link--secondary:hover {
+  border-color: var(--monash-blue);
+  background: rgb(239 246 255);
+  color: var(--monash-blue);
+}
+
+.button-link--quiet {
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgb(107 114 128);
+}
+
+.button-link--quiet:hover {
+  color: var(--monash-blue);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

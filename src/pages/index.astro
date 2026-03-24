@@ -303,14 +303,14 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       <div class="flex flex-wrap justify-center gap-4">
         <a
           href={researchHeroAction.url}
-          class="rounded-full bg-black px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-white shadow-xl shadow-black/10 transition duration-300 hover:bg-gray-800"
+          class="rounded-full bg-black px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-white shadow-xl shadow-black/10 transition duration-300 hover:bg-[#003087]"
           data-testid="home-hero-research-cta"
         >
           {researchHeroAction.label}
         </a>
         <a
           href={publicationsHeroAction.url}
-          class="rounded-full border border-gray-200 bg-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-gray-900 transition duration-300 hover:bg-gray-50"
+          class="rounded-full border border-gray-200 bg-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-gray-900 transition duration-300 hover:border-[#003087] hover:bg-blue-50 hover:text-[#003087]"
           data-testid="home-hero-publications-cta"
         >
           {publicationsHeroAction.label}
@@ -493,7 +493,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       {
         featuredPublicationItems.map((item) => (
           <article
-            class="group flex flex-row items-center gap-3 rounded-2xl border border-gray-100 bg-white px-4 py-3.5 shadow-md transition-all duration-300 hover:border-blue-200 hover:shadow-xl sm:gap-4 sm:px-5 sm:py-4"
+            class="group flex flex-row items-center gap-3 rounded-2xl border border-gray-100 bg-white px-4 py-3.5 shadow-md transition-colors duration-300 hover:border-blue-200 sm:gap-4 sm:px-5 sm:py-4"
             data-publication-slug={item.id}
             data-testid="featured-publication"
           >
@@ -505,7 +505,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
               item.pdfHref && (
                 <a
                   href={item.pdfHref}
-                  class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-blue-700 transition-all hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-md active:scale-95"
+                  class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-blue-700 transition-all hover:border-[#003087] hover:bg-[#003087] hover:text-white hover:shadow-md active:scale-95"
                   target={item.pdfExternal ? '_blank' : undefined}
                   rel={item.pdfExternal ? 'noreferrer' : undefined}
                   data-testid="featured-publication-pdf"
@@ -525,7 +525,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
     <div class="mt-8 text-center">
       <a
         href="/publications/"
-        class="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 transition hover:text-black"
+        class="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 transition hover:text-[#003087]"
         data-testid="home-publications-archive-cta"
       >
         View all publications
@@ -547,10 +547,10 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
         </div>
         <a
           href="/news/"
-          class="rounded-full border border-gray-100 px-8 py-4 text-xs font-black uppercase tracking-widest transition hover:border-black"
+          class="rounded-full border border-gray-100 px-8 py-4 text-xs font-black uppercase tracking-widest transition hover:border-[#003087] hover:text-[#003087]"
           data-testid="home-news-archive-cta"
         >
-          Explore Archive
+          More News
         </a>
       </div>
 

@@ -644,7 +644,6 @@ const site = defineCollection({
         sortOrder: positiveSortOrder,
         phone: trimmedString(),
         email: trimmedString().email('Use a standard email address without mailto:.'),
-        officeHours: trimmedString(),
         addressLines: z.array(trimmedString()).min(1),
         mapUrl: destinationSchema,
         mapEmbedUrl: trimmedString().refine(isAbsoluteHttpUrl, 'Expected an absolute https:// map embed URL.'),

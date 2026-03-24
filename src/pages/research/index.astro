@@ -262,7 +262,7 @@ if (!benchmarkSpotlight) {
           <div class="flex flex-wrap gap-3">
             <a
               href={benchmarkSpotlight.data.primaryUrl}
-              class="rounded-full bg-white px-10 py-5 text-[11px] font-black uppercase tracking-widest text-black transition hover:bg-blue-400"
+              class="rounded-full bg-white px-10 py-5 text-[11px] font-black uppercase tracking-widest text-black transition hover:bg-[#003087] hover:text-white"
               target="_blank"
               rel="noreferrer"
               data-testid="research-benchmark-spotlight-link"
@@ -273,7 +273,7 @@ if (!benchmarkSpotlight) {
               entry.href ? (
                 <a
                   href={entry.href}
-                  class="rounded-full border border-blue-200/30 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-blue-100/70 transition hover:border-blue-200 hover:text-white"
+                  class="rounded-full border border-blue-200/30 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-blue-100/70 transition hover:border-[#003087] hover:text-white"
                   target={entry.external ? '_blank' : undefined}
                   rel={entry.external ? 'noreferrer' : undefined}
                   data-testid={`research-benchmark-link-${entry.slug}`}
