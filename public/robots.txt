@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vl4ai.github.io/sitemap-index.xml
+Sitemap: https://vl4ai.erc.monash.edu/sitemap-index.xml

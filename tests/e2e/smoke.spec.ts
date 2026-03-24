@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,7 +14,7 @@ import {
 } from '../../src/data/route-contract';
 
 const previewOrigin = 'http://127.0.0.1:4321';
-const siteOrigin = 'https://vl4ai.github.io';
+const siteOrigin = 'https://vl4ai.erc.monash.edu';
 const task7PublicationsScreenshotPath = fileURLToPath(
   new URL('../../.sisyphus/evidence/task-7-publications-desktop.png', import.meta.url),
 );
@@ -53,11 +54,13 @@ const task10ContactDesktopScreenshotPath = fileURLToPath(
 const task10ContactMaskedScreenshotPath = fileURLToPath(
   new URL('../../.sisyphus/evidence/task-10-contact-masked.png', import.meta.url),
 );
+const contactContentPath = fileURLToPath(new URL('../../src/content/site/contact.toml', import.meta.url));
 const task11LegacyRetirementEvidencePath = fileURLToPath(
   new URL('../../.sisyphus/evidence/task-11-legacy-retirement.txt', import.meta.url),
 );
 const task11SitemapEvidencePath = fileURLToPath(new URL('../../.sisyphus/evidence/task-11-sitemap.txt', import.meta.url));
 const parityRouteMatrixEvidencePath = fileURLToPath(new URL('../../.sisyphus/evidence/parity/route-matrix.txt', import.meta.url));
+const publicationsRouteCopyPath = fileURLToPath(new URL('../../src/content/site/publications-route.md', import.meta.url));
 const canonicalPublicPaths = publicRouteContract.map((route) => route.path);
 const expectedCanonicalPublicPaths = [
   '/',
@@ -78,6 +81,19 @@ const parityCriticalRoutes = [
   { id: 'positions', path: '/positions/', title: 'Positions', screenshotKey: 'positions' },
   { id: 'contact', path: '/contact/', title: 'Contact', screenshotKey: 'contact' },
 ] as const;
+
+const publicationsRouteCopySource = readFileSync(publicationsRouteCopyPath, 'utf8');
+const expectedPublicationsScholarHref =
+  publicationsRouteCopySource.match(/^\s*url:\s*(https?:\/\/\S+)\s*$/mu)?.[1] ??
+  (() => {
+    throw new Error('Expected src/content/site/publications-route.md to declare a publications CTA url.');
+  })();
+const contactContentSource = readFileSync(contactContentPath, 'utf8');
+const expectedContactMapHref =
+  contactContentSource.match(/^mapUrl\s*=\s*"(https?:\/\/[^"\n]+)"\s*$/mu)?.[1] ??
+  (() => {
+    throw new Error('Expected src/content/site/contact.toml to declare a mapUrl.');
+  })();
 
 test.describe.configure({ mode: 'serial' });
 
@@ -574,7 +590,7 @@ test('publications route renders descending year dividers, scholar CTA, and comp
   await expect(page.getByTestId('publications-archive-header')).toBeVisible();
   await expect(page.getByTestId('publications-scholar-cta')).toHaveAttribute(
     'href',
-    'https://scholar.google.com/citations?user=qL7q42EAAAAJ&hl=en',
+    expectedPublicationsScholarHref,
   );
 
   const sortValues = await page.locator('[data-publication-year-sort]').evaluateAll((elements) =>
@@ -823,7 +839,7 @@ test('contact route renders collection-backed location blocks, canonical chrome,
   await expect(mapBlock.getByTestId('contact-map-embed')).toHaveAttribute('src', /google\.com\/maps\/embed/u);
   await expect(mapBlock.getByRole('link', { name: 'Open in Google Maps' })).toHaveAttribute(
     'href',
-    /^https:\/\/www\.google\.com\/maps\/search\//u,
+    expectedContactMapHref,
   );
 
   await ensureEvidenceDirectory(task10ContactDesktopScreenshotPath);

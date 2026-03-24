@@ -6,7 +6,7 @@ const sitemapExcludedPaths = new Set(['/404.html']);
 
 export default defineConfig({
   output: 'static',
-  site: 'https://vl4ai.github.io',
+  site: 'https://vl4ai.erc.monash.edu',
   base: '/',
   trailingSlash: 'always',
   vite: {

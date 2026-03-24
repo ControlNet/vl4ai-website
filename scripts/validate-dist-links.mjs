@@ -4,7 +4,7 @@ import { extname, relative, resolve } from 'node:path';
 
 const repoRoot = process.cwd();
 const distRoot = resolve(repoRoot, 'dist');
-const siteOrigin = 'https://vl4ai.github.io';
+const siteOrigin = 'https://vl4ai.erc.monash.edu';
 
 const attributePatterns = [
   { attribute: 'href', regex: /\bhref\s*=\s*["']([^"']+)["']/gu },

@@ -91,7 +91,7 @@ export const publicNavItems: NavContractItem[] = [
     testId: 'site-nav-link-publications',
   },
   { key: 'news', label: 'News', href: '/news/', testId: 'site-nav-link-news' },
-  { key: 'positions', label: 'Positions', href: '/positions/', testId: 'site-nav-link-positions' },
+  { key: 'positions', label: 'Join us', href: '/positions/', testId: 'site-nav-link-positions' },
   { key: 'contact', label: 'Contact', href: '/contact/', testId: 'site-nav-link-contact' },
 ];
 
