@@ -1,0 +1,114 @@
+name: deploy-master
+
+on:
+  push:
+    branches:
+      - master-src
+  pull_request:
+    branches:
+      - master-src
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Source branch, tag, or SHA to deploy from
+        required: true
+        default: master-src
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-master-${{ github.event_name == 'workflow_dispatch' && 'publish' || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      source_sha: ${{ steps.meta.outputs.source_sha }}
+      source_subject: ${{ steps.meta.outputs.source_subject }}
+    steps:
+      - name: Check out source branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.source_ref || github.ref }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Record source commit metadata
+        id: meta
+        run: |
+          echo "source_sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          {
+            echo 'source_subject<<EOF'
+            git log -1 --pretty=%s
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Verify source branch
+        run: pnpm verify
+
+      - name: Upload built dist artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-dist
+          path: dist/
+          if-no-files-found: error
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch'
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out deploy branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          path: deploy
+          fetch-depth: 0
+
+      - name: Download built dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-dist
+          path: dist
+
+      - name: Sync built site into master branch
+        run: rsync -a --delete --exclude='.git/' dist/ deploy/
+
+      - name: Commit deploy output
+        run: |
+          git -C deploy config user.name 'github-actions[bot]'
+          git -C deploy config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C deploy add -A
+
+          if git -C deploy diff --cached --quiet; then
+            echo 'No deploy changes to commit.'
+            exit 0
+          fi
+
+          git -C deploy commit -m "deploy: master-src@${{ needs.verify.outputs.source_sha }}" -m "Source: ${{ needs.verify.outputs.source_subject }}"
+
+      - name: Push deploy branch
+        run: |
+          if git -C deploy rev-parse --verify HEAD >/dev/null 2>&1; then
+            if git -C deploy log -1 --pretty=%s | grep -q '^deploy: master-src@'; then
+              git -C deploy push origin HEAD:master
+            fi
+          fi
