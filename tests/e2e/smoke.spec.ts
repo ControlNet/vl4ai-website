@@ -628,7 +628,7 @@ test('homepage publications CTAs resolve to /publications/ without hash anchors'
   expectNoPageIssues(monitor);
 });
 
-test('news archive route renders a descending text-first timeline and captures News archive evidence', async ({ page }) => {
+test('news archive route renders a descending timeline with thumbnails and captures News archive evidence', async ({ page }) => {
   const monitor = createPageIssueMonitor(page);
 
   await page.goto('/news/', { waitUntil: 'domcontentloaded' });
@@ -647,9 +647,10 @@ test('news archive route renders a descending text-first timeline and captures N
   await expectNonEmptyText(page.getByTestId('news-archive-header').locator('p').last());
   await expect(page.getByTestId('news-year-group').first()).toBeVisible();
   await expect(page.getByTestId('news-archive-item').first()).toBeVisible();
-  await expect(page.getByTestId('news-archive-section').locator('img')).toHaveCount(0);
-  await expect(page.getByTestId('news-archive-cta')).toBeVisible();
-  await expectNonEmptyText(page.getByTestId('news-archive-cta').locator('h2'));
+  const archiveImageCount = await page.getByTestId('news-archive-section').locator('img').count();
+  const archiveItemCount = await page.getByTestId('news-archive-item').count();
+  expect(archiveImageCount).toBe(archiveItemCount);
+  expect(archiveImageCount).toBeGreaterThan(0);
 
   const yearSortValues = await page.locator('[data-news-year-sort]').evaluateAll((elements) =>
     elements.map((element) => Number(element.getAttribute('data-news-year-sort'))),

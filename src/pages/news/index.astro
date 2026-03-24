@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { toContentAssetUrl } from '../../lib/content-assets';
 import { resolveRouteDestination } from '../../lib/route-destination';
 import { routeSeo } from '../../lib/page-seo';
 
@@ -34,6 +35,7 @@ interface NewsArchiveItem {
   year: string;
   href: string;
   external: boolean;
+  imageUrl: string;
 }
 
 interface NewsArchiveYearGroup {
@@ -67,15 +69,20 @@ const sortNewsEntries = (left: NewsEntry, right: NewsEntry) =>
   left.data.sequence - right.data.sequence ||
   left.id.localeCompare(right.id);
 
-const archiveItems: NewsArchiveItem[] = newsEntries.slice().sort(sortNewsEntries).map((entry) => ({
-  slug: entry.id,
-  title: normalizeNewsText(entry.data.title).replace(/\.$/u, ''),
-  summary: normalizeNewsText(entry.data.summary).replace(/\.$/u, ''),
-  date: entry.data.date,
-  dateLabel: formatNewsDateLabel(entry.data.date),
-  year: entry.data.date.slice(0, 4),
-  ...resolveRouteDestination(entry.data.link),
-}));
+const archiveItems: NewsArchiveItem[] = newsEntries.slice().sort(sortNewsEntries).map((entry) => {
+  const title = normalizeNewsText(entry.data.title).replace(/\.$/u, '');
+
+  return {
+    slug: entry.id,
+    title,
+    summary: normalizeNewsText(entry.data.summary).replace(/\.$/u, ''),
+    date: entry.data.date,
+    dateLabel: formatNewsDateLabel(entry.data.date),
+    year: entry.data.date.slice(0, 4),
+    imageUrl: toContentAssetUrl(entry.data.image),
+    ...resolveRouteDestination(entry.data.link),
+  };
+});
 
 const yearGroups: NewsArchiveYearGroup[] = Array.from(
   archiveItems.reduce((groupMap, item) => {
@@ -95,8 +102,6 @@ const yearGroups: NewsArchiveYearGroup[] = Array.from(
     return groupMap;
   }, new Map<string, NewsArchiveYearGroup>()).values(),
 ).sort((left, right) => right.sortValue - left.sortValue || left.label.localeCompare(right.label));
-
-const archiveAction = newsRouteCopy.data.actions[0];
 ---
 
 <SiteLayout
@@ -123,7 +128,7 @@ const archiveAction = newsRouteCopy.data.actions[0];
     {
       yearGroups.map((group, groupIndex) => (
         <div
-          class="relative border-l border-gray-100 pl-12 pb-16"
+          class="relative border-l border-gray-100 pb-16 pl-12"
           data-testid="news-year-group"
           data-news-year={group.label}
           data-news-year-sort={String(group.sortValue)}
@@ -140,44 +145,41 @@ const archiveAction = newsRouteCopy.data.actions[0];
 
           <div class="space-y-12">
             {group.items.map((item) => (
-                <article
-                  class="group"
-                  data-news-slug={item.slug}
-                  data-news-published-at={item.date}
-                  data-testid="news-archive-item"
-                >
+              <article
+                class="group flex gap-5 sm:gap-6"
+                data-news-slug={item.slug}
+                data-news-published-at={item.date}
+                data-testid="news-archive-item"
+              >
+                <div class="relative h-[5.25rem] w-[6.5rem] shrink-0 overflow-hidden bg-gray-50 sm:h-24 sm:w-32">
+                  <img
+                    src={item.imageUrl}
+                    alt=""
+                    class="block h-full w-full max-w-none origin-center scale-105 object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div class="min-w-0 flex-1">
                   <time class="mb-2 block text-[10px] font-black uppercase tracking-widest text-blue-700" datetime={item.date}>
                     {item.dateLabel}
                   </time>
-                <h3 class="text-2xl leading-tight font-bold transition group-hover:text-blue-800">
-                  <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
-                    {item.title}
-                  </a>
-                </h3>
-                <p class="mt-4 leading-relaxed font-light text-gray-500">{item.summary}</p>
+                  <h3 class="text-2xl leading-tight font-bold transition group-hover:text-blue-800">
+                    <a
+                      href={item.href}
+                      target={item.external ? '_blank' : undefined}
+                      rel={item.external ? 'noreferrer' : undefined}
+                    >
+                      {item.title}
+                    </a>
+                  </h3>
+                  <p class="mt-4 leading-relaxed font-light text-gray-500">{item.summary}</p>
+                </div>
               </article>
             ))}
           </div>
         </div>
       ))
     }
-
-    <div class="pt-20 text-center" data-testid="news-archive-cta">
-      <h2 class="mb-6 text-3xl font-black tracking-tight text-gray-900">All news entries are loaded</h2>
-      {
-        archiveAction?.url ? (
-          <a
-            href={archiveAction.url}
-            class="rounded-full bg-gray-50 px-10 py-4 text-[10px] font-black uppercase tracking-widest transition hover:bg-[#003087] hover:text-white"
-          >
-            {archiveAction.label}
-          </a>
-        ) : (
-          <span class="inline-flex rounded-full bg-gray-50 px-10 py-4 text-[10px] font-black uppercase tracking-widest">
-            {archiveAction?.label ?? 'Archive complete'}
-          </span>
-        )
-      }
-    </div>
   </section>
 </SiteLayout>
