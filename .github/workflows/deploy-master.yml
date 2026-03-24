@@ -57,7 +57,7 @@ jobs:
         run: pnpm verify
 
       - name: Upload built dist artifact
-        if: github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: deploy-dist
@@ -65,7 +65,7 @@ jobs:
           if-no-files-found: error
 
   deploy:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     needs: verify
     runs-on: ubuntu-latest
     steps:
