@@ -66,7 +66,7 @@ const homeRouteCopy = siteEntries.find(
   (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/',
 );
 const directorEntry = peopleEntries.find(
-  (entry) => entry.data.status === 'current' && entry.data.group === 'director',
+  (entry) => entry.data.recordType === 'member' && entry.data.group === 'director',
 );
 
 if (!homeCopyEntry) {

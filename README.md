@@ -25,7 +25,7 @@ Read [`docs/maintainer-playbook.md`](docs/maintainer-playbook.md) before making 
 
 ## Content ownership at a glance
 
-- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, plus featured items from `src/content/publications/index.toml` and the newest three news entries from `src/content/news/index.toml`
+- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, the director entry from `src/content/people/index.toml`, featured items from `src/content/publications/index.toml`, and the newest three news entries from `src/content/news/index.toml`
 - People `/people/`: `src/content/site/people-route.md` and `src/content/people/index.toml`
 - Research `/research/`: `src/content/site/research-route.md` and `src/content/research/**`
 - Publications `/publications/`: `src/content/site/publications-route.md` and `src/content/publications/index.toml`
@@ -47,6 +47,44 @@ image = "images/news/mata.png"
 ```
 
 Maintain only those five fields. The site now derives the news entry id automatically from `date + title`, keeps the homepage to the newest three items by date, and generates archive date labels from the stored date.
+
+## People authoring format
+
+People entries now live in one compact TOML file with `[[member]]` and `[[alumni]]` tables in `src/content/people/index.toml`.
+
+```toml
+[[member]]
+name = "A/Prof. Hamid Rezatofighi"
+group = "director"
+image = "images/team/115_Hamid Rezatofigih_10012025.jpg"
+details = [
+  "Associate Professor, Department of Data Science & AI",
+  "Interested in Computer vision, Robot vision & Deep learning",
+]
+links = [
+  { kind = "email", label = "Email", url = "mailto:Hamid.Rezatofighi@monash.edu" },
+  { kind = "website", label = "Website", url = "https://research.monash.edu/en/persons/hamid-rezatofighi" },
+]
+
+[[alumni]]
+name = "Huangying Zhan"
+group = "postdocs"
+details = [
+  "Postdoc, University of Adelaide, 2020-2022",
+  "Now Scientist at OPPO US Research Center",
+]
+link = "https://huangying-zhan.github.io/"
+```
+
+Important rules:
+
+- use `[[member]]` for current people and `[[alumni]]` for previous cohorts
+- keep `group` editor-facing and simple: `director`, `postdocs`, `phd-students`, or `master-and-undergrad-students`
+- members must include `name`, `group`, `image`, `details`, and `links`
+- alumni must include `name`, `group`, and `details`, and may optionally include one `link`
+- the site derives each people entry id automatically from `table type + name` and adds a numeric suffix only if a collision occurs
+- `/people/` preserves TOML file order within each rendered section, so keep entries in the order you want them shown
+- the homepage reads the single `[[member]]` entry with `group = "director"`
 
 ## Verification order
 

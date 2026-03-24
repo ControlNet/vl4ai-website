@@ -1,13 +1,11 @@
-["hamid-rezatofighi"]
-localeKey = "hamid-rezatofighi"
-slug = "hamid-rezatofighi"
-recordType = "member"
-status = "current"
-group = "director"
-sortOrder = 1
+[[member]]
 name = "A/Prof. Hamid Rezatofighi"
+group = "director"
 image = "images/team/115_Hamid Rezatofigih_10012025.jpg"
-details = ["Associate Professor, Department of Data Science & AI", "Interested in Computer vision, Robot vision & Deep learning"]
+details = [
+  "Associate Professor, Department of Data Science & AI",
+  "Interested in Computer vision, Robot vision & Deep learning",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:Hamid.Rezatofighi@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?hl=en&user=VxAuxMwAAAAJ&view_op=list_works&sortby=pubdate" },
@@ -16,16 +14,14 @@ links = [
   { kind = "twitter", label = "Twitter", url = "https://twitter.com/HamidRezatofigh" },
 ]
 
-["zhixi-cai"]
-localeKey = "zhixi-cai"
-slug = "zhixi-cai"
-recordType = "member"
-status = "current"
-group = "postdocs"
-sortOrder = 1
+[[member]]
 name = "Zhixi Cai"
+group = "postdocs"
 image = "images/team/zhixi.png"
-details = ["Postdoc (DARPA-ANSR), Monash University, 2024-now", "Working on Neuro-symbolic visual reasoning"]
+details = [
+  "Postdoc (DARPA-ANSR), Monash University, 2024-now",
+  "Working on Neuro-symbolic visual reasoning",
+]
 links = [
   { kind = "website", label = "Profile", url = "https://profile.controlnet.space/" },
   { kind = "email", label = "Email", url = "mailto:zhixi.cai@monash.edu" },
@@ -35,16 +31,14 @@ links = [
   { kind = "twitter", label = "Twitter", url = "https://twitter.com/zhixi_cai" },
 ]
 
-["sukai-huang"]
-localeKey = "sukai-huang"
-slug = "sukai-huang"
-recordType = "member"
-status = "current"
-group = "postdocs"
-sortOrder = 2
+[[member]]
 name = "Sukai Huang"
+group = "postdocs"
 image = "images/team/sukai_avatar.jpg"
-details = ["Postdoc (DARPA-ANSR), Monash University, 2025-now", "Working on LLMs for Planning & LLMs for embodied agents"]
+details = [
+  "Postdoc (DARPA-ANSR), Monash University, 2025-now",
+  "Working on LLMs for Planning & LLMs for embodied agents",
+]
 links = [
   { kind = "website", label = "Profile", url = "https://sino-huang.github.io/" },
   { kind = "email", label = "Email", url = "mailto:sukai.huang@monash.edu" },
@@ -53,32 +47,28 @@ links = [
   { kind = "linkedin", label = "LinkedIn", url = "https://au.linkedin.com/in/sukai-huang-683368169" },
 ]
 
-["fucai-ke"]
-localeKey = "fucai-ke"
-slug = "fucai-ke"
-recordType = "member"
-status = "current"
-group = "postdocs"
-sortOrder = 3
+[[member]]
 name = "Fucai Ke"
+group = "postdocs"
 image = "images/team/Fucai-Ke.jpg"
-details = ["PhD student, Monash University, 2026-now", "Working on Visual reasoning"]
+details = [
+  "PhD student, Monash University, 2026-now",
+  "Working on Visual reasoning",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:fucai.ke1@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=HOMJ178AAAAJ&hl=en" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/fucai-ke-202031224/?originalSubdomain=au" },
 ]
 
-["boying-li"]
-localeKey = "boying-li"
-slug = "boying-li"
-recordType = "member"
-status = "current"
-group = "postdocs"
-sortOrder = 4
+[[member]]
 name = "Boying Li"
+group = "postdocs"
 image = "images/team/Boying.jpg"
-details = ["Postdoc (DARPA-ANSR), Monash University, 2023-now", "Working on 3D Computer vision and robotics"]
+details = [
+  "Postdoc (DARPA-ANSR), Monash University, 2023-now",
+  "Working on 3D Computer vision and robotics",
+]
 links = [
   { kind = "website", label = "Profile", url = "https://leeby68.github.io/" },
   { kind = "email", label = "Email", url = "mailto:boying.li@monash.edu" },
@@ -87,32 +77,32 @@ links = [
   { kind = "twitter", label = "Twitter", url = "https://twitter.com/BoyingLi_LBY" },
 ]
 
-["chris-austin"]
-localeKey = "chris-austin"
-slug = "chris-austin"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 1
+[[member]]
 name = "Chris Austin"
+group = "phd-students"
 image = "images/team/Chris.png"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Dr. Fabbrizio Horta (From UNSW)", "PhD student, Monash University, 2023-now", "Working on AI based clinical decision support system for IVF using time-lapse data."]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Dr. Fabbrizio Horta (From UNSW)",
+  "PhD student, Monash University, 2023-now",
+  "Working on AI based clinical decision support system for IVF using time-lapse data.",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:caus4@student.monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=ZTH_XnUAAAAJ" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/chris-r-austin/" },
 ]
 
-["sandika-biswas"]
-localeKey = "sandika-biswas"
-slug = "sandika-biswas"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 2
+[[member]]
 name = "Sandika Biswas"
+group = "phd-students"
 image = "images/team/sandika.jpg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Prof. Subhasis Chaudhuri and Prof. Biplab Banerjee", "PhD student, Monash University - IIT Bombay, 2022-now", "Working on Holistic 3D human & scene reconstruction from monocular video"]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Prof. Subhasis Chaudhuri and Prof. Biplab Banerjee",
+  "PhD student, Monash University - IIT Bombay, 2022-now",
+  "Working on Holistic 3D human & scene reconstruction from monocular video",
+]
 links = [
   { kind = "website", label = "Profile", url = "http://www.researchgate.net/profile/Sandika_Biswas/research" },
   { kind = "email", label = "Email", url = "mailto:sandika.biswas@monash.edu" },
@@ -121,47 +111,47 @@ links = [
   { kind = "twitter", label = "Twitter", url = "https://twitter.com/biswas_sandika?t=VJeJ0u0XIUs0rQ3wR-lFEA&s=09" },
 ]
 
-["cristian-rojas-cardenas"]
-localeKey = "cristian-rojas-cardenas"
-slug = "cristian-rojas-cardenas"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 3
+[[member]]
 name = "Cristian Rojas Cardenas"
+group = "phd-students"
 image = "images/team/cristian.jpg"
-details = ["Primary supervisor: Dr. Buser Say", "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi", "PhD student, Monash University, 2025-now", "Working on Robust neuro-symbolic planning"]
+details = [
+  "Primary supervisor: Dr. Buser Say",
+  "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi",
+  "PhD student, Monash University, 2025-now",
+  "Working on Robust neuro-symbolic planning",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:Cristian.RojasCardenas@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=9Kmak_oAAAAJ&hl=en&authuser=1" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/crarojasca/" },
 ]
 
-["stavya-datta"]
-localeKey = "stavya-datta"
-slug = "stavya-datta"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 4
+[[member]]
 name = "Stavya Datta"
+group = "phd-students"
 image = "images/team/stavya.jpeg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Prof. Pamela Carreno and Prof. Dana Kulic", "PhD student, Monash University, 2025-now", "Working on Robot-human interaction using computer vision techniques and large language models."]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Prof. Pamela Carreno and Prof. Dana Kulic",
+  "PhD student, Monash University, 2025-now",
+  "Working on Robot-human interaction using computer vision techniques and large language models.",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:sdat0008@student.monash.edu" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/stavyadatta/" },
 ]
 
-["saikat-dutta"]
-localeKey = "saikat-dutta"
-slug = "saikat-dutta"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 5
+[[member]]
 name = "Saikat Dutta"
+group = "phd-students"
 image = "images/team/saikat.jpg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Prof. Biplab Banerjee", "PhD student, Monash University - IIT Bombay, 2023-now", "Working on Self-supervised approaches for dense prediction tasks from images"]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Prof. Biplab Banerjee",
+  "PhD student, Monash University - IIT Bombay, 2023-now",
+  "Working on Self-supervised approaches for dense prediction tasks from images",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:saikat.dutta779@gmail.com" },
   { kind = "website", label = "Website", url = "https://saikatdutta.github.io/" },
@@ -169,64 +159,63 @@ links = [
   { kind = "twitter", label = "Twitter", url = "https://twitter.com/saikat_dutta779" },
 ]
 
-["chenhui-gou"]
-localeKey = "chenhui-gou"
-slug = "chenhui-gou"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 6
+[[member]]
 name = "Chenhui Gou"
+group = "phd-students"
 image = "images/team/Chenhui.png"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Prof. Jianfei Cai", "PhD student, Monash University, 2023-now", "Working on Visual perception and Reasoning for AI agent."]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Prof. Jianfei Cai",
+  "PhD student, Monash University, 2023-now",
+  "Working on Visual perception and Reasoning for AI agent.",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:Chenhui.Gou@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com.au/citations?user=tlhShPsAAAAJ&hl=en&oi=ao" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/chenhui-gou-9201081a1/" },
 ]
 
-["simindokht-jahangard"]
-localeKey = "simindokht-jahangard"
-slug = "simindokht-jahangard"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 7
+[[member]]
 name = "Simindokht Jahangard"
+group = "phd-students"
 image = "images/team/Simin.jpg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "PhD student, Monash University, 2022-now", "Working on Human social group and activity undrestanding"]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "PhD student, Monash University, 2022-now",
+  "Working on Human social group and activity undrestanding",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:simindokht.jahangard@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=1bMrjtkAAAAJ&hl=en&oi=ao" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/simindokht-jahangard-3009504b/" },
 ]
 
-["tho-le"]
-localeKey = "tho-le"
-slug = "tho-le"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 8
+[[member]]
 name = "Tho Le"
+group = "phd-students"
 image = "images/team/Tho.jpeg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Prof. Jianfei Cai", "PhD student, Monash University, 2022-now", "Working on Multi-modal object detection, tracking, and navigation"]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Prof. Jianfei Cai",
+  "PhD student, Monash University, 2022-now",
+  "Working on Multi-modal object detection, tracking, and navigation",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:dtho.97@gmail.com" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=ufvAmAIAAAAJ" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/duy-tho-le-7745bb106" },
 ]
 
-["mahyar-jahani-nasab"]
-localeKey = "mahyar-jahani-nasab"
-slug = "mahyar-jahani-nasab"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 9
+[[member]]
 name = "Mahyar Jahani Nasab"
+group = "phd-students"
 image = "images/team/Mahyar.JPG"
-details = ["Primary supervisor: Dr. Buser Say", "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi", "PhD student, Monash University, 2025-now", "Working on Assured Neuro-symbolic Sequential Decision Making with Physics Informed Neural Networks"]
+details = [
+  "Primary supervisor: Dr. Buser Say",
+  "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi",
+  "PhD student, Monash University, 2025-now",
+  "Working on Assured Neuro-symbolic Sequential Decision Making with Physics Informed Neural Networks",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:jahaninasab.mahyar@gmail.com" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=D2dQ6R8AAAAJ&hl=en" },
@@ -235,48 +224,48 @@ links = [
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/mahyar-jahaninasab-050342115" },
 ]
 
-["hassan-saadatmand"]
-localeKey = "hassan-saadatmand"
-slug = "hassan-saadatmand"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 10
+[[member]]
 name = "Hassan Saadatmand"
+group = "phd-students"
 image = "images/team/Hassan.jpg"
-details = ["Primary supervisor: Dr. Mahsa Salehi", "Co-supervisor(s): Prof. Hamid Rezatofighi", "PhD student, Monash University, 2025-now", "Working on Time Series Analysis with Deep Learning"]
+details = [
+  "Primary supervisor: Dr. Mahsa Salehi",
+  "Co-supervisor(s): Prof. Hamid Rezatofighi",
+  "PhD student, Monash University, 2025-now",
+  "Working on Time Series Analysis with Deep Learning",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:hassan.saadatmand@monash.edu" },
   { kind = "scholar", label = "Google Scholar", url = "https://scholar.google.com/citations?user=4Wh8_SwAAAAJ&hl=en" },
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/hassan-saadatmand-0a743b155" },
 ]
 
-["meng-wei"]
-localeKey = "meng-wei"
-slug = "meng-wei"
-recordType = "member"
-status = "current"
-group = "phd-students"
-sortOrder = 11
+[[member]]
 name = "Meng Wei"
+group = "phd-students"
 image = "images/team/meng.jpg"
-details = ["Primary supervisor: Prof. Jianfei Cai", "Co-supervisor(s): Prof. Hamid Rezatofighi", "PhD student, Monash University, 2024-now", "Working on Neural rendering & 3D reconstruction"]
+details = [
+  "Primary supervisor: Prof. Jianfei Cai",
+  "Co-supervisor(s): Prof. Hamid Rezatofighi",
+  "PhD student, Monash University, 2024-now",
+  "Working on Neural rendering & 3D reconstruction",
+]
 links = [
   { kind = "email", label = "Email", url = "mailto:Meng.Wei@monash.edu" },
   { kind = "github", label = "GitHub", url = "https://github.com/Meng-Wei" },
-  { kind = "github", label = "GitHub", url = "https://linkedin.com/in/meng-wei-66687a105" },
+  { kind = "linkedin", label = "LinkedIn", url = "https://linkedin.com/in/meng-wei-66687a105" },
 ]
 
-["nishant-panchal"]
-localeKey = "nishant-panchal"
-slug = "nishant-panchal"
-recordType = "member"
-status = "current"
-group = "master-and-undergrad-students"
-sortOrder = 1
+[[member]]
 name = "Nishant Panchal"
+group = "master-and-undergrad-students"
 image = "images/team/nishant.jpeg"
-details = ["Primary supervisor: Prof. Hamid Rezatofighi", "Co-supervisor(s): Dr. Sukai Huang", "Honours student, Monash University, 2026-now", "Working on LLMs for Planning & LLMs for embodied agents."]
+details = [
+  "Primary supervisor: Prof. Hamid Rezatofighi",
+  "Co-supervisor(s): Dr. Sukai Huang",
+  "Honours student, Monash University, 2026-now",
+  "Working on LLMs for Planning & LLMs for embodied agents.",
+]
 links = [
   { kind = "website", label = "Profile", url = "https://www.linkedin.com/in/nishantppanchal" },
   { kind = "email", label = "Email", url = "mailto:npan0028@student.monash.edu" },
@@ -284,392 +273,259 @@ links = [
   { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/nishantppanchal/" },
 ]
 
-["huangying-zhan"]
-localeKey = "huangying-zhan"
-slug = "huangying-zhan"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-postdocs"
-sortOrder = 1
+[[alumni]]
 name = "Huangying Zhan"
-details = ["Postdoc, University of Adelaide, 2020-2022", "Now Scientist at OPPO US Research Center"]
-links = [
-  { kind = "external", label = "External link", url = "https://huangying-zhan.github.io/" },
+group = "postdocs"
+details = [
+  "Postdoc, University of Adelaide, 2020-2022",
+  "Now Scientist at OPPO US Research Center",
 ]
+link = "https://huangying-zhan.github.io/"
 
-["fucai-ke-2"]
-localeKey = "fucai-ke-2"
-slug = "fucai-ke-2"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 1
+[[alumni]]
 name = "Fucai Ke"
-details = ["PhD, Monash University, 2022-2026", "Now Postdoc at Monash University"]
-links = [
-  { kind = "email", label = "Email", url = "mailto:fucai.ke1@monash.edu" },
+group = "phd-students"
+details = [
+  "PhD, Monash University, 2022-2026",
+  "Now Postdoc at Monash University",
 ]
+link = "mailto:fucai.ke1@monash.edu"
 
-["ruth-emely-pierau"]
-localeKey = "ruth-emely-pierau"
-slug = "ruth-emely-pierau"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 2
+[[alumni]]
 name = "Ruth-Emely Pierau"
-details = ["PhD, Monash University, 2021-2025", "Now Research Engineer at FFT (Future Fibre Technology)"]
-links = [
-  { kind = "email", label = "Email", url = "mailto:ruth-emely.pierau@monash.edu" },
+group = "phd-students"
+details = [
+  "PhD, Monash University, 2021-2025",
+  "Now Research Engineer at FFT (Future Fibre Technology)",
 ]
+link = "mailto:ruth-emely.pierau@monash.edu"
 
-["mohamed-salih"]
-localeKey = "mohamed-salih"
-slug = "mohamed-salih"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 3
+[[alumni]]
 name = "Mohamed Salih"
+group = "phd-students"
 details = ["PhD, Monash University, 2020-2025"]
-links = [
-  { kind = "email", label = "Email", url = "mailto:mohamed.salih@monash.edu" },
-]
+link = "mailto:mohamed.salih@monash.edu"
 
-["chen-fei"]
-localeKey = "chen-fei"
-slug = "chen-fei"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 4
+[[alumni]]
 name = "Chen Fei"
-details = ["PhD, University of Adelaide, 2018-2024 Now Postdoc at University of Adelaide"]
-links = [
-  { kind = "email", label = "Email", url = "mailto:a1650595@student.adelaide.edu.au" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2018-2024",
+  "Now Postdoc at University of Adelaide",
 ]
+link = "mailto:a1650595@student.adelaide.edu.au"
 
-["mahsa-ehsanpour"]
-localeKey = "mahsa-ehsanpour"
-slug = "mahsa-ehsanpour"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 5
+[[alumni]]
 name = "Mahsa Ehsanpour"
-details = ["PhD, University of Adelaide, 2018-2024", "Researcher at Harrison.ai"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://au.linkedin.com/in/mahsa-ehsanpour/" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2018-2024",
+  "Researcher at Harrison.ai",
 ]
+link = "https://au.linkedin.com/in/mahsa-ehsanpour/"
 
-["chamath-abeysinghe"]
-localeKey = "chamath-abeysinghe"
-slug = "chamath-abeysinghe"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 6
+[[alumni]]
 name = "Chamath Abeysinghe"
-details = ["PhD, Monash University, 2020-2024", "Now Research Engineer at PrimeSens"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/chamathabeysinghe/" },
+group = "phd-students"
+details = [
+  "PhD, Monash University, 2020-2024",
+  "Now Research Engineer at PrimeSens",
 ]
+link = "https://www.linkedin.com/in/chamathabeysinghe/"
 
-["alan-tianyu-zhu"]
-localeKey = "alan-tianyu-zhu"
-slug = "alan-tianyu-zhu"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 7
+[[alumni]]
 name = "Alan Tianyu Zhu"
-details = ["PhD, Monash University, 2018-2023", "Now Scientist at Amazon"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/alan-zhu-37504a147" },
+group = "phd-students"
+details = [
+  "PhD, Monash University, 2018-2023",
+  "Now Scientist at Amazon",
 ]
+link = "https://www.linkedin.com/in/alan-zhu-37504a147"
 
-["kejie-li"]
-localeKey = "kejie-li"
-slug = "kejie-li"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 8
+[[alumni]]
 name = "Kejie Li"
-details = ["PhD, University of Adelaide, 2017-2021", "Now a Postdoc at the University of Oxford"]
-links = [
-  { kind = "external", label = "External link", url = "https://likojack.github.io/kejieli/#/home" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2017-2021",
+  "Now a Postdoc at the University of Oxford",
 ]
+link = "https://likojack.github.io/kejieli/#/home"
 
-["alireza-abedin-varamin"]
-localeKey = "alireza-abedin-varamin"
-slug = "alireza-abedin-varamin"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 9
+[[alumni]]
 name = "Alireza Abedin Varamin"
-details = ["PhD, University of Adelaide, 2017-2020", "Graduated with Dean's Commendation for Doctoral Thesis Excellence", "Now Research Engineer at Aerometrex Pty. Ltd"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/aliab3din/?originalSubdomain=au" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2017-2020",
+  "Graduated with Dean's Commendation for Doctoral Thesis Excellence",
+  "Now Research Engineer at Aerometrex Pty. Ltd",
 ]
+link = "https://www.linkedin.com/in/aliab3din/?originalSubdomain=au"
 
-["hoa-van-nguyen"]
-localeKey = "hoa-van-nguyen"
-slug = "hoa-van-nguyen"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 10
+[[alumni]]
 name = "Hoa Van Nguyen"
-details = ["PhD, University of Adelaide, 2016-2020", "Graduated with Dean's Commendation for Doctoral Thesis Excellence", "Now a Lecturer at Curtin University"]
-links = [
-  { kind = "external", label = "External link", url = "https://sites.google.com/view/hoa-van-nguyen/home" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2016-2020",
+  "Graduated with Dean's Commendation for Doctoral Thesis Excellence",
+  "Now a Lecturer at Curtin University",
 ]
+link = "https://sites.google.com/view/hoa-van-nguyen/home"
 
-["chongyu-liu"]
-localeKey = "chongyu-liu"
-slug = "chongyu-liu"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-phd-students"
-sortOrder = 11
+[[alumni]]
 name = "Chongyu Liu"
-details = ["PhD, University of Adelaide, 2016-2019", "Now working at KIKTech Robotics Pty. Ltd"]
-links = [
-  { kind = "external", label = "External link", url = "https://digital.library.adelaide.edu.au/dspace/handle/2440/120160" },
+group = "phd-students"
+details = [
+  "PhD, University of Adelaide, 2016-2019",
+  "Now working at KIKTech Robotics Pty. Ltd",
 ]
+link = "https://digital.library.adelaide.edu.au/dspace/handle/2440/120160"
 
-["yuan-zou"]
-localeKey = "yuan-zou"
-slug = "yuan-zou"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 1
+[[alumni]]
 name = "Yuan Zou"
+group = "master-and-undergrad-students"
 details = ["Masters student, Monash University, 2025-2026"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/yuan-zou-2a4035352/" },
-]
+link = "https://www.linkedin.com/in/yuan-zou-2a4035352/"
 
-["riddhi-sawant"]
-localeKey = "riddhi-sawant"
-slug = "riddhi-sawant"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 2
+[[alumni]]
 name = "Riddhi Sawant"
+group = "master-and-undergrad-students"
 details = ["Masters student, Monash University, 2025-2026"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/riddhisaw/" },
-]
+link = "https://www.linkedin.com/in/riddhisaw/"
 
-["stavya-datta-2"]
-localeKey = "stavya-datta-2"
-slug = "stavya-datta-2"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 3
+[[alumni]]
 name = "Stavya Datta"
-details = ["Masters student, Monash University, 2024-2025", "Now PhD at Monash University"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/stavyadatta/" },
+group = "master-and-undergrad-students"
+details = [
+  "Masters student, Monash University, 2024-2025",
+  "Now PhD at Monash University",
 ]
+link = "https://www.linkedin.com/in/stavyadatta/"
 
-["shuo-chen"]
-localeKey = "shuo-chen"
-slug = "shuo-chen"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 4
+[[alumni]]
 name = "Shuo Chen"
+group = "master-and-undergrad-students"
 details = ["Honours student, Monash University, 2023-2024"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/shuo-chen-7747a7246/" },
-]
+link = "https://www.linkedin.com/in/shuo-chen-7747a7246/"
 
-["shiki-wen"]
-localeKey = "shiki-wen"
-slug = "shiki-wen"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 5
+[[alumni]]
 name = "Shiki Wen"
-details = ["Masters student, Monash University, 2023-2024", "Now working with EnergyAustralia as Software Engineer"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/shiki-wen-65536/" },
+group = "master-and-undergrad-students"
+details = [
+  "Masters student, Monash University, 2023-2024",
+  "Now working with EnergyAustralia as Software Engineer",
 ]
+link = "https://www.linkedin.com/in/shiki-wen-65536/"
 
-["wangjie-zhong"]
-localeKey = "wangjie-zhong"
-slug = "wangjie-zhong"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 6
+[[alumni]]
 name = "Wangjie Zhong"
-details = ["Undergrad, Monash University, 2019-2023", "Now working with Commonwealth Bank"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/wangjie-zhong-54a695177/" },
+group = "master-and-undergrad-students"
+details = [
+  "Undergrad, Monash University, 2019-2023",
+  "Now working with Commonwealth Bank",
 ]
+link = "https://www.linkedin.com/in/wangjie-zhong-54a695177/"
 
-["chris-austin-2"]
-localeKey = "chris-austin-2"
-slug = "chris-austin-2"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 7
+[[alumni]]
 name = "Chris Austin"
-details = ["Master, Monash University, 2020-2022", "Now PhD at Monash University"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/chris-r-austin" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Monash University, 2020-2022",
+  "Now PhD at Monash University",
 ]
+link = "https://www.linkedin.com/in/chris-r-austin"
 
-["kaustubh-kundu"]
-localeKey = "kaustubh-kundu"
-slug = "kaustubh-kundu"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 8
+[[alumni]]
 name = "Kaustubh Kundu"
-details = ["Master, Monash University, 2021-2022", "Now PhD at Monash University"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/kaustubh-kundu-3509b689" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Monash University, 2021-2022",
+  "Now PhD at Monash University",
 ]
+link = "https://www.linkedin.com/in/kaustubh-kundu-3509b689"
 
-["edward-vendrow"]
-localeKey = "edward-vendrow"
-slug = "edward-vendrow"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 9
+[[alumni]]
 name = "Edward Vendrow"
-details = ["Undergrad & Master, Stanford University, 2018-2023", "Now PhD at Massachusetts Institute of Technology"]
-links = [
-  { kind = "external", label = "External link", url = "https://edwardv.com/" },
+group = "master-and-undergrad-students"
+details = [
+  "Undergrad & Master, Stanford University, 2018-2023",
+  "Now PhD at Massachusetts Institute of Technology",
 ]
+link = "https://edwardv.com/"
 
-["mihir-patel"]
-localeKey = "mihir-patel"
-slug = "mihir-patel"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 10
+[[alumni]]
 name = "Mihir Patel"
-details = ["Master, Stanford University, 2019-2021", "Now A Quantitative Researcher at Citadel"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/mvpatel2000/" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Stanford University, 2019-2021",
+  "Now A Quantitative Researcher at Citadel",
 ]
+link = "https://www.linkedin.com/in/mvpatel2000/"
 
-["andrew-sharp"]
-localeKey = "andrew-sharp"
-slug = "andrew-sharp"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 11
+[[alumni]]
 name = "Andrew Sharp"
-details = ["Master, Stanford University, 2019-2021", "Now a data scientist working at Massachusetts General Hospital"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/andrew-w-sharp" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Stanford University, 2019-2021",
+  "Now a data scientist working at Massachusetts General Hospital",
 ]
+link = "https://www.linkedin.com/in/andrew-w-sharp"
 
-["vida-adeli"]
-localeKey = "vida-adeli"
-slug = "vida-adeli"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 12
+[[alumni]]
 name = "Vida Adeli"
-details = ["Master, 2019-2021", "Now PhD at University of Toronto"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/vida-adeli-3a970384/?originalSubdomain=ca" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, 2019-2021",
+  "Now PhD at University of Toronto",
 ]
+link = "https://www.linkedin.com/in/vida-adeli-3a970384/?originalSubdomain=ca"
 
-["krishna-mundada"]
-localeKey = "krishna-mundada"
-slug = "krishna-mundada"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 13
+[[alumni]]
 name = "Krishna Mundada"
+group = "master-and-undergrad-students"
 details = ["Master, Monash University, 2019-2021"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/krishna-kanth-mundada-376ab6a5/?originalSubdomain=au" },
-]
+link = "https://www.linkedin.com/in/krishna-kanth-mundada-376ab6a5/?originalSubdomain=au"
 
-["vineet-kosaraju"]
-localeKey = "vineet-kosaraju"
-slug = "vineet-kosaraju"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 14
+[[alumni]]
 name = "Vineet Kosaraju"
-details = ["Master, Stanford University, 2018-2020", "Now working at OpenAI"]
-links = [
-  { kind = "external", label = "External link", url = "http://vineetkosaraju.com/#about" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Stanford University, 2018-2020",
+  "Now working at OpenAI",
 ]
+link = "http://vineetkosaraju.com/#about"
 
-["abhijeet-shenoi"]
-localeKey = "abhijeet-shenoi"
-slug = "abhijeet-shenoi"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 15
+[[alumni]]
 name = "Abhijeet Shenoi"
-details = ["Master, Stanford University, 2018-2020", "Now working at Hakimo"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/ashenoi/" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Stanford University, 2018-2020",
+  "Now working at Hakimo",
 ]
+link = "https://www.linkedin.com/in/ashenoi/"
 
-["roman-kaskman"]
-localeKey = "roman-kaskman"
-slug = "roman-kaskman"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 16
+[[alumni]]
 name = "Roman Kaskman"
-details = ["Master, Technical University of Munich, 2017-2018", "Now working at Siemens"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/roman-kaskman-083370123/?originalSubdomain=de" },
+group = "master-and-undergrad-students"
+details = [
+  "Master, Technical University of Munich, 2017-2018",
+  "Now working at Siemens",
 ]
+link = "https://www.linkedin.com/in/roman-kaskman-083370123/?originalSubdomain=de"
 
-["nathan-tsoi"]
-localeKey = "nathan-tsoi"
-slug = "nathan-tsoi"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 17
+[[alumni]]
 name = "Nathan Tsoi"
-details = ["Undergrad, Stanford University, 2017-2018", "Now a PhD student at Yale University"]
-links = [
-  { kind = "external", label = "External link", url = "https://www.nathantsoi.com/" },
+group = "master-and-undergrad-students"
+details = [
+  "Undergrad, Stanford University, 2017-2018",
+  "Now a PhD student at Yale University",
 ]
+link = "https://www.nathantsoi.com/"
 
-["farbod-t-motlagh"]
-localeKey = "farbod-t-motlagh"
-slug = "farbod-t-motlagh"
-recordType = "alumnus"
-status = "alumni"
-group = "alumni-master-and-undergrad-students"
-sortOrder = 18
+[[alumni]]
 name = "Farbod T. Motlagh"
-details = ["Undergrad-Honours degree, University of Adelaide, 2016-2019", "Now working at Google AI"]
-links = [
-  { kind = "linkedin", label = "LinkedIn", url = "https://www.linkedin.com/in/farbod-motlagh-8062204a/" },
+group = "master-and-undergrad-students"
+details = [
+  "Undergrad-Honours degree, University of Adelaide, 2016-2019",
+  "Now working at Google AI",
 ]
+link = "https://www.linkedin.com/in/farbod-motlagh-8062204a/"

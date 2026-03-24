@@ -53,9 +53,39 @@ Edit these files:
 
 Important constraints:
 
-- `localeKey` and `slug` should match.
-- current members should keep an `image`.
-- each person should expose at least one entry in `links`.
+- use compact `[[member]]` and `[[alumni]]` tables in the single `src/content/people/index.toml` file
+- keep `group` editor-facing and simple: `director`, `postdocs`, `phd-students`, or `master-and-undergrad-students`
+- `[[member]]` entries must include `name`, `group`, `image`, `details`, and `links`
+- `[[alumni]]` entries must include `name`, `group`, and `details`, and may include one optional `link`
+- the site derives each people entry id automatically from `table type + name` and adds a numeric suffix only on collision
+- `/people/` keeps the existing section block order and preserves TOML file order within each rendered section
+- the homepage reads the one current `[[member]]` entry whose `group` is `director`
+
+Example:
+
+```toml
+[[member]]
+name = "A/Prof. Hamid Rezatofighi"
+group = "director"
+image = "images/team/115_Hamid Rezatofigih_10012025.jpg"
+details = [
+  "Associate Professor, Department of Data Science & AI",
+  "Interested in Computer vision, Robot vision & Deep learning",
+]
+links = [
+  { kind = "email", label = "Email", url = "mailto:Hamid.Rezatofighi@monash.edu" },
+  { kind = "website", label = "Website", url = "https://research.monash.edu/en/persons/hamid-rezatofighi" },
+]
+
+[[alumni]]
+name = "Huangying Zhan"
+group = "postdocs"
+details = [
+  "Postdoc, University of Adelaide, 2020-2022",
+  "Now Scientist at OPPO US Research Center",
+]
+link = "https://huangying-zhan.github.io/"
+```
 
 ### Research `/research/`
 

@@ -32,11 +32,12 @@ if (!peopleRouteCopy) {
   throw new Error('Expected a route-copy entry for /people/ in the site collection.');
 }
 
-const sortPeopleEntries = (left: PersonEntry, right: PersonEntry) =>
-  left.data.sortOrder - right.data.sortOrder || left.data.name.localeCompare(right.data.name);
+const peopleEntriesInAuthorOrder = peopleEntries
+  .slice()
+  .sort((left, right) => left.data.sequence - right.data.sequence || left.id.localeCompare(right.id));
 
-const currentEntries = peopleEntries.filter((entry) => entry.data.status === 'current').sort(sortPeopleEntries);
-const alumniEntries = peopleEntries.filter((entry) => entry.data.status === 'alumni').sort(sortPeopleEntries);
+const currentEntries = peopleEntriesInAuthorOrder.filter((entry) => entry.data.recordType === 'member');
+const alumniEntries = peopleEntriesInAuthorOrder.filter((entry) => entry.data.recordType === 'alumni');
 const director = currentEntries.find((entry) => entry.data.group === 'director');
 
 if (!director) {

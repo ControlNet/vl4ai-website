@@ -109,6 +109,12 @@ const isoDateSchema = trimmedString()
   .refine((value) => !Number.isNaN(Date.parse(value)), 'Date value is not parseable.');
 
 const nonNegativeIntegerSchema = z.number().int().nonnegative();
+const peopleGroupSchema = z.enum([
+  'director',
+  'postdocs',
+  'phd-students',
+  'master-and-undergrad-students',
+]);
 
 const linkSchema = z
   .object({
@@ -157,6 +163,94 @@ const canonicalizeIdentifierSegment = (value: string) => {
 
 const inferNewsEntryIdBase = (date: string, title: string) =>
   `${date.trim()}-${canonicalizeIdentifierSegment(title.trim())}`;
+
+const inferPeopleEntryIdBase = (tableType: 'member' | 'alumni', name: string) =>
+  `${tableType}-${canonicalizeIdentifierSegment(name.trim())}`;
+
+const getCompactTomlNestingDepth = (value: string) => {
+  let squareBracketDepth = 0;
+  let curlyBracketDepth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (const character of value) {
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+
+      if (character === '\\') {
+        escaped = true;
+        continue;
+      }
+
+      if (character === '"') {
+        inString = false;
+      }
+
+      continue;
+    }
+
+    if (character === '"') {
+      inString = true;
+      continue;
+    }
+
+    if (character === '[') {
+      squareBracketDepth += 1;
+      continue;
+    }
+
+    if (character === ']') {
+      squareBracketDepth -= 1;
+      continue;
+    }
+
+    if (character === '{') {
+      curlyBracketDepth += 1;
+      continue;
+    }
+
+    if (character === '}') {
+      curlyBracketDepth -= 1;
+    }
+  }
+
+  return squareBracketDepth + curlyBracketDepth;
+};
+
+const parseCompactTomlValue = (collectionName: string, fieldName: string, rawValueLiteral: string, lineNumber: number): unknown => {
+  if (/^"(?:[^"\\]|\\.)*"$/u.test(rawValueLiteral)) {
+    try {
+      return JSON.parse(rawValueLiteral) as string;
+    } catch {
+      throw new Error(`[content:${collectionName}] Invalid string value for ${fieldName} at line ${lineNumber}.`);
+    }
+  }
+
+  if (rawValueLiteral.startsWith('[')) {
+    const jsonLikeLiteral = rawValueLiteral
+      .replace(/(^|[{,]\s*)([A-Za-z][A-Za-z0-9_-]*)\s*=/gmu, '$1"$2":')
+      .replace(/,(\s*[\]}])/gu, '$1');
+
+    try {
+      return JSON.parse(jsonLikeLiteral) as unknown[];
+    } catch {
+      throw new Error(`[content:${collectionName}] Invalid array value for ${fieldName} at line ${lineNumber}.`);
+    }
+  }
+
+  throw new Error(
+    `[content:${collectionName}] Only quoted strings and arrays are supported for ${fieldName} at line ${lineNumber}.`,
+  );
+};
+
+const inferCompactPeopleLink = (url: string) => ({
+  kind: url.startsWith('mailto:') ? 'email' : 'external',
+  label: url.startsWith('mailto:') ? 'Email' : 'External link',
+  url,
+});
 
 const parseCompactNewsItems = (text: string): Record<string, Record<string, unknown>> => {
   const rawItems: Record<string, unknown>[] = [];
@@ -238,6 +332,173 @@ const parseCompactNewsItems = (text: string): Record<string, Record<string, unkn
   );
 };
 
+const compactPeopleFieldNames = {
+  member: ['name', 'group', 'image', 'details', 'links'],
+  alumni: ['name', 'group', 'details', 'link'],
+} as const;
+
+type CompactPeopleTableType = keyof typeof compactPeopleFieldNames;
+
+type RawCompactPeopleEntry = {
+  tableType: CompactPeopleTableType;
+  lineNumber: number;
+  fields: Record<string, unknown>;
+};
+
+const parseCompactPeopleEntries = (text: string): Record<string, Record<string, unknown>> => {
+  const rawEntries: RawCompactPeopleEntry[] = [];
+  let currentEntry: RawCompactPeopleEntry | undefined;
+  const lines = text.split(/\r?\n/u);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const lineNumber = index + 1;
+    const line = lines[index] ?? '';
+    const trimmedLine = line.trim();
+
+    if (trimmedLine.length === 0 || trimmedLine.startsWith('#')) {
+      continue;
+    }
+
+    if (trimmedLine === '[[member]]' || trimmedLine === '[[alumni]]') {
+      currentEntry = {
+        tableType: trimmedLine === '[[member]]' ? 'member' : 'alumni',
+        lineNumber,
+        fields: {},
+      };
+      rawEntries.push(currentEntry);
+      continue;
+    }
+
+    if (!currentEntry) {
+      throw new Error(`[content:people] Expected [[member]] or [[alumni]] before properties at line ${lineNumber}.`);
+    }
+
+    const fieldMatch = trimmedLine.match(/^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*(.+)$/u);
+
+    if (!fieldMatch) {
+      throw new Error(`[content:people] Could not parse line ${lineNumber}: ${trimmedLine}`);
+    }
+
+    const [, fieldName, initialRawValueLiteral] = fieldMatch;
+    const allowedFieldNames: readonly string[] = compactPeopleFieldNames[currentEntry.tableType];
+
+    if (!allowedFieldNames.includes(fieldName)) {
+      throw new Error(
+        `[content:people] Unsupported field "${fieldName}" in [[${currentEntry.tableType}]] at line ${lineNumber}. ` +
+          `Allowed fields: ${allowedFieldNames.join(', ')}.`,
+      );
+    }
+
+    if (fieldName in currentEntry.fields) {
+      throw new Error(`[content:people] Duplicate field "${fieldName}" in [[${currentEntry.tableType}]] at line ${lineNumber}.`);
+    }
+
+    let rawValueLiteral = initialRawValueLiteral;
+    let nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+
+    while (nestingDepth > 0) {
+      index += 1;
+      const continuationLine = lines[index];
+
+      if (continuationLine === undefined) {
+        throw new Error(
+          `[content:people] Unterminated value for ${fieldName} in [[${currentEntry.tableType}]] starting at line ${lineNumber}.`,
+        );
+      }
+
+      rawValueLiteral += `\n${continuationLine.trim()}`;
+      nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+    }
+
+    currentEntry.fields[fieldName] = parseCompactTomlValue('people', fieldName, rawValueLiteral, lineNumber);
+  }
+
+  if (rawEntries.length === 0) {
+    throw new Error('[content:people] Expected src/content/people/index.toml to define at least one [[member]] or [[alumni]] entry.');
+  }
+
+  const seenIds = new Map<string, number>();
+
+  return Object.fromEntries(
+    rawEntries.map((rawEntry, sequence) => {
+      const entry = toRecord(rawEntry.fields);
+      const rawName = entry.name;
+      const rawGroup = entry.group;
+      const rawDetails = entry.details;
+
+      if (typeof rawName !== 'string' || rawName.trim().length === 0) {
+        throw new Error(
+          `[content:people] [[${rawEntry.tableType}]] starting at line ${rawEntry.lineNumber} is missing a non-empty string name field.`,
+        );
+      }
+
+      if (typeof rawGroup !== 'string' || rawGroup.trim().length === 0) {
+        throw new Error(
+          `[content:people] [[${rawEntry.tableType}]] "${rawName}" is missing a non-empty string group field.`,
+        );
+      }
+
+      if (!Array.isArray(rawDetails) || rawDetails.length === 0) {
+        throw new Error(`[content:people] [[${rawEntry.tableType}]] "${rawName}" must include a non-empty details array.`);
+      }
+
+      if (rawDetails.some((detail) => typeof detail !== 'string' || detail.trim().length === 0)) {
+        throw new Error(`[content:people] [[${rawEntry.tableType}]] "${rawName}" details must contain only non-empty strings.`);
+      }
+
+      const baseId = inferPeopleEntryIdBase(rawEntry.tableType, rawName);
+      const nextCollisionCount = (seenIds.get(baseId) ?? 0) + 1;
+      seenIds.set(baseId, nextCollisionCount);
+
+      const id = nextCollisionCount === 1 ? baseId : `${baseId}-${nextCollisionCount}`;
+
+      if (rawEntry.tableType === 'member') {
+        const rawImage = entry.image;
+        const rawLinks = entry.links;
+
+        if (typeof rawImage !== 'string' || rawImage.trim().length === 0) {
+          throw new Error(`[content:people] [[member]] "${rawName}" must include a non-empty string image field.`);
+        }
+
+        if (!Array.isArray(rawLinks) || rawLinks.length === 0) {
+          throw new Error(`[content:people] [[member]] "${rawName}" must include a non-empty links array.`);
+        }
+
+        return [
+          id,
+          {
+            recordType: 'member',
+            group: rawGroup,
+            sequence,
+            name: rawName,
+            image: rawImage,
+            details: rawDetails,
+            links: rawLinks,
+          },
+        ];
+      }
+
+      const rawLink = entry.link;
+
+      if (rawLink !== undefined && (typeof rawLink !== 'string' || rawLink.trim().length === 0)) {
+        throw new Error(`[content:people] [[alumni]] "${rawName}" link must be a non-empty string when provided.`);
+      }
+
+      return [
+        id,
+        {
+          recordType: 'alumni',
+          group: rawGroup,
+          sequence,
+          name: rawName,
+          details: rawDetails,
+          links: typeof rawLink === 'string' ? [inferCompactPeopleLink(rawLink)] : [],
+        },
+      ];
+    }),
+  );
+};
+
 const site = defineCollection({
   loader: withDuplicateIdentifierValidation(
     glob({ pattern: '**/*.{md,toml}', base: './src/content/site' }),
@@ -298,36 +559,34 @@ const site = defineCollection({
 });
 
 const people = defineCollection({
-  loader: withDuplicateIdentifierValidation(file('src/content/people/index.toml'), ['localeKey', 'slug']),
+  loader: file('src/content/people/index.toml', {
+    parser: parseCompactPeopleEntries,
+  }),
   schema: z
     .object({
-      localeKey: canonicalId(),
-      slug: canonicalId(),
-      recordType: z.enum(['member', 'alumnus']),
-      status: z.enum(['current', 'alumni']),
-      group: z.enum([
-        'director',
-        'postdocs',
-        'phd-students',
-        'master-and-undergrad-students',
-        'alumni-postdocs',
-        'alumni-phd-students',
-        'alumni-master-and-undergrad-students',
-      ]),
-      sortOrder: positiveSortOrder,
+      recordType: z.enum(['member', 'alumni']),
+      group: peopleGroupSchema,
+      sequence: nonNegativeIntegerSchema,
       name: trimmedString(),
       image: assetPathSchema.optional(),
       details: z.array(trimmedString()).min(1),
-      links: z.array(linkSchema).min(1),
+      links: z.array(linkSchema).default([]),
     })
     .strict()
     .superRefine((value, ctx) => {
-      enforceCanonicalSlug(value, ctx);
-      if (value.status === 'current' && !value.image) {
+      if (value.recordType === 'member' && !value.image) {
         ctx.addIssue({
           code: 'custom',
-          message: 'Current members must include an image asset path.',
+          message: 'Members must include an image asset path.',
           path: ['image'],
+        });
+      }
+
+      if (value.recordType === 'member' && value.links.length === 0) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Members must include at least one link.',
+          path: ['links'],
         });
       }
     }),
