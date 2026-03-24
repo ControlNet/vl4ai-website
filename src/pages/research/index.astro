@@ -1,0 +1,306 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { toContentAssetUrl } from '../../lib/content-assets';
+import { routeSeo } from '../../lib/page-seo';
+
+type ResearchEntry = CollectionEntry<'research'>;
+
+interface SiteRouteCopyData {
+  kind: 'route-copy';
+  localeKey: string;
+  sortOrder: number;
+  route: string;
+  title: string;
+  highlight?: string;
+  lede: string;
+}
+
+type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
+
+type ResearchTopicEntry = ResearchEntry & {
+  data: Extract<ResearchEntry['data'], { kind: 'topic' }>;
+};
+
+type ResearchBenchmarkEntry = ResearchEntry & {
+  data: Extract<ResearchEntry['data'], { kind: 'benchmark' }>;
+};
+
+interface TopicPreview {
+  slug: string;
+  title: string;
+  summary: string;
+}
+
+interface ResearchPillarViewModel {
+  key: ResearchTopicEntry['data']['category'];
+  title: string;
+  description: string;
+  imageUrl: string;
+  imageAlt: string;
+  topics: TopicPreview[];
+  orientation: 'default' | 'reverse';
+}
+
+interface BenchmarkReference {
+  slug: string;
+  title: string;
+  href: string | null;
+  external: boolean;
+}
+
+const siteEntries = await getCollection('site');
+const researchEntries = await getCollection('research');
+
+const researchRouteCopy = siteEntries.find(
+  (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/research/',
+);
+
+if (!researchRouteCopy) {
+  throw new Error('Expected a route-copy entry for /research/ in the site collection.');
+}
+
+const stripMarkdownToPlainText = (value: string) =>
+  value
+    .replace(/!\[[^\]]*\]\([^)]+\)/gu, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/gu, '$1')
+    .replace(/^#{1,6}\s+/gmu, '')
+    .replace(/^>\s?/gmu, '')
+    .replace(/[*_`]/gu, '')
+    .replace(/\s+/gu, ' ')
+    .trim();
+
+const getNonListParagraphs = (body: string) =>
+  body
+    .split(/\n\s*\n/gu)
+    .map((block) => block.trim())
+    .filter((block) => block.length > 0)
+    .filter((block) => {
+      const lines = block
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      return lines.length > 0 && !lines.every((line) => /^(?:[-*+]|\d+\.)\s/u.test(line));
+    })
+    .map(stripMarkdownToPlainText)
+    .filter((paragraph) => paragraph.length > 0);
+
+const sortResearchEntries = (left: ResearchEntry, right: ResearchEntry) =>
+  left.data.sortOrder - right.data.sortOrder || left.id.localeCompare(right.id);
+
+const resolveBenchmarkHref = (value: string) => {
+  if (/^https?:\/\//iu.test(value)) {
+    return {
+      href: value,
+      external: true,
+    };
+  }
+
+  if (value.startsWith('/') && !/\.html(?:$|[?#])/u.test(value)) {
+    return {
+      href: value,
+      external: false,
+    };
+  }
+
+  return {
+    href: null,
+    external: false,
+  };
+};
+
+const topicEntries = researchEntries
+  .filter((entry): entry is ResearchTopicEntry => entry.data.kind === 'topic')
+  .sort(sortResearchEntries);
+const benchmarkEntries = researchEntries
+  .filter((entry): entry is ResearchBenchmarkEntry => entry.data.kind === 'benchmark')
+  .sort(sortResearchEntries);
+
+const pillarMeta: Array<{
+  key: ResearchTopicEntry['data']['category'];
+  title: string;
+  icon: 'eye' | 'forecast' | 'robot';
+}> = [
+  { key: 'perception', title: 'Advanced Visual Perception', icon: 'eye' },
+  { key: 'forecasting', title: 'Forecasting & Behavior', icon: 'forecast' },
+  { key: 'navigation', title: 'Embodied Intelligence & Navigation', icon: 'robot' },
+];
+
+const pillars: ResearchPillarViewModel[] = pillarMeta.map(({ key, title }, index) => {
+  const topics = topicEntries
+    .filter((entry) => entry.data.category === key)
+    .map((entry) => ({
+      slug: entry.data.slug,
+      title: entry.data.title,
+      summary: getNonListParagraphs(entry.body ?? '')[0] ?? entry.data.title,
+    }));
+  const featuredTopicEntry = topicEntries.find((entry) => entry.data.category === key);
+
+  if (!featuredTopicEntry || topics.length === 0) {
+    throw new Error(`Expected at least one research topic in the ${key} category.`);
+  }
+
+  return {
+    key,
+    title,
+    description: topics[0]?.summary ?? researchRouteCopy.data.lede,
+    imageUrl: toContentAssetUrl(featuredTopicEntry.data.image),
+    imageAlt: `${featuredTopicEntry.data.title} research artwork`,
+    topics,
+    orientation: index % 2 === 0 ? 'default' : 'reverse',
+  };
+});
+
+const benchmarkSpotlight = benchmarkEntries[0];
+const benchmarkSpotlightDescription =
+  benchmarkSpotlight && (getNonListParagraphs(benchmarkSpotlight.body ?? '')[0] ?? benchmarkSpotlight.data.title);
+const benchmarkCtaLabel =
+  benchmarkSpotlight?.data.title.includes('JRDB') ? 'Visit JRDB Website' : 'Visit Benchmark Website';
+const benchmarkReferences: BenchmarkReference[] = benchmarkEntries.slice(1).map((entry) => ({
+  slug: entry.data.slug,
+  title: entry.data.title,
+  ...resolveBenchmarkHref(entry.data.primaryUrl),
+}));
+
+if (!benchmarkSpotlight) {
+  throw new Error('Expected at least one research benchmark entry.');
+}
+---
+
+<SiteLayout
+  title={routeSeo.research.title}
+  description={routeSeo.research.description}
+  canonicalPath="/research/"
+  socialImage={routeSeo.research.socialImage}
+  socialImageAlt={routeSeo.research.socialImageAlt}
+  activeNav="research"
+  navItems={publicNavItems}
+  navCta={navContactCta}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="research-page-header">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="text-6xl leading-none font-[900] uppercase tracking-tighter md:text-8xl">
+        {researchRouteCopy.data.title} <br /><span class="text-gray-300">{researchRouteCopy.data.highlight}</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-xl font-light text-gray-500">{researchRouteCopy.data.lede}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl divide-y divide-gray-100 px-6 py-32" data-testid="research-pillars-section">
+    {
+      pillars.map((pillar) => (
+        <div class="grid items-center gap-20 py-24 lg:grid-cols-2" data-research-pillar={pillar.key}>
+          <div class:list={[pillar.orientation === 'reverse' && 'lg:order-2', 'space-y-6']}>
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-[#003087]">
+              {
+                pillar.key === 'perception' ? (
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                ) : pillar.key === 'forecasting' ? (
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M4 18 10 12l4 4 6-8"></path>
+                    <path d="M16 8h4v4"></path>
+                  </svg>
+                ) : (
+                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <rect x="7" y="9" width="10" height="8" rx="2"></rect>
+                    <path d="M9 9V6a3 3 0 1 1 6 0v3"></path>
+                    <path d="M4 13H2"></path>
+                    <path d="M22 13h-2"></path>
+                  </svg>
+                )
+              }
+            </div>
+            <h3 class="text-4xl font-black uppercase tracking-tight">{pillar.title}</h3>
+            <p class="text-lg leading-relaxed font-light text-gray-500">{pillar.description}</p>
+            <div class="flex flex-wrap gap-2" data-testid={`research-featured-topic-${pillar.key}`}>
+              {pillar.topics.map((topic) => (
+                <span class="rounded-full bg-gray-100 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+                  {topic.title}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div
+            class:list={[
+              pillar.orientation === 'reverse' && 'lg:order-1 -skew-y-3 hover:skew-y-0',
+              pillar.orientation === 'default' && 'skew-y-3 hover:skew-y-0',
+              'overflow-hidden rounded-3xl bg-gray-100 shadow-2xl transition-transform duration-700',
+            ]}
+          >
+            <img src={pillar.imageUrl} alt={pillar.imageAlt} class="h-full w-full object-cover" />
+          </div>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="bg-gray-900 px-6 py-32 text-white" data-testid="research-impact-section">
+    <div class="mx-auto max-w-7xl">
+      <div class="mb-24 text-center">
+        <h2 class="mb-4 text-xs font-black uppercase tracking-[0.4em] text-blue-400">Community Impact</h2>
+        <h3 class="text-5xl font-black uppercase tracking-tight">Datasets &amp; Benchmarks</h3>
+      </div>
+
+      <div
+        class="flex flex-col items-center gap-16 rounded-[3rem] border border-blue-900/30 bg-gradient-to-br from-blue-900/50 to-black p-12 lg:flex-row"
+        data-testid="research-benchmark-spotlight"
+      >
+        <div class="space-y-8 lg:w-1/2">
+          <div class="inline-block rounded-lg bg-blue-600 px-6 py-2 text-xs font-black uppercase tracking-widest">
+            Global Standard
+          </div>
+          <h3 class="text-5xl font-black tracking-tighter">{benchmarkSpotlight.data.title}</h3>
+          <p class="text-lg leading-relaxed font-light text-blue-100/60">{benchmarkSpotlightDescription}</p>
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={benchmarkSpotlight.data.primaryUrl}
+              class="rounded-full bg-white px-10 py-5 text-[11px] font-black uppercase tracking-widest text-black transition hover:bg-blue-400"
+              target="_blank"
+              rel="noreferrer"
+              data-testid="research-benchmark-spotlight-link"
+            >
+              {benchmarkCtaLabel}
+            </a>
+            {benchmarkReferences.map((entry) =>
+              entry.href ? (
+                <a
+                  href={entry.href}
+                  class="rounded-full border border-blue-200/30 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-blue-100/70 transition hover:border-blue-200 hover:text-white"
+                  target={entry.external ? '_blank' : undefined}
+                  rel={entry.external ? 'noreferrer' : undefined}
+                  data-testid={`research-benchmark-link-${entry.slug}`}
+                >
+                  {entry.title}
+                </a>
+              ) : (
+                <span
+                  class="rounded-full border border-blue-200/20 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-blue-100/40"
+                  data-testid={`research-benchmark-chip-${entry.slug}`}
+                >
+                  {entry.title}
+                </span>
+              ),
+            )}
+          </div>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl shadow-2xl shadow-blue-500/10 lg:w-1/2">
+          <img
+            src={toContentAssetUrl(benchmarkSpotlight.data.image)}
+            alt={benchmarkSpotlight.data.title}
+            class="w-full transition duration-700 hover:grayscale-0"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

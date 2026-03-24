@@ -1,0 +1,289 @@
+---
+import ButtonLink from '../ui/ButtonLink.astro';
+import CardSurface from '../ui/CardSurface.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface PublicationBadge {
+  label: string;
+  tone: 'venue' | 'note';
+}
+
+interface PublicationLink {
+  label: string;
+  href: string;
+  external: boolean;
+  kind: string;
+}
+
+interface FeaturedPublicationItem {
+  slug: string;
+  title: string;
+  authorLine: string;
+  authorLineFull: string;
+  venue: string;
+  yearLabel: string;
+  imageUrl: string;
+  imageAlt: string;
+  badges: PublicationBadge[];
+  links: PublicationLink[];
+}
+
+interface Props {
+  description: string;
+  items: FeaturedPublicationItem[];
+}
+
+const { description, items } = Astro.props as Props;
+---
+
+<div class="homepage-section-stack">
+  <SectionHeading
+    eyebrow="Impact"
+    title="Seminal"
+    accent="works"
+    description={description}
+  />
+
+  {
+    items.length > 0 ? (
+      <div class="home-publications__grid" aria-label="Featured publications preview">
+        {items.map((item) => (
+          <article
+            class="home-publications__item"
+            data-testid="featured-publication"
+            data-publication-slug={item.slug}
+          >
+            <CardSurface variant="outlined" class="home-publications__surface">
+              <div class="home-publications__media">
+                <img src={item.imageUrl} alt={item.imageAlt} loading="lazy" />
+              </div>
+
+              <div class="home-publications__content">
+                <div class="home-publications__meta">
+                  <div class="home-publications__badge-row" aria-label={`${item.title} badges`}>
+                    {item.badges.map((badge) => (
+                      <span class:list={['home-publications__badge', `home-publications__badge--${badge.tone}`]}>
+                        {badge.label}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p class="home-publications__year">{item.yearLabel}</p>
+                </div>
+
+                <div class="home-publications__copy">
+                  <h3 class="home-publications__title">{item.title}</h3>
+                  <p class="home-publications__authors" title={item.authorLineFull}>{item.authorLine}</p>
+                  <p class="home-publications__venue">{item.venue}</p>
+                </div>
+
+                <div class="home-publications__link-row" aria-label={`${item.title} publication links`}>
+                  {item.links.map((link) => (
+                    <a
+                      href={link.href}
+                      class="home-publications__link"
+                      target={link.external ? '_blank' : undefined}
+                      rel={link.external ? 'noreferrer' : undefined}
+                    >
+                      <span>{link.label}</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </CardSurface>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <CardSurface variant="dashed" class="home-publications__empty-state" testId="home-publications-empty-state">
+        <p class="eyebrow-label">Publications collection</p>
+        <h3 class="primitive-card__title">No featured publications yet</h3>
+        <p class="primitive-card__copy">Homepage seminal works will appear here once publications are marked for homepage display in the collection.</p>
+      </CardSurface>
+    )
+  }
+
+  <div class="homepage-section-actions homepage-section-actions--start">
+    <ButtonLink href="/publications/" variant="secondary" testId="home-publications-archive-cta">
+      View Publications Archive
+    </ButtonLink>
+  </div>
+</div>
+
+<style>
+  .home-publications__grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .home-publications__item,
+  .home-publications__content,
+  .home-publications__copy {
+    min-width: 0;
+  }
+
+  .home-publications__surface,
+  .home-publications__content,
+  .home-publications__copy {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .home-publications__surface {
+    height: 100%;
+    padding: var(--space-5);
+  }
+
+  .home-publications__media {
+    overflow: hidden;
+    border-radius: calc(var(--radius-2xl) - var(--space-1));
+    aspect-ratio: 16 / 10;
+    background: var(--color-gray-100);
+  }
+
+  .home-publications__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-standard);
+  }
+
+  .home-publications__item:hover .home-publications__media img {
+    transform: scale(1.04);
+  }
+
+  .home-publications__meta,
+  .home-publications__badge-row,
+  .home-publications__link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .home-publications__meta {
+    justify-content: space-between;
+  }
+
+  .home-publications__badge,
+  .home-publications__year,
+  .home-publications__link {
+    font-size: var(--text-tiny);
+    font-weight: var(--weight-black);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+
+  .home-publications__badge,
+  .home-publications__year {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .home-publications__badge {
+    border-radius: var(--radius-pill);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .home-publications__badge--venue {
+    background: var(--color-blue-50);
+    color: var(--color-monash-blue);
+  }
+
+  .home-publications__badge--note {
+    background: var(--color-gray-900);
+    color: var(--color-white);
+  }
+
+  .home-publications__year {
+    margin: 0;
+    color: var(--color-gray-400);
+  }
+
+  .home-publications__title,
+  .home-publications__authors,
+  .home-publications__venue {
+    margin: 0;
+  }
+
+  .home-publications__title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--line-height-xl);
+    transition: color var(--duration-base) var(--ease-standard);
+  }
+
+  .home-publications__item:hover .home-publications__title {
+    color: var(--color-blue-800);
+  }
+
+  .home-publications__authors,
+  .home-publications__venue {
+    color: var(--color-gray-500);
+    line-height: var(--leading-normal);
+  }
+
+  .home-publications__authors {
+    font-size: var(--text-base);
+    font-style: italic;
+    font-weight: var(--weight-medium);
+  }
+
+  .home-publications__venue {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-light);
+    line-height: var(--line-height-sm);
+  }
+
+  .home-publications__link-row {
+    margin-top: auto;
+  }
+
+  .home-publications__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    border: var(--border-subtle);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-gray-500);
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard),
+      background-color var(--duration-base) var(--ease-standard);
+  }
+
+  .home-publications__link:hover {
+    border-color: var(--color-black);
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .home-publications__empty-state {
+    padding: var(--space-8);
+  }
+
+  .homepage-section-actions--start {
+    justify-content: start;
+  }
+
+  @media (min-width: 48rem) {
+    .home-publications__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .home-publications__surface {
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+      align-items: stretch;
+    }
+
+    .home-publications__media {
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+  }
+</style>

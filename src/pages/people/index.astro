@@ -1,0 +1,231 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import MemberLinkIcon from '../../components/home/MemberLinkIcon.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import { toContentAssetUrl } from '../../lib/content-assets';
+import { routeSeo } from '../../lib/page-seo';
+
+type PersonEntry = CollectionEntry<'people'>;
+
+interface SiteRouteCopyData {
+  kind: 'route-copy';
+  localeKey: string;
+  sortOrder: number;
+  route: string;
+  title: string;
+  highlight?: string;
+  lede: string;
+}
+
+type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
+
+const peopleEntries = await getCollection('people');
+const siteEntries = await getCollection('site');
+
+const peopleRouteCopy = siteEntries.find(
+  (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/people/',
+);
+
+if (!peopleRouteCopy) {
+  throw new Error('Expected a route-copy entry for /people/ in the site collection.');
+}
+
+const sortPeopleEntries = (left: PersonEntry, right: PersonEntry) =>
+  left.data.sortOrder - right.data.sortOrder || left.data.name.localeCompare(right.data.name);
+
+const currentEntries = peopleEntries.filter((entry) => entry.data.status === 'current').sort(sortPeopleEntries);
+const alumniEntries = peopleEntries.filter((entry) => entry.data.status === 'alumni').sort(sortPeopleEntries);
+const director = currentEntries.find((entry) => entry.data.group === 'director');
+
+if (!director) {
+  throw new Error('Expected one current director entry in the people collection.');
+}
+
+const postdocs = currentEntries.filter((entry) => entry.data.group === 'postdocs');
+const phdCandidates = currentEntries.filter((entry) => entry.data.group === 'phd-students');
+const mastersAndHonours = currentEntries.filter((entry) => entry.data.group === 'master-and-undergrad-students');
+const directorDisplayName = director.data.name.replace(/^(?:A\/)?Prof\.\s+/u, '').trim();
+const directorImageUrl = director.data.image ? toContentAssetUrl(director.data.image) : undefined;
+const directorRole = director.data.details[0] ?? 'Associate Professor | Monash University';
+const directorSummary = director.data.details.slice(1, 3);
+
+const getProgramDetail = (entry: PersonEntry) =>
+  entry.data.details.find((detail) => /postdoc|phd|honours|master|undergrad/iu.test(detail)) ?? entry.data.details[0] ?? '';
+
+const getTrackLabel = (entry: PersonEntry) => {
+  if (entry.data.group === 'postdocs') {
+    return 'Postdoc';
+  }
+
+  if (entry.data.group === 'master-and-undergrad-students') {
+    return 'Masters & Honours';
+  }
+
+  return 'PhD Candidate';
+};
+
+const getCompactTopic = (entry: PersonEntry) =>
+  entry.data.details.at(-1)?.replace(/^Working on\s+/iu, '').replace(/\.$/u, '') ??
+  getProgramDetail(entry).replace(/\.$/u, '');
+---
+
+<SiteLayout
+  title={routeSeo.people.title}
+  description={routeSeo.people.description}
+  canonicalPath="/people/"
+  socialImage={routeSeo.people.socialImage}
+  socialImageAlt={routeSeo.people.socialImageAlt}
+  activeNav="people"
+  navItems={publicNavItems}
+  navCta={navContactCta}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="people-page-header">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="mb-6 text-6xl font-[900] uppercase tracking-tighter md:text-8xl">
+        {peopleRouteCopy.data.title} <span class="text-gray-300">{peopleRouteCopy.data.highlight}</span>
+      </h1>
+      <p class="max-w-2xl text-xl font-light text-gray-500">{peopleRouteCopy.data.lede}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-6 py-24" data-people-section="director">
+    <h2 class="mb-12 border-l-4 border-[#003087] pl-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">
+      Director
+    </h2>
+
+    <div class="grid items-center gap-12 md:grid-cols-3" data-testid="people-director-feature">
+      <div class="aspect-square overflow-hidden rounded-2xl shadow-2xl">
+        {directorImageUrl && <img src={directorImageUrl} alt={director.data.name} class="h-full w-full object-cover" />}
+      </div>
+      <div class="space-y-6 md:col-span-2">
+        <h3 class="text-4xl font-black">{directorDisplayName}</h3>
+        <p class="text-[11px] font-bold uppercase tracking-widest text-blue-700">{directorRole}</p>
+        <div class="space-y-4 text-lg leading-relaxed font-light text-gray-600">
+          {(directorSummary.length > 0 ? directorSummary : director.data.details.slice(0, 2)).map((detail) => <p>{detail}</p>)}
+        </div>
+        <div class="flex gap-4 pt-4">
+          {director.data.links.map((link) => (
+            <a
+              href={link.url}
+              class="flex h-12 w-12 items-center justify-center rounded-full border border-gray-100 transition hover:bg-black hover:text-white"
+              target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+              rel={link.url.startsWith('mailto:') ? undefined : 'noreferrer'}
+              aria-label={`${director.data.name} ${link.label}`}
+            >
+              <MemberLinkIcon kind={link.kind} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    postdocs.length > 0 && (
+      <section class="bg-gray-50 px-6 py-24" data-people-section="postdocs">
+        <div class="mx-auto max-w-7xl">
+          <h2 class="mb-16 border-l-4 border-[#003087] pl-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">
+            Postdocs
+          </h2>
+
+          <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {postdocs.map((entry) => (
+              <article class="group" data-testid="people-postdoc-card">
+                <div class="mb-6 aspect-[4/5] overflow-hidden rounded-2xl shadow-lg transition duration-500">
+                  {entry.data.image && (
+                    <img
+                      src={toContentAssetUrl(entry.data.image)}
+                      alt={entry.data.name}
+                      class="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+                <h4 class="text-xl font-bold">{entry.data.name}</h4>
+                <p class="mt-1 text-[10px] font-bold uppercase tracking-widest text-gray-400">{getTrackLabel(entry)}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-7xl px-6 py-24" data-people-section="phd">
+    <h2 class="mb-16 border-l-4 border-[#003087] pl-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">
+      PhD Candidates
+    </h2>
+
+    <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {phdCandidates.map((entry) => (
+        <article class="group" data-testid="people-phd-card">
+          <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition duration-500">
+            {entry.data.image && (
+              <img
+                src={toContentAssetUrl(entry.data.image)}
+                alt={entry.data.name}
+                class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            )}
+          </div>
+          <h4 class="font-bold">{entry.data.name}</h4>
+          <p class="text-[9px] font-bold uppercase tracking-widest text-gray-400">{getCompactTopic(entry)}</p>
+        </article>
+      ))}
+      {
+        mastersAndHonours.length > 0 && (
+          <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-100 py-10 text-center opacity-40 transition hover:opacity-100">
+            <p class="text-[10px] font-black uppercase tracking-widest text-gray-400">
+              Plus {mastersAndHonours.length} masters and honours researchers
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {mastersAndHonours.length > 0 && (
+    <section class="bg-gray-50 px-6 py-24" data-people-section="masters">
+      <div class="mx-auto max-w-7xl">
+        <h2 class="mb-16 border-l-4 border-[#003087] pl-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">
+          Masters &amp; Honours
+        </h2>
+
+        <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {mastersAndHonours.map((entry) => (
+            <article class="group" data-testid="people-masters-card">
+              <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition duration-500">
+                {entry.data.image && (
+                  <img
+                    src={toContentAssetUrl(entry.data.image)}
+                    alt={entry.data.name}
+                    class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+              <h4 class="font-bold">{entry.data.name}</h4>
+              <p class="text-[9px] font-bold uppercase tracking-widest text-gray-400">{getCompactTopic(entry)}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {alumniEntries.length > 0 && (
+    <section class="border-t border-gray-50 bg-white px-6 py-24" data-people-section="alumni">
+      <div class="mx-auto max-w-7xl">
+        <h2 class="mb-12 text-xs font-black uppercase tracking-[0.4em] text-gray-400">Alumni</h2>
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6" data-testid="people-alumni-groups">
+          {alumniEntries.map((entry) => <div class="text-sm font-bold text-gray-500">{entry.data.name}</div>)}
+        </div>
+      </div>
+    </section>
+  )}
+</SiteLayout>

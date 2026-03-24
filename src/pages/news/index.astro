@@ -1,0 +1,178 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { routeSeo } from '../../lib/page-seo';
+
+type NewsEntry = CollectionEntry<'news'>;
+
+interface SiteRouteCopyData {
+  kind: 'route-copy';
+  localeKey: string;
+  sortOrder: number;
+  route: string;
+  title: string;
+  highlight?: string;
+  lede: string;
+  actions: Array<{
+    label: string;
+    style: 'primary' | 'secondary';
+    url?: string;
+  }>;
+}
+
+type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
+
+interface NewsArchiveItem {
+  slug: string;
+  title: string;
+  summary: string;
+  publishedAt: string;
+  dateLabel: string;
+  year: string;
+  href: string;
+  external: boolean;
+}
+
+interface NewsArchiveYearGroup {
+  label: string;
+  sortValue: number;
+  items: NewsArchiveItem[];
+}
+
+const siteEntries = await getCollection('site');
+const newsEntries = await getCollection('news');
+
+const newsRouteCopy = siteEntries.find(
+  (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/news/',
+);
+
+if (!newsRouteCopy) {
+  throw new Error('Expected a route-copy entry for /news/ in the site collection.');
+}
+
+const normalizeNewsText = (value: string) => value.replace(/\s+/gu, ' ').trim();
+const isExternalLink = (value: string) => /^https?:\/\//iu.test(value) || value.startsWith('mailto:');
+
+const sortNewsEntries = (left: NewsEntry, right: NewsEntry) =>
+  right.data.publishedAt.localeCompare(left.data.publishedAt) ||
+  left.data.sortOrder - right.data.sortOrder ||
+  left.id.localeCompare(right.id);
+
+const archiveItems: NewsArchiveItem[] = newsEntries.sort(sortNewsEntries).map((entry) => ({
+  slug: entry.data.slug,
+  title: normalizeNewsText(entry.data.title).replace(/\.$/u, ''),
+  summary: normalizeNewsText(entry.data.summary).replace(/\.$/u, ''),
+  publishedAt: entry.data.publishedAt,
+  dateLabel: normalizeNewsText(entry.data.displayDate).replace(/,/gu, ''),
+  year: entry.data.publishedAt.slice(0, 4),
+  href: entry.data.primaryUrl,
+  external: isExternalLink(entry.data.primaryUrl),
+}));
+
+const yearGroups: NewsArchiveYearGroup[] = Array.from(
+  archiveItems.reduce((groupMap, item) => {
+    const existing = groupMap.get(item.year);
+
+    if (existing) {
+      existing.items.push(item);
+      return groupMap;
+    }
+
+    groupMap.set(item.year, {
+      label: item.year,
+      sortValue: Number(item.year),
+      items: [item],
+    });
+
+    return groupMap;
+  }, new Map<string, NewsArchiveYearGroup>()).values(),
+).sort((left, right) => right.sortValue - left.sortValue || left.label.localeCompare(right.label));
+
+const archiveAction = newsRouteCopy.data.actions[0];
+---
+
+<SiteLayout
+  title={routeSeo.newsArchive.title}
+  description={routeSeo.newsArchive.description}
+  canonicalPath="/news/"
+  socialImage={routeSeo.newsArchive.socialImage}
+  socialImageAlt={routeSeo.newsArchive.socialImageAlt}
+  activeNav="news"
+  navItems={publicNavItems}
+  navCta={navContactCta}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="news-archive-header">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="mb-6 text-6xl font-[900] uppercase tracking-tighter md:text-8xl">
+        {newsRouteCopy.data.title} <span class="text-gray-300">{newsRouteCopy.data.highlight}</span>
+      </h1>
+      <p class="max-w-2xl text-xl font-light text-gray-500">{newsRouteCopy.data.lede}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-24" data-testid="news-archive-section">
+    {
+      yearGroups.map((group, groupIndex) => (
+        <div
+          class="relative border-l border-gray-100 pl-12 pb-16"
+          data-testid="news-year-group"
+          data-news-year={group.label}
+          data-news-year-sort={String(group.sortValue)}
+        >
+          <div
+            class:list={[
+              'absolute top-2 left-[-5px] h-2.5 w-2.5 rounded-full',
+              groupIndex === 0 ? 'bg-[#003087]' : 'bg-gray-300',
+            ]}
+          ></div>
+          <h2 class:list={['mb-10 text-4xl font-black tracking-tighter', groupIndex === 0 ? 'text-gray-900' : 'text-gray-400']}>
+            {group.label}
+          </h2>
+
+          <div class="space-y-12">
+            {group.items.map((item) => (
+              <article
+                class="group"
+                data-news-slug={item.slug}
+                data-news-published-at={item.publishedAt}
+                data-testid="news-archive-item"
+              >
+                <time class="mb-2 block text-[10px] font-black uppercase tracking-widest text-blue-700" datetime={item.publishedAt}>
+                  {item.dateLabel}
+                </time>
+                <h3 class="text-2xl leading-tight font-bold transition group-hover:text-blue-800">
+                  <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
+                    {item.title}
+                  </a>
+                </h3>
+                <p class="mt-4 leading-relaxed font-light text-gray-500">{item.summary}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+
+    <div class="pt-20 text-center" data-testid="news-archive-cta">
+      <h2 class="mb-6 text-3xl font-black tracking-tight text-gray-900">All news entries are loaded</h2>
+      {
+        archiveAction?.url ? (
+          <a
+            href={archiveAction.url}
+            class="rounded-full bg-gray-50 px-10 py-4 text-[10px] font-black uppercase tracking-widest transition hover:bg-black hover:text-white"
+          >
+            {archiveAction.label}
+          </a>
+        ) : (
+          <span class="inline-flex rounded-full bg-gray-50 px-10 py-4 text-[10px] font-black uppercase tracking-widest">
+            {archiveAction?.label ?? 'Archive complete'}
+          </span>
+        )
+      }
+    </div>
+  </section>
+</SiteLayout>

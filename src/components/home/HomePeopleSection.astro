@@ -1,0 +1,471 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import CardSurface from '../ui/CardSurface.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { toContentAssetUrl } from '../../lib/content-assets';
+import MemberLinkIcon from './MemberLinkIcon.astro';
+
+type PersonEntry = CollectionEntry<'people'>;
+
+interface AlumniGroup {
+  label: string;
+  entries: PersonEntry[];
+}
+
+interface Props {
+  director: PersonEntry;
+  postdocs: PersonEntry[];
+  phdCandidates: PersonEntry[];
+  mastersAndUndergradStudents: PersonEntry[];
+  alumniGroups: AlumniGroup[];
+}
+
+const { director, postdocs, phdCandidates, mastersAndUndergradStudents, alumniGroups } = Astro.props as Props;
+
+const currentMemberCount = 1 + postdocs.length + phdCandidates.length + mastersAndUndergradStudents.length;
+const alumniCount = alumniGroups.reduce((count, group) => count + group.entries.length, 0);
+const currentTrackCopy = mastersAndUndergradStudents.length > 0 ? 'director, postdoc, PhD, and honours tracks' : 'director, postdoc, and PhD tracks';
+
+const summarizePerson = (entry: PersonEntry) => {
+  const details = entry.data.details;
+
+  if (entry.data.group === 'phd-students') {
+    return {
+      meta: details.at(-2) ?? details[0],
+      summary: details.at(-1) ?? details[0],
+    };
+  }
+
+  return {
+    meta: details[0],
+    summary: details.at(1) ?? details[0],
+  };
+};
+
+const directorCopy = director.data.details.slice(1);
+const directorImageUrl = director.data.image ? toContentAssetUrl(director.data.image) : undefined;
+---
+
+<div class="homepage-section-stack">
+  <SectionHeading
+    eyebrow="People"
+    title="Meet the"
+    accent="team"
+    description={`${currentMemberCount} current researchers across ${currentTrackCopy}, with ${alumniCount} alumni preserved in the local people collection.`}
+  />
+
+  <div class="people-section" data-testid="people-section">
+    <CardSurface variant="elevated" class="people-feature member-card" testId="member-card">
+      <div class="people-feature__grid">
+        <div class="people-feature__media">
+          {directorImageUrl && <img src={directorImageUrl} alt={director.data.name} loading="lazy" />}
+        </div>
+
+        <div class="people-feature__content">
+          <p class="eyebrow-label">Director</p>
+          <h3 class="people-feature__name">{director.data.name}</h3>
+          <p class="people-feature__role">{director.data.details[0]}</p>
+
+          <div class="people-feature__copy">
+            {(directorCopy.length > 0 ? directorCopy : director.data.details).map((detail) => <p>{detail}</p>)}
+          </div>
+
+          <div class="people-links" aria-label={`${director.data.name} links`}>
+            {director.data.links.map((link) => (
+              <a
+                href={link.url}
+                class="people-links__item"
+                aria-label={`${director.data.name} ${link.label}`}
+                target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+                rel={link.url.startsWith('mailto:') ? undefined : 'noreferrer'}
+              >
+                <MemberLinkIcon kind={link.kind} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </CardSurface>
+
+    <section class="people-cluster" aria-labelledby="people-postdocs-heading">
+      <div class="people-cluster__heading">
+        <p class="eyebrow-label">Researchers</p>
+        <h3 id="people-postdocs-heading">Postdocs</h3>
+      </div>
+
+      <div class="people-grid people-grid--postdocs">
+        {postdocs.map((entry) => {
+          const summary = summarizePerson(entry);
+          return (
+            <CardSurface variant="outlined" class="member-card" testId="member-card">
+              <div class="member-card__media member-card__media--portrait">
+                {entry.data.image && <img src={toContentAssetUrl(entry.data.image)} alt={entry.data.name} loading="lazy" />}
+              </div>
+
+              <div class="member-card__content">
+                <h4 class="member-card__name">{entry.data.name}</h4>
+                <p class="member-card__meta">{summary.meta}</p>
+                <p class="member-card__summary">{summary.summary}</p>
+
+                <div class="people-links people-links--compact" aria-label={`${entry.data.name} links`}>
+                  {entry.data.links.map((link) => (
+                    <a
+                      href={link.url}
+                      class="people-links__item"
+                      aria-label={`${entry.data.name} ${link.label}`}
+                      target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+                      rel={link.url.startsWith('mailto:') ? undefined : 'noreferrer'}
+                    >
+                      <MemberLinkIcon kind={link.kind} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </CardSurface>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="people-cluster" aria-labelledby="people-phd-heading">
+      <div class="people-cluster__heading">
+        <p class="eyebrow-label">Doctoral researchers</p>
+        <h3 id="people-phd-heading">PhD Candidates</h3>
+      </div>
+
+      <div class="people-grid people-grid--phd">
+        {phdCandidates.map((entry) => {
+          const summary = summarizePerson(entry);
+          return (
+            <CardSurface variant="outlined" class="member-card member-card--compact" testId="member-card">
+              <div class="member-card__media member-card__media--square">
+                {entry.data.image && <img src={toContentAssetUrl(entry.data.image)} alt={entry.data.name} loading="lazy" />}
+              </div>
+
+              <div class="member-card__content member-card__content--compact">
+                <h4 class="member-card__name">{entry.data.name}</h4>
+                <p class="member-card__meta">{summary.meta}</p>
+                <p class="member-card__summary">{summary.summary}</p>
+
+                <div class="people-links people-links--compact" aria-label={`${entry.data.name} links`}>
+                  {entry.data.links.map((link) => (
+                    <a
+                      href={link.url}
+                      class="people-links__item"
+                      aria-label={`${entry.data.name} ${link.label}`}
+                      target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+                      rel={link.url.startsWith('mailto:') ? undefined : 'noreferrer'}
+                    >
+                      <MemberLinkIcon kind={link.kind} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </CardSurface>
+          );
+        })}
+      </div>
+    </section>
+
+    {
+      mastersAndUndergradStudents.length > 0 && (
+        <section class="people-cluster" aria-labelledby="people-masters-heading">
+          <div class="people-cluster__heading">
+            <p class="eyebrow-label">Emerging researchers</p>
+            <h3 id="people-masters-heading">Masters &amp; Honours</h3>
+          </div>
+
+          <div class="people-grid people-grid--masters">
+            {mastersAndUndergradStudents.map((entry) => {
+              const summary = summarizePerson(entry);
+              return (
+                <CardSurface variant="outlined" class="member-card member-card--compact" testId="member-card">
+                  <div class="member-card__media member-card__media--square">
+                    {entry.data.image && <img src={toContentAssetUrl(entry.data.image)} alt={entry.data.name} loading="lazy" />}
+                  </div>
+
+                  <div class="member-card__content member-card__content--compact">
+                    <h4 class="member-card__name">{entry.data.name}</h4>
+                    <p class="member-card__meta">{summary.meta}</p>
+                    <p class="member-card__summary">{summary.summary}</p>
+
+                    <div class="people-links people-links--compact" aria-label={`${entry.data.name} links`}>
+                      {entry.data.links.map((link) => (
+                        <a
+                          href={link.url}
+                          class="people-links__item"
+                          aria-label={`${entry.data.name} ${link.label}`}
+                          target={link.url.startsWith('mailto:') ? undefined : '_blank'}
+                          rel={link.url.startsWith('mailto:') ? undefined : 'noreferrer'}
+                        >
+                          <MemberLinkIcon kind={link.kind} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </CardSurface>
+              );
+            })}
+          </div>
+        </section>
+      )
+    }
+
+    <section class="people-cluster people-cluster--alumni" aria-labelledby="people-alumni-heading">
+      <div class="people-cluster__heading people-cluster__heading--subtle">
+        <p class="micro-copy">Alumni</p>
+        <h3 id="people-alumni-heading">Previous cohorts</h3>
+      </div>
+
+      <div class="alumni-grid">
+        {alumniGroups.map((group) => (
+          <CardSurface variant="muted" class="alumni-card">
+            <div class="alumni-card__header">
+              <p class="micro-copy">{group.entries.length} recorded</p>
+              <h4>{group.label}</h4>
+            </div>
+
+            <ul class="alumni-list">
+              {group.entries.map((entry) => (
+                <li class="alumni-list__item">
+                  <div>
+                    <p class="alumni-list__name">{entry.data.name}</p>
+                    <p class="alumni-list__detail">{entry.data.details.join(' · ')}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </CardSurface>
+        ))}
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  .people-section {
+    display: grid;
+    gap: var(--space-16);
+  }
+
+  .people-cluster {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .people-cluster__heading {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .people-cluster__heading h3 {
+    margin: 0;
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-black);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+  }
+
+  .people-cluster__heading--subtle h3 {
+    color: var(--color-gray-600);
+  }
+
+  .people-grid,
+  .alumni-grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .people-section :global(.people-feature) {
+    padding: var(--space-8);
+  }
+
+  .people-feature__grid {
+    display: grid;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .people-feature__media {
+    overflow: hidden;
+    border-radius: var(--radius-3xl);
+    aspect-ratio: 1 / 1;
+    background: var(--color-gray-100);
+  }
+
+  .people-feature__media img,
+  .member-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .people-feature__content,
+  .member-card__content {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .people-feature__name,
+  .member-card__name,
+  .alumni-card__header h4 {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+  }
+
+  .people-feature__role,
+  .member-card__meta,
+  .alumni-list__name {
+    margin: 0;
+    color: var(--color-blue-700);
+    font-size: var(--text-label);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-widest);
+    line-height: var(--leading-normal);
+    text-transform: uppercase;
+  }
+
+  .people-feature__copy,
+  .member-card__summary,
+  .alumni-list__detail {
+    color: var(--color-gray-600);
+    font-size: var(--text-base);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-copy);
+  }
+
+  .people-feature__copy {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .people-feature__copy p,
+  .member-card__summary,
+  .alumni-list__detail,
+  .alumni-list__name {
+    margin: 0;
+  }
+
+  .member-card__media {
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    background: var(--color-gray-100);
+  }
+
+  .member-card__media--portrait {
+    aspect-ratio: 4 / 5;
+    margin-bottom: var(--space-6);
+  }
+
+  .member-card__media--square {
+    aspect-ratio: 1 / 1;
+    margin-bottom: var(--space-4);
+  }
+
+  .member-card__content--compact {
+    gap: var(--space-3);
+  }
+
+  .people-section :global(.member-card) {
+    padding: var(--space-6);
+  }
+
+  .people-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .people-links--compact {
+    margin-top: auto;
+  }
+
+  .people-links__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: var(--border-subtle);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    color: var(--color-gray-500);
+    transition:
+      color var(--duration-base) var(--ease-standard),
+      background-color var(--duration-base) var(--ease-standard),
+      border-color var(--duration-base) var(--ease-standard);
+  }
+
+  .people-links__item:hover {
+    border-color: var(--color-black);
+    background: var(--color-black);
+    color: var(--color-white);
+  }
+
+  .alumni-card__header {
+    display: grid;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+
+  .people-section :global(.alumni-card) {
+    padding: var(--space-6);
+  }
+
+  .alumni-list {
+    display: grid;
+    gap: var(--space-5);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .alumni-list__item {
+    padding-top: var(--space-5);
+    border-top: var(--border-subtle);
+  }
+
+  .alumni-list__item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .people-grid--postdocs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .people-grid--phd,
+    .people-grid--masters,
+    .alumni-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .people-feature__grid {
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: var(--space-12);
+    }
+
+    .people-grid--postdocs {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .people-grid--phd {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .people-grid--masters {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .alumni-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,286 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { routeSeo } from '../../lib/page-seo';
+
+type PositionsEntry = CollectionEntry<'positions'>;
+
+interface SiteRouteCopyData {
+  kind: 'route-copy';
+  localeKey: string;
+  sortOrder: number;
+  route: string;
+  title: string;
+  highlight?: string;
+  lede: string;
+}
+
+type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
+
+type PositionsOverviewEntry = PositionsEntry & {
+  data: Extract<PositionsEntry['data'], { kind: 'overview' }>;
+};
+
+type PositionOpeningEntry = PositionsEntry & {
+  data: Extract<PositionsEntry['data'], { kind: 'opening' }>;
+};
+
+interface PositionCard {
+  slug: string;
+  title: string;
+  status: PositionOpeningEntry['data']['status'];
+  statusLabel: string;
+  shortDescription: string;
+  primaryUrl?: string;
+}
+
+const siteEntries = await getCollection('site');
+const positionsEntries = await getCollection('positions');
+
+const positionsRouteCopy = siteEntries.find(
+  (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/positions/',
+);
+const positionsOverview = positionsEntries.find(
+  (entry): entry is PositionsOverviewEntry => entry.data.kind === 'overview',
+);
+
+if (!positionsRouteCopy) {
+  throw new Error('Expected a route-copy entry for /positions/ in the site collection.');
+}
+
+if (!positionsOverview) {
+  throw new Error('Expected a positions overview entry in the positions collection.');
+}
+
+const stripMarkdownToPlainText = (value: string) =>
+  value
+    .replace(/!\[[^\]]*\]\([^)]+\)/gu, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/gu, '$1')
+    .replace(/^#{1,6}\s+/gmu, '')
+    .replace(/^>\s?/gmu, '')
+    .replace(/[*_`]/gu, '')
+    .replace(/\s+/gu, ' ')
+    .trim();
+
+const getNonListParagraphs = (body: string) =>
+  body
+    .split(/\n\s*\n/gu)
+    .map((block) => block.trim())
+    .filter((block) => block.length > 0)
+    .filter((block) => {
+      const lines = block
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      return lines.length > 0 && !lines.every((line) => /^(?:[-*+]|\d+\.)\s/u.test(line));
+    })
+    .map(stripMarkdownToPlainText)
+    .filter((paragraph) => paragraph.length > 0);
+
+const statusCopy: Record<PositionOpeningEntry['data']['status'], string> = {
+  open: 'Available',
+  closed: 'Filled',
+  archived: 'Archived',
+};
+
+const statusSortOrder: Record<PositionOpeningEntry['data']['status'], number> = {
+  open: 0,
+  closed: 1,
+  archived: 2,
+};
+
+const sortOpeningEntries = (left: PositionOpeningEntry, right: PositionOpeningEntry) =>
+  statusSortOrder[left.data.status] - statusSortOrder[right.data.status] ||
+  left.data.sortOrder - right.data.sortOrder ||
+  left.id.localeCompare(right.id);
+
+const openings = positionsEntries
+  .filter((entry): entry is PositionOpeningEntry => entry.data.kind === 'opening')
+  .sort(sortOpeningEntries);
+
+const toCard = (entry: PositionOpeningEntry): PositionCard => ({
+  slug: entry.data.slug,
+  title: entry.data.title,
+  status: entry.data.status,
+  statusLabel: statusCopy[entry.data.status],
+  shortDescription: entry.data.shortDescription,
+  primaryUrl: entry.data.primaryUrl,
+});
+
+const phdOpenings = openings.filter((entry) => entry.data.positionType === 'phd').map(toCard);
+const staffOpenings = openings.filter((entry) => entry.data.positionType !== 'phd').map(toCard);
+const openPhdOpenings = phdOpenings.filter((opening) => opening.status === 'open');
+const preservedPhdOpening = phdOpenings.find((opening) => opening.status !== 'open');
+const featuredStaffOpening = staffOpenings.find((opening) => opening.status === 'open') ?? staffOpenings[0];
+const inclusiveStatementSource = getNonListParagraphs(positionsOverview.body ?? '').at(-1) ?? '';
+const inclusiveStatement = inclusiveStatementSource
+  ? `“${inclusiveStatementSource.replace(/\.$/u, '')}.”`
+  : '“The group welcomes culturally and linguistically diverse applicants of all genders.”';
+---
+
+<SiteLayout
+  title={routeSeo.positions.title}
+  description={routeSeo.positions.description}
+  canonicalPath="/positions/"
+  socialImage={routeSeo.positions.socialImage}
+  socialImageAlt={routeSeo.positions.socialImageAlt}
+  activeNav="positions"
+  navItems={publicNavItems}
+  navCta={navContactCta}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="positions-page-header">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="text-6xl leading-none font-[900] uppercase tracking-tighter md:text-8xl">
+        {positionsRouteCopy.data.title} <br /><span class="text-gray-300">{positionsRouteCopy.data.highlight}</span>
+      </h1>
+      <p class="mt-6 max-w-2xl text-xl font-light text-gray-500">{positionsRouteCopy.data.lede}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-6 py-24">
+    <div class="mb-32" data-testid="positions-phd-section">
+      <h2 class="mb-12 text-4xl font-black uppercase tracking-tighter">PhD Positions</h2>
+
+      <div class="grid gap-16 lg:grid-cols-2">
+        <div class="space-y-8">
+          <div class="rounded-3xl border border-gray-100 bg-gray-50 p-8">
+            <h4 class="mb-6 text-xs font-black uppercase tracking-[0.3em] text-[#003087]">Essential Skills</h4>
+            <ul class="space-y-4">
+              {positionsOverview.data.essentialSkills.map((skill) => (
+                <li class="flex items-start gap-4 text-sm leading-relaxed text-gray-600">
+                  <svg class="mt-1 h-4 w-4 shrink-0 text-blue-700" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="m9.55 18.2-5.2-5.2 1.4-1.4 3.8 3.8 8.7-8.7 1.4 1.4z"></path>
+                  </svg>
+                  <span>{skill}</span>
+                </li>
+              ))}
+            </ul>
+            {positionsOverview.data.importantLinks.length > 0 && (
+              <div class="mt-8 flex flex-wrap gap-3">
+                {positionsOverview.data.importantLinks.map((link) => (
+                  <a
+                    href={link.url}
+                    class="rounded-full border border-gray-200 bg-white px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-500 transition hover:border-black hover:text-black"
+                    target="_blank"
+                    rel="noreferrer"
+                    data-testid="positions-important-link"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div class="space-y-8" data-testid="positions-opportunities-block">
+          <h3 class="mb-8 text-2xl font-bold">Currently Open Opportunities</h3>
+          <div class="space-y-4">
+            {openPhdOpenings.map((opening) => (
+              <a
+                href={opening.primaryUrl ?? '#'}
+                class="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-6 transition hover:border-blue-200"
+                target={opening.primaryUrl ? '_blank' : undefined}
+                rel={opening.primaryUrl ? 'noreferrer' : undefined}
+                data-testid="positions-opening-card"
+                data-position-type="phd"
+                data-position-status={opening.status}
+              >
+                <div>
+                  <span class="mb-2 inline-block rounded-full bg-green-100 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-green-700">
+                    {opening.statusLabel}
+                  </span>
+                  <h4 class="text-lg font-bold transition group-hover:text-blue-800">{opening.title}</h4>
+                  <p class="mt-1 text-xs font-bold uppercase tracking-widest text-gray-400">{opening.shortDescription}</p>
+                </div>
+                <svg class="h-5 w-5 text-gray-100 transition group-hover:text-blue-700" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.95 4.55 11.54 5.96l4.58 4.59H4v2h12.12l-4.58 4.59 1.41 1.41 7-7z"></path>
+                </svg>
+              </a>
+            ))}
+
+            {preservedPhdOpening && (
+              <div
+                class="flex cursor-not-allowed items-center justify-between rounded-xl bg-gray-50 p-6 opacity-40"
+                data-testid="positions-opening-card"
+                data-position-type="phd"
+                data-position-status={preservedPhdOpening.status}
+              >
+                <div>
+                  <span class="mb-2 inline-block rounded-full bg-gray-200 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-gray-500">
+                    {preservedPhdOpening.statusLabel}
+                  </span>
+                  <h4 class="text-lg font-bold">{preservedPhdOpening.title}</h4>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-32 border-t border-gray-100" data-testid="positions-separator"></div>
+
+    <div class="mb-32" data-testid="positions-staff-section">
+      <h2 class="mb-12 text-right text-4xl font-black uppercase tracking-tighter">
+        Research <span class="text-gray-300">Staff</span>
+      </h2>
+
+      <div class="grid gap-16 lg:grid-cols-2">
+        <div class="space-y-8 lg:order-2">
+          <div class="rounded-3xl border border-blue-100 bg-blue-50/50 p-8">
+            <p class="mb-8 text-lg font-light italic text-blue-900" data-testid="positions-inclusion-statement">
+              {inclusiveStatement}
+            </p>
+            <div class="flex items-center gap-4">
+              <svg class="h-6 w-6 text-blue-800" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="m12 1.75 2.36 4.78 5.27.77-3.81 3.71.9 5.24L12 13.78 7.28 16.25l.9-5.24-3.81-3.71 5.27-.77Z"></path>
+              </svg>
+              <span class="text-[10px] font-black uppercase tracking-widest text-blue-800">Inclusive Research Environment</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 lg:order-1">
+          <h3 class="mb-8 text-2xl font-bold">Current Available Staff Positions</h3>
+          {featuredStaffOpening ? (
+            <a
+              href={featuredStaffOpening.primaryUrl ?? '#'}
+              class:list={[
+                'group block rounded-xl border border-gray-100 p-6 transition',
+                featuredStaffOpening.status === 'open' ? 'bg-white hover:border-blue-200' : 'bg-gray-50 opacity-60',
+              ]}
+              target={featuredStaffOpening.primaryUrl ? '_blank' : undefined}
+              rel={featuredStaffOpening.primaryUrl ? 'noreferrer' : undefined}
+              data-testid="positions-opening-card"
+              data-position-type="staff"
+              data-position-status={featuredStaffOpening.status}
+            >
+              <span
+                class:list={[
+                  'mb-2 inline-block rounded-full px-3 py-1 text-[9px] font-black uppercase tracking-widest',
+                  featuredStaffOpening.status === 'open'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-gray-200 text-gray-500',
+                ]}
+              >
+                {featuredStaffOpening.statusLabel}
+              </span>
+              <h4 class="text-lg font-bold transition group-hover:text-blue-800">{featuredStaffOpening.title}</h4>
+              <p class="mt-2 text-sm leading-relaxed text-gray-500">{featuredStaffOpening.shortDescription}</p>
+            </a>
+          ) : (
+            <p class="pb-10 text-xs font-black uppercase tracking-widest text-gray-400">
+              We are currently at capacity for staff roles. Check back later.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

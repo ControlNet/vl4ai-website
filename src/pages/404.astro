@@ -1,0 +1,86 @@
+---
+import ButtonLink from '../components/ui/ButtonLink.astro';
+import CardSurface from '../components/ui/CardSurface.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import SectionShell from '../components/ui/SectionShell.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { routeSeo } from '../lib/page-seo';
+import {
+  footerUtilityLink,
+  navContactCta,
+  publicNavItems,
+  publicRouteContract,
+} from '../data/route-contract';
+
+const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.html');
+---
+
+<SiteLayout
+  title={routeSeo.notFound.title}
+  description={routeSeo.notFound.description}
+  canonicalPath="/404.html"
+  socialImage={routeSeo.notFound.socialImage}
+  socialImageAlt={routeSeo.notFound.socialImageAlt}
+  robots="noindex,follow"
+  navItems={publicNavItems}
+  navCta={navContactCta}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <PageHeader
+    title="Route"
+    accent="not found"
+    description="This rebuild now uses canonical standalone routes. If you reached this page through a retired legacy URL, continue with one of the supported public destinations below."
+    testId="not-found-header"
+  />
+
+  <SectionShell id="not-found-guidance" testId="not-found-guidance-section">
+    <div class="section-heading">
+      <p class="section-heading__eyebrow">Try one of the canonical routes</p>
+      <h2 class="section-heading__title">Known public destinations</h2>
+    </div>
+
+    <div class="primitive-grid not-found-grid">
+      {
+        routesToKeep.map((route) => (
+          <CardSurface href={route.path} variant="outlined" class="not-found-card" testId={`not-found-route-${route.id}`}>
+            <p class="eyebrow-label">{route.kind}</p>
+            <h3 class="primitive-card__title">{route.path}</h3>
+            <p class="primitive-card__copy">{route.summary}</p>
+          </CardSurface>
+        ))
+      }
+    </div>
+
+    <div class="not-found-actions" aria-label="Canonical route shortcuts">
+      {
+        routesToKeep.map((route, index) => (
+          <ButtonLink
+            href={route.path}
+            variant={index === 0 ? 'primary' : 'secondary'}
+            testId={`not-found-action-${route.id}`}
+          >
+            Open {route.title}
+          </ButtonLink>
+        ))
+      }
+    </div>
+  </SectionShell>
+
+  <style>
+    .not-found-grid {
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    }
+
+    .not-found-card {
+      padding: var(--space-8);
+    }
+
+    .not-found-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: var(--space-12);
+    }
+  </style>
+</SiteLayout>

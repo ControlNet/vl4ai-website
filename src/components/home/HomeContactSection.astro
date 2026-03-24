@@ -1,0 +1,310 @@
+---
+import ButtonLink from '../ui/ButtonLink.astro';
+import CardSurface from '../ui/CardSurface.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface ContactData {
+  phone: string;
+  email: string;
+  officeHours: string;
+  addressLines: string[];
+  mapUrl: string;
+  mapEmbedUrl: string;
+}
+
+interface LabData {
+  fullName: string;
+  institution: string;
+  department: string;
+  primaryLocation: string;
+}
+
+interface Props {
+  contact: ContactData;
+  lab: LabData;
+}
+
+interface ContactDetailRow {
+  key: 'phone' | 'email' | 'office-hours';
+  label: string;
+  value: string;
+  href?: string;
+}
+
+const { contact, lab } = Astro.props as Props;
+
+const phoneHref = `tel:${contact.phone.replace(/[^+\d]/g, '')}`;
+const locationLines = contact.addressLines.slice(1);
+
+const detailRows: ContactDetailRow[] = [
+  {
+    key: 'phone',
+    label: 'Phone',
+    value: contact.phone,
+    href: phoneHref,
+  },
+  {
+    key: 'email',
+    label: 'Email',
+    value: contact.email,
+    href: `mailto:${contact.email}`,
+  },
+  {
+    key: 'office-hours',
+    label: 'Office Hours',
+    value: contact.officeHours,
+  },
+];
+---
+
+<div class="homepage-section-stack">
+  <SectionHeading
+    eyebrow="Contact"
+    title="Get in"
+    accent="touch"
+    description={`Whether you are a prospective student, collaborator, or industry partner, connect with ${lab.fullName} at ${lab.institution}.`}
+  />
+
+  <div class="contact-section" data-testid="contact-section">
+    <div class="contact-section__column">
+      <CardSurface variant="outlined" class="contact-panel">
+        <div class="contact-panel__block">
+          <p class="eyebrow-label">Location</p>
+          <h3 class="contact-panel__title">{contact.addressLines[0] ?? lab.fullName}</h3>
+          <p class="contact-panel__institution">{lab.department} · {lab.institution}</p>
+          <address class="contact-panel__address">
+            {locationLines.map((line) => (
+              <span>{line}</span>
+            ))}
+          </address>
+        </div>
+
+        <div class="contact-detail-list" aria-label="Contact details">
+          {detailRows.map((detail) => (
+            <div class="contact-detail-list__item" data-testid={`contact-detail-${detail.key}`}>
+              <div class="contact-detail-list__icon" aria-hidden="true">
+                {
+                  detail.key === 'phone' ? (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M6.62 10.79a15.054 15.054 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C9.4 21 3 14.6 3 6a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.19 2.45.56 3.57a1 1 0 0 1-.24 1.02z"></path>
+                    </svg>
+                  ) : detail.key === 'email' ? (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 6.75A1.75 1.75 0 0 1 4.75 5h14.5A1.75 1.75 0 0 1 21 6.75v10.5A1.75 1.75 0 0 1 19.25 19H4.75A1.75 1.75 0 0 1 3 17.25zm1.5.132v.176l7.5 5.204 7.5-5.204v-.176a.25.25 0 0 0-.25-.25H4.75a.25.25 0 0 0-.25.25m15 1.994-7.072 4.911a.75.75 0 0 1-.856 0L4.5 8.876v8.374c0 .138.112.25.25.25h14.5a.25.25 0 0 0 .25-.25z"></path>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 1.75A10.25 10.25 0 1 0 22.25 12 10.262 10.262 0 0 0 12 1.75m0 18.5a8.25 8.25 0 1 1 8.25-8.25A8.259 8.259 0 0 1 12 20.25"></path>
+                      <path d="M12.75 6.75h-1.5v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+                    </svg>
+                  )
+                }
+              </div>
+
+              <div class="contact-detail-list__copy">
+                <p class="micro-copy">{detail.label}</p>
+                {detail.href ? (
+                  <a href={detail.href} class="contact-detail-list__value">
+                    {detail.value}
+                  </a>
+                ) : (
+                  <p class="contact-detail-list__value">{detail.value}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="contact-meta-card">
+          <p class="micro-copy">Primary location</p>
+          <p>{lab.primaryLocation}</p>
+        </div>
+      </CardSurface>
+    </div>
+
+    <CardSurface variant="elevated" class="contact-map-shell">
+      <div class="contact-map-shell__frame">
+        <iframe
+          src={contact.mapEmbedUrl}
+          title={`Map for ${lab.fullName}`}
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <div class="contact-map-shell__footer">
+        <div>
+          <p class="micro-copy">Visit the lab</p>
+          <p class="contact-map-shell__location">{lab.primaryLocation}</p>
+        </div>
+
+        <ButtonLink href={contact.mapUrl} variant="secondary" testId="contact-map-link">
+          Open in Maps
+        </ButtonLink>
+      </div>
+    </CardSurface>
+  </div>
+</div>
+
+<style>
+  .contact-section {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .contact-section__column {
+    min-width: 0;
+  }
+
+  .contact-section :global(.contact-panel),
+  .contact-section :global(.contact-map-shell) {
+    height: 100%;
+  }
+
+  .contact-section :global(.contact-panel) {
+    padding: var(--space-8);
+  }
+
+  .contact-panel {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .contact-panel__block {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .contact-panel__title,
+  .contact-map-shell__location {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+  }
+
+  .contact-panel__institution,
+  .contact-panel__address,
+  .contact-meta-card p:last-child,
+  .contact-detail-list__value {
+    margin: 0;
+    color: var(--color-gray-600);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-light);
+    line-height: var(--leading-copy);
+  }
+
+  .contact-panel__institution {
+    color: var(--color-monash-blue);
+    font-size: var(--text-label);
+    font-weight: var(--weight-black);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+  }
+
+  .contact-panel__address {
+    display: grid;
+    font-style: normal;
+  }
+
+  .contact-detail-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .contact-detail-list__item,
+  .contact-meta-card,
+  .contact-map-shell__footer {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5);
+    border: var(--border-subtle);
+    border-radius: var(--radius-2xl);
+    background: var(--color-gray-50);
+  }
+
+  .contact-detail-list__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-10);
+    height: var(--space-10);
+    flex: 0 0 var(--space-10);
+    border-radius: var(--radius-lg);
+    background: var(--color-gray-50);
+    color: var(--color-monash-blue);
+  }
+
+  .contact-detail-list__icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+  }
+
+  .contact-detail-list__copy {
+    display: grid;
+    gap: var(--space-1);
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .contact-detail-list__value {
+    color: var(--color-gray-900);
+    text-decoration: none;
+  }
+
+  .contact-detail-list__value:hover {
+    color: var(--color-monash-blue);
+  }
+
+  .contact-meta-card {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .contact-meta-card p {
+    margin: 0;
+  }
+
+  .contact-section :global(.contact-map-shell) {
+    padding: var(--space-5);
+  }
+
+  .contact-map-shell {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .contact-map-shell__frame {
+    overflow: hidden;
+    min-height: 24rem;
+    border-radius: calc(var(--radius-3xl) - var(--space-1));
+  }
+
+  .contact-map-shell__frame iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 24rem;
+    border: 0;
+  }
+
+  .contact-map-shell__footer {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  @media (min-width: 64rem) {
+    .contact-section {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      align-items: stretch;
+    }
+
+    .contact-map-shell__footer {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+</style>
