@@ -56,6 +56,12 @@ interface NewsPreviewItemData {
   external: boolean;
 }
 
+interface AboutCarouselSlide {
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+}
+
 const peopleEntries = await getCollection('people');
 const newsEntries = await getCollection('news');
 const publicationEntries = await getCollection('publications');
@@ -163,6 +169,59 @@ const directorDisplayName = directorEntry.data.name.replace(/^(?:A\/)?Prof\.\s+/
 const totalPublicationCount = publicationEntries.length;
 const publicationCountLabel =
   totalPublicationCount >= 10 ? `${Math.floor(totalPublicationCount / 10) * 10}+` : String(totalPublicationCount);
+
+/** Same order and copy as the legacy site homepage carousel (`vl4ai-website-old/index.html`). `JRDB.png` → `JRDB-teaser.png` (asset name in this repo). */
+const aboutCarouselSlides: readonly AboutCarouselSlide[] = [
+  {
+    imageSrc: '/images/slider/BasicVision.png',
+    imageAlt: 'Basic vision: object detection and segmentation',
+    title: 'Basic Vision Problems: Object Detection & Segmentation',
+  },
+  {
+    imageSrc: '/images/slider/MOT2.png',
+    imageAlt: 'Multi-object tracking',
+    title: 'Multi-Object Tracking',
+  },
+  {
+    imageSrc: '/images/slider/3Drec.png',
+    imageAlt: '3D reconstruction in dynamic scenes',
+    title: '3D Reconstruction of Human and Objects in Dynamic Scenes',
+  },
+  {
+    imageSrc: '/images/slider/JRMOT.png',
+    imageAlt: 'Multi-task 3D visual perception for mobile robots',
+    title: 'Multi-task 3D Visual Perception System for a Mobile Robot in Human Environments',
+  },
+  {
+    imageSrc: '/images/slider/JRDB-teaser.png',
+    imageAlt: 'JRDB dataset and benchmark',
+    title: 'JRDB: JackRabbot Dataset and Benchmark',
+  },
+  {
+    imageSrc: '/images/slider/TRiPOD-SoPhie.png',
+    imageAlt: 'Human trajectory and body motion forecasting',
+    title: 'Human Trajectory/Body Motion Forecasting',
+  },
+  {
+    imageSrc: '/images/slider/JRDB-ACT.png',
+    imageAlt: 'Human action and activity detection',
+    title: 'Human Spatio-temporal Action, Social Group and Activity Detection',
+  },
+  {
+    imageSrc: '/images/slider/VN.png',
+    imageAlt: 'Active visual navigation',
+    title: 'Active Visual Navigation in an Unexplored Environment',
+  },
+  {
+    imageSrc: '/images/slider/UAV.jpg',
+    imageAlt: 'UAV planning for tracking mobile objects',
+    title: 'Single or Multi-UAV Planning for Discovering and Tracking Mobile Objects',
+  },
+];
+
+const aboutCarouselSlideCount = aboutCarouselSlides.length;
+const aboutCarouselTrackItemCount = aboutCarouselSlideCount + 1;
+const aboutCarouselTrackItemWidthPct = 100 / aboutCarouselTrackItemCount;
 
 if (!researchHeroAction || !publicationsHeroAction) {
   throw new Error('Expected canonical /research/ and /publications/ hero actions in the / route-copy entry.');
@@ -298,16 +357,113 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       </div>
 
       <div class="relative">
-        <div class="group relative aspect-[4/3] overflow-hidden rounded-3xl bg-gray-100 shadow-2xl">
-          <img
-            src="/images/slider/JRMOT.png"
-            alt="Lab research"
-            class="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
-          />
-          <div class="absolute inset-0 bg-gradient-to-b from-black/45 to-transparent"></div>
-          <div class="absolute top-10 left-10 max-w-xl pr-8 text-white">
-            <p class="mb-2 text-[10px] font-black uppercase tracking-[0.3em] opacity-80">Latest Project</p>
-            <h4 class="text-2xl font-bold">JRMOT: Robot Visual Perception</h4>
+        <div
+          class="relative aspect-[4/3] overflow-hidden rounded-3xl bg-gray-100 shadow-2xl"
+          data-testid="home-about-carousel"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Research highlights"
+        >
+          <div class="absolute inset-0 overflow-hidden">
+            <div
+              class="flex h-full transition-transform duration-700 ease-out motion-reduce:transition-none"
+              style={{
+                width: `${aboutCarouselTrackItemCount * 100}%`,
+                transform: 'translateX(0)',
+              }}
+              data-carousel-track
+            >
+              {
+                aboutCarouselSlides.map((slide, index) => (
+                  <div
+                    class="relative h-full min-h-0 shrink-0"
+                    style={{ width: `${aboutCarouselTrackItemWidthPct}%` }}
+                    data-carousel-slide
+                    data-slide-title={slide.title}
+                    aria-hidden={index === 0 ? 'false' : 'true'}
+                  >
+                    <img
+                      src={slide.imageSrc}
+                      alt={slide.imageAlt}
+                      class="h-full w-full object-cover object-center opacity-90"
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      draggable="false"
+                    />
+                  </div>
+                ))
+              }
+              <div
+                class="relative h-full min-h-0 shrink-0"
+                style={{ width: `${aboutCarouselTrackItemWidthPct}%` }}
+                aria-hidden="true"
+                data-carousel-clone
+              >
+                <img
+                  src={aboutCarouselSlides[0]?.imageSrc}
+                  alt=""
+                  class="h-full w-full object-cover object-center opacity-90"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 to-transparent"></div>
+
+          <div class="pointer-events-none absolute top-10 left-10 max-w-xl pr-8 text-white">
+            <p class="mb-2 text-[10px] font-black uppercase tracking-[0.3em] opacity-80">Research highlight</p>
+            <h4 class="text-2xl font-bold" data-carousel-heading aria-live="polite">
+              {aboutCarouselSlides[0].title}
+            </h4>
+          </div>
+
+          <div
+            class="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-3"
+          >
+            <button
+              type="button"
+              class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/55"
+              data-carousel-prev
+              aria-label="Previous slide"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6"></path>
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/55"
+              data-carousel-next
+              aria-label="Next slide"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 18l6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div
+            class="pointer-events-none absolute bottom-4 left-0 right-0 flex flex-wrap items-center justify-center gap-2 px-4"
+            data-carousel-dots
+          >
+            {
+              aboutCarouselSlides.map((_, index) => (
+                <button
+                  type="button"
+                  class:list={[
+                    'pointer-events-auto h-2 rounded-full transition-[width,background-color] duration-300',
+                    index === 0 ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70',
+                  ]}
+                  data-carousel-dot
+                  data-carousel-index={index}
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={index === 0 ? 'true' : undefined}
+                />
+              ))
+            }
           </div>
         </div>
 
@@ -436,4 +592,214 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-testid="home-about-carousel"]');
+      if (!(root instanceof HTMLElement)) {
+        return;
+      }
+
+      const track = root.querySelector('[data-carousel-track]');
+      const slideEls = root.querySelectorAll('[data-carousel-slide]');
+      const titleEl = root.querySelector('[data-carousel-heading]');
+      const prevBtn = root.querySelector('[data-carousel-prev]');
+      const nextBtn = root.querySelector('[data-carousel-next]');
+      const dotBtns = root.querySelectorAll('[data-carousel-dot]');
+
+      const total = slideEls.length;
+      if (
+        !(track instanceof HTMLElement) ||
+        total === 0 ||
+        !(titleEl instanceof HTMLElement) ||
+        !(prevBtn instanceof HTMLButtonElement) ||
+        !(nextBtn instanceof HTMLButtonElement)
+      ) {
+        return;
+      }
+      const trackItemCount = track.children.length;
+
+      const prefersReduced =
+        typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const intervalMs = 5000;
+
+      const titles = Array.from(slideEls).map((el) =>
+        el instanceof HTMLElement ? el.getAttribute('data-slide-title') ?? '' : '',
+      );
+
+      let activeIndex = 0;
+      let trackIndex = 0;
+      let isTransitioning = false;
+      /** @type {number | null} */
+      let timer = null;
+
+      const getTransform = (nextTrackIndex) => `translateX(calc(-${nextTrackIndex} * 100% / ${trackItemCount}))`;
+
+      const setControlsDisabled = (disabled) => {
+        [prevBtn, nextBtn, ...dotBtns].forEach((btn) => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          btn.disabled = disabled;
+          btn.setAttribute('aria-disabled', String(disabled));
+        });
+      };
+
+      const syncUi = (nextActiveIndex) => {
+        titleEl.textContent = titles[nextActiveIndex] ?? '';
+
+        slideEls.forEach((el, i) => {
+          if (el instanceof HTMLElement) {
+            el.setAttribute('aria-hidden', i === nextActiveIndex ? 'false' : 'true');
+          }
+        });
+
+        dotBtns.forEach((btn, i) => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          const active = i === nextActiveIndex;
+          btn.classList.toggle('w-6', active);
+          btn.classList.toggle('w-2', !active);
+          btn.classList.toggle('bg-white', active);
+          btn.classList.toggle('bg-white/40', !active);
+          btn.classList.toggle('hover:bg-white/70', !active);
+          if (active) {
+            btn.setAttribute('aria-current', 'true');
+          } else {
+            btn.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      const jumpToTrackIndex = (nextTrackIndex) => {
+        track.style.transition = 'none';
+        track.style.transform = getTransform(nextTrackIndex);
+        trackIndex = nextTrackIndex;
+        void track.offsetWidth;
+        track.style.transition = '';
+      };
+
+      const moveTo = (nextActiveIndex, nextTrackIndex) => {
+        activeIndex = ((nextActiveIndex % total) + total) % total;
+        syncUi(activeIndex);
+
+        if (prefersReduced) {
+          jumpToTrackIndex(nextTrackIndex === total ? 0 : nextTrackIndex);
+          return;
+        }
+
+        isTransitioning = true;
+        setControlsDisabled(true);
+        trackIndex = nextTrackIndex;
+        track.style.transition = '';
+        track.style.transform = getTransform(nextTrackIndex);
+      };
+
+      const goPrev = () => {
+        if (isTransitioning) {
+          return;
+        }
+
+        if (activeIndex === 0) {
+          activeIndex = total - 1;
+          syncUi(activeIndex);
+          jumpToTrackIndex(total - 1);
+          return;
+        }
+
+        moveTo(activeIndex - 1, trackIndex - 1);
+      };
+
+      const goNext = () => {
+        if (isTransitioning) {
+          return;
+        }
+
+        const nextActiveIndex = (activeIndex + 1) % total;
+        const nextTrackIndex = trackIndex + 1;
+        moveTo(nextActiveIndex, nextTrackIndex);
+      };
+
+      const stopTimer = () => {
+        if (timer !== null) {
+          window.clearInterval(timer);
+          timer = null;
+        }
+      };
+
+      const startTimer = () => {
+        if (prefersReduced) {
+          return;
+        }
+
+        stopTimer();
+        timer = window.setInterval(goNext, intervalMs);
+      };
+
+      const restartTimer = () => {
+        stopTimer();
+        startTimer();
+      };
+
+      track.addEventListener('transitionend', (event) => {
+        if (event.target !== track || event.propertyName !== 'transform' || !isTransitioning) {
+          return;
+        }
+
+        isTransitioning = false;
+
+        if (trackIndex === total) {
+          jumpToTrackIndex(0);
+        }
+
+        setControlsDisabled(false);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        goPrev();
+        restartTimer();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        goNext();
+        restartTimer();
+      });
+
+      dotBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          const raw = btn.getAttribute('data-carousel-index');
+          const target = raw === null ? NaN : Number.parseInt(raw, 10);
+          if (!Number.isFinite(target) || target === activeIndex || isTransitioning) {
+            restartTimer();
+            return;
+          }
+
+          if (activeIndex === total - 1 && target === 0) {
+            moveTo(0, total);
+            restartTimer();
+            return;
+          }
+
+          activeIndex = target;
+          syncUi(activeIndex);
+          jumpToTrackIndex(target);
+          restartTimer();
+        });
+      });
+
+      root.addEventListener('mouseenter', stopTimer);
+      root.addEventListener('mouseleave', startTimer);
+
+      syncUi(activeIndex);
+      jumpToTrackIndex(0);
+      startTimer();
+    })();
+  </script>
 </SiteLayout>
