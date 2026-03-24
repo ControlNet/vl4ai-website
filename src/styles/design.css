@@ -47,17 +47,6 @@ body {
   width: 100%;
 }
 
-.seminal-work-item {
-  border-left: 3px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.seminal-work-item:hover {
-  border-left-color: var(--monash-blue);
-  background: rgb(0 48 135 / 0.02);
-  padding-left: 1rem;
-}
-
 ::-webkit-scrollbar {
   width: 8px;
 }

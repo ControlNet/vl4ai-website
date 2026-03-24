@@ -2,7 +2,7 @@
 kind: home-copy
 localeKey: home-overview
 sortOrder: 3
-title: Welcome to the Vision & Learning for Autonomous AI (VL4AI) Group
+title: Welcome to the Vision & Language for Autonomous AI (VL4AI) Group
 lede: Our research addresses the theoretical foundations and practical applications of computer vision and machine learning for embodied AI systems that perceive, predict, reason, and interact with dynamic environments.
 ---
 

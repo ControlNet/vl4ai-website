@@ -43,7 +43,7 @@ const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.
     <div class="primitive-grid not-found-grid">
       {
         routesToKeep.map((route) => (
-          <CardSurface href={route.path} variant="outlined" class="not-found-card" testId={`not-found-route-${route.id}`}>
+          <CardSurface href={route.path} variant="outlined" class="not-found-card shadow-lg" testId={`not-found-route-${route.id}`}>
             <p class="eyebrow-label">{route.kind}</p>
             <h3 class="primitive-card__title">{route.path}</h3>
             <p class="primitive-card__copy">{route.summary}</p>

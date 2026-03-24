@@ -3,8 +3,8 @@ kind: route-copy
 localeKey: route-home
 sortOrder: 10
 route: /
-eyebrow: Monash University Research Group
-title: Vision & Learning for
+eyebrow: Monash University
+title: Vision & Language for
 highlight: Autonomous AI
 lede: Advancing the theoretical foundations and practical applications of computer vision and machine learning for embodied agents.
 actions:

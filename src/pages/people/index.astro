@@ -175,7 +175,7 @@ const getTrackLabel = (entry: PersonEntry) => {
     <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {phdCandidates.map((entry) => (
         <article class="group flex h-full flex-col" data-testid="people-phd-card">
-          <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition duration-500">
+          <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-lg transition duration-500">
             {entry.data.image && (
               <img
                 src={toContentAssetUrl(entry.data.image)}
@@ -222,7 +222,7 @@ const getTrackLabel = (entry: PersonEntry) => {
         <div class="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {mastersAndHonours.map((entry) => (
             <article class="group flex h-full flex-col" data-testid="people-masters-card">
-              <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-sm transition duration-500">
+              <div class="mb-4 aspect-square overflow-hidden rounded-2xl border border-gray-100 shadow-lg transition duration-500">
                 {entry.data.image && (
                   <img
                     src={toContentAssetUrl(entry.data.image)}

@@ -148,7 +148,7 @@ const inclusiveStatement = inclusiveStatementSource
 
       <div class="grid gap-16 lg:grid-cols-2">
         <div class="space-y-8">
-          <div class="rounded-3xl border border-gray-100 bg-gray-50 p-8">
+          <div class="rounded-3xl border border-gray-100 bg-gray-50 p-8 shadow-lg">
             <h4 class="mb-6 text-xs font-black uppercase tracking-[0.3em] text-[#003087]">Essential Skills</h4>
             <ul class="space-y-4">
               {positionsOverview.data.essentialSkills.map((skill) => (
@@ -184,7 +184,7 @@ const inclusiveStatement = inclusiveStatementSource
             {openPhdOpenings.map((opening) => (
               <a
                 href={opening.primaryUrl ?? '#'}
-                class="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-6 transition hover:border-blue-200"
+                class="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-6 shadow-lg transition hover:border-blue-200"
                 target={opening.primaryUrl ? '_blank' : undefined}
                 rel={opening.primaryUrl ? 'noreferrer' : undefined}
                 data-testid="positions-opening-card"
@@ -206,7 +206,7 @@ const inclusiveStatement = inclusiveStatementSource
 
             {preservedPhdOpening && (
               <div
-                class="flex cursor-not-allowed items-center justify-between rounded-xl bg-gray-50 p-6 opacity-40"
+                class="flex cursor-not-allowed items-center justify-between rounded-xl bg-gray-50 p-6 opacity-40 shadow-lg"
                 data-testid="positions-opening-card"
                 data-position-type="phd"
                 data-position-status={preservedPhdOpening.status}
@@ -233,7 +233,7 @@ const inclusiveStatement = inclusiveStatementSource
 
       <div class="grid gap-16 lg:grid-cols-2">
         <div class="space-y-8 lg:order-2">
-          <div class="rounded-3xl border border-blue-100 bg-blue-50/50 p-8">
+          <div class="rounded-3xl border border-blue-100 bg-blue-50/50 p-8 shadow-lg">
             <p class="mb-8 text-lg font-light italic text-blue-900" data-testid="positions-inclusion-statement">
               {inclusiveStatement}
             </p>
@@ -252,7 +252,7 @@ const inclusiveStatement = inclusiveStatementSource
             <a
               href={featuredStaffOpening.primaryUrl ?? '#'}
               class:list={[
-                'group block rounded-xl border border-gray-100 p-6 transition',
+                'group block rounded-xl border border-gray-100 p-6 shadow-lg transition',
                 featuredStaffOpening.status === 'open' ? 'bg-white hover:border-blue-200' : 'bg-gray-50 opacity-60',
               ]}
               target={featuredStaffOpening.primaryUrl ? '_blank' : undefined}

@@ -10,9 +10,9 @@ export interface RouteSeoDefinition {
 
 export const routeSeo = {
   home: {
-    title: 'Vision & Learning for Autonomous AI | VL4AI at Monash University',
+    title: 'Vision & Language for Autonomous AI | VL4AI at Monash University',
     description:
-      'Explore VL4AI at Monash University, including people, research, selected publications, latest news, positions, and contact details for the Vision & Learning for Autonomous AI group.',
+      'Explore VL4AI at Monash University, including people, research, selected publications, latest news, positions, and contact details for the Vision & Language for Autonomous AI lab.',
     socialImage: defaultSocialImage,
     socialImageAlt: 'VL4AI research showcase artwork',
   },
@@ -33,14 +33,14 @@ export const routeSeo = {
   newsArchive: {
     title: 'News Archive | VL4AI at Monash University',
     description:
-      'Browse the VL4AI news archive for lab updates, paper acceptances, grants, benchmarks, and community milestones from the Vision & Learning for Autonomous AI group.',
+      'Browse the VL4AI news archive for lab updates, paper acceptances, grants, benchmarks, and community milestones from the Vision & Language for Autonomous AI lab.',
     socialImage: '/images/news/zhixi_neusis.png',
     socialImageAlt: 'VL4AI news archive artwork',
   },
   publicationsArchive: {
     title: 'Publications Archive | VL4AI at Monash University',
     description:
-      'Browse the VL4AI publications archive spanning conference papers, journal articles, and benchmark releases from the Vision & Learning for Autonomous AI group at Monash University.',
+      'Browse the VL4AI publications archive spanning conference papers, journal articles, and benchmark releases from the Vision & Language for Autonomous AI lab at Monash University.',
     socialImage: '/images/pub/TrackerBot.png',
     socialImageAlt: 'VL4AI publications archive artwork',
   },
@@ -54,7 +54,7 @@ export const routeSeo = {
   contact: {
     title: 'Contact | VL4AI at Monash University',
     description:
-      'Find the VL4AI lab address, contact details, and contact pathway for the Vision & Learning for Autonomous AI group.',
+      'Find the VL4AI lab address, contact details, and contact pathway for the Vision & Language for Autonomous AI lab.',
     socialImage: logoSocialImage,
     socialImageAlt: 'VL4AI contact route artwork',
   },
