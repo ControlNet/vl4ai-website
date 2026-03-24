@@ -1,1 +1,10 @@
 /images/pub/pdf
+
+# Node / Astro
+node_modules/
+.astro/
+dist/
+
+# Test artifacts
+playwright-report/
+test-results/
