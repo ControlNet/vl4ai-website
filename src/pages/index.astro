@@ -140,17 +140,16 @@ const sortFeaturedPublicationEntries = (left: PublicationEntry, right: Publicati
   left.id.localeCompare(right.id);
 
 const sortFeaturedNewsEntries = (left: NewsEntry, right: NewsEntry) =>
-  (left.data.featuredOrder ?? Number.MAX_SAFE_INTEGER) - (right.data.featuredOrder ?? Number.MAX_SAFE_INTEGER) ||
-  right.data.publishedAt.localeCompare(left.data.publishedAt) ||
-  left.data.sortOrder - right.data.sortOrder ||
+  right.data.date.localeCompare(left.data.date) ||
+  left.data.sequence - right.data.sequence ||
   left.id.localeCompare(right.id);
 
-const formatNewsDateLabel = (publishedAt: string) =>
+const formatNewsDateLabel = (date: string) =>
   new Intl.DateTimeFormat('en', {
     month: 'short',
     year: 'numeric',
     timeZone: 'UTC',
-  }).format(new Date(`${publishedAt}T00:00:00Z`));
+  }).format(new Date(`${date}T00:00:00Z`));
 
 const homeCopyParagraphs = getNonListParagraphs(homeCopyEntry.body ?? '');
 const homeCopyListItems = getMarkdownListItems(homeCopyEntry.body ?? '');
@@ -188,17 +187,17 @@ const featuredPublicationItems: FeaturedPublicationItemData[] = publicationEntri
 const isCitedHighlight = (label: string | undefined) => Boolean(label && /highly\s*cited/i.test(label));
 
 const featuredNewsItems: NewsPreviewItemData[] = newsEntries
-  .filter((entry) => entry.data.featuredOnHome)
+  .slice()
   .sort(sortFeaturedNewsEntries)
   .slice(0, 3)
   .map((entry) => ({
-    slug: entry.data.slug,
+    slug: entry.id,
     title: normalizeText(entry.data.title).replace(/\.$/u, ''),
     summary: normalizeText(entry.data.summary).replace(/\.$/u, ''),
-    dateLabel: formatNewsDateLabel(entry.data.publishedAt),
+    dateLabel: formatNewsDateLabel(entry.data.date),
     imageUrl: toContentAssetUrl(entry.data.image),
     imageAlt: `${normalizeText(entry.data.title)} artwork`,
-    ...resolveRouteDestination(entry.data.primaryUrl),
+    ...resolveRouteDestination(entry.data.link),
   }));
 ---
 

@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 import { footerUtilityLink, navContactCta, publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { resolveRouteDestination } from '../../lib/route-destination';
 import { routeSeo } from '../../lib/page-seo';
 
 type NewsEntry = CollectionEntry<'news'>;
@@ -28,7 +29,7 @@ interface NewsArchiveItem {
   slug: string;
   title: string;
   summary: string;
-  publishedAt: string;
+  date: string;
   dateLabel: string;
   year: string;
   href: string;
@@ -53,22 +54,27 @@ if (!newsRouteCopy) {
 }
 
 const normalizeNewsText = (value: string) => value.replace(/\s+/gu, ' ').trim();
-const isExternalLink = (value: string) => /^https?:\/\//iu.test(value) || value.startsWith('mailto:');
+
+const formatNewsDateLabel = (date: string) =>
+  new Intl.DateTimeFormat('en', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${date}T00:00:00Z`));
 
 const sortNewsEntries = (left: NewsEntry, right: NewsEntry) =>
-  right.data.publishedAt.localeCompare(left.data.publishedAt) ||
-  left.data.sortOrder - right.data.sortOrder ||
+  right.data.date.localeCompare(left.data.date) ||
+  left.data.sequence - right.data.sequence ||
   left.id.localeCompare(right.id);
 
-const archiveItems: NewsArchiveItem[] = newsEntries.sort(sortNewsEntries).map((entry) => ({
-  slug: entry.data.slug,
+const archiveItems: NewsArchiveItem[] = newsEntries.slice().sort(sortNewsEntries).map((entry) => ({
+  slug: entry.id,
   title: normalizeNewsText(entry.data.title).replace(/\.$/u, ''),
   summary: normalizeNewsText(entry.data.summary).replace(/\.$/u, ''),
-  publishedAt: entry.data.publishedAt,
-  dateLabel: normalizeNewsText(entry.data.displayDate).replace(/,/gu, ''),
-  year: entry.data.publishedAt.slice(0, 4),
-  href: entry.data.primaryUrl,
-  external: isExternalLink(entry.data.primaryUrl),
+  date: entry.data.date,
+  dateLabel: formatNewsDateLabel(entry.data.date),
+  year: entry.data.date.slice(0, 4),
+  ...resolveRouteDestination(entry.data.link),
 }));
 
 const yearGroups: NewsArchiveYearGroup[] = Array.from(
@@ -135,15 +141,15 @@ const archiveAction = newsRouteCopy.data.actions[0];
 
           <div class="space-y-12">
             {group.items.map((item) => (
-              <article
-                class="group"
-                data-news-slug={item.slug}
-                data-news-published-at={item.publishedAt}
-                data-testid="news-archive-item"
-              >
-                <time class="mb-2 block text-[10px] font-black uppercase tracking-widest text-blue-700" datetime={item.publishedAt}>
-                  {item.dateLabel}
-                </time>
+                <article
+                  class="group"
+                  data-news-slug={item.slug}
+                  data-news-published-at={item.date}
+                  data-testid="news-archive-item"
+                >
+                  <time class="mb-2 block text-[10px] font-black uppercase tracking-widest text-blue-700" datetime={item.date}>
+                    {item.dateLabel}
+                  </time>
                 <h3 class="text-2xl leading-tight font-bold transition group-hover:text-blue-800">
                   <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
                     {item.title}

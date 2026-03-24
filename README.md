@@ -25,13 +25,28 @@ Read [`docs/maintainer-playbook.md`](docs/maintainer-playbook.md) before making 
 
 ## Content ownership at a glance
 
-- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, plus featured items from `src/content/publications/index.toml` and `src/content/news/index.toml`
+- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, plus featured items from `src/content/publications/index.toml` and the newest three news entries from `src/content/news/index.toml`
 - People `/people/`: `src/content/site/people-route.md` and `src/content/people/index.toml`
 - Research `/research/`: `src/content/site/research-route.md` and `src/content/research/**`
 - Publications `/publications/`: `src/content/site/publications-route.md` and `src/content/publications/index.toml`
 - News `/news/`: `src/content/site/news-route.md` and `src/content/news/index.toml`
 - Positions `/positions/`: `src/content/site/positions-route.md` and `src/content/positions/**`
 - Contact `/contact/`: `src/content/site/contact-route.md`, `src/content/site/contact.toml`, and `src/content/site/lab.toml`
+
+## News authoring format
+
+News entries now live in a compact `[[item]]` list in `src/content/news/index.toml`.
+
+```toml
+[[item]]
+date = "2026-02-01"
+title = "Our work MATA published in ICLR."
+summary = "Congrats to Zhixi. Read paper here."
+link = "https://arxiv.org/pdf/2601.19204"
+image = "images/news/mata.png"
+```
+
+Maintain only those five fields. The site now derives the news entry id automatically from `date + title`, keeps the homepage to the newest three items by date, and generates archive date labels from the stored date.
 
 ## Verification order
 

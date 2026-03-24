@@ -42,7 +42,7 @@ Edit these files:
 Notes:
 
 - Homepage publications are selected with `featuredOnHome = true` and ordered with `featuredOrder`.
-- Homepage news items use the same `featuredOnHome` and `featuredOrder` pattern.
+- Homepage news items are now selected automatically as the newest three entries in `src/content/news/index.toml`.
 
 ### People `/people/`
 
@@ -96,10 +96,22 @@ Edit these files:
 
 Important constraints:
 
-- `publishedAt` must use `YYYY-MM-DD`
-- `primaryUrl` should also appear in `links`
-- `localeKey` and `slug` should match
-- if `featuredOnHome = true`, also set `featuredOrder`
+- use a compact `[[item]]` list with only `date`, `title`, `summary`, `link`, and `image`
+- `date` must use `YYYY-MM-DD`
+- `image` should point to an asset under `public/`
+- the site derives the entry id automatically from `date + title` and adds a numeric suffix if a duplicate would collide
+- the homepage pulls the newest three items by date, and items with the same date stay in file order
+
+Example:
+
+```toml
+[[item]]
+date = "2026-02-01"
+title = "Our work MATA published in ICLR."
+summary = "Congrats to Zhixi. Read paper here."
+link = "https://arxiv.org/pdf/2601.19204"
+image = "images/news/mata.png"
+```
 
 ### Positions `/positions/`
 

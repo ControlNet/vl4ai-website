@@ -108,6 +108,8 @@ const isoDateSchema = trimmedString()
   .regex(/^\d{4}-\d{2}-\d{2}$/u, 'Use an ISO date string in YYYY-MM-DD format.')
   .refine((value) => !Number.isNaN(Date.parse(value)), 'Date value is not parseable.');
 
+const nonNegativeIntegerSchema = z.number().int().nonnegative();
+
 const linkSchema = z
   .object({
     kind: z.enum([
@@ -139,6 +141,101 @@ const enforceCanonicalSlug = (
       path: ['slug'],
     });
   }
+};
+
+const canonicalizeIdentifierSegment = (value: string) => {
+  const slug = value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/gu, '')
+    .toLowerCase()
+    .replace(/&/gu, ' and ')
+    .replace(/[^a-z0-9]+/gu, '-')
+    .replace(/^-+|-+$/gu, '');
+
+  return slug.length > 0 ? slug : 'item';
+};
+
+const inferNewsEntryIdBase = (date: string, title: string) =>
+  `${date.trim()}-${canonicalizeIdentifierSegment(title.trim())}`;
+
+const parseCompactNewsItems = (text: string): Record<string, Record<string, unknown>> => {
+  const rawItems: Record<string, unknown>[] = [];
+  let currentItem: Record<string, unknown> | undefined;
+
+  for (const [index, line] of text.split(/\r?\n/u).entries()) {
+    const lineNumber = index + 1;
+    const trimmedLine = line.trim();
+
+    if (trimmedLine.length === 0 || trimmedLine.startsWith('#')) {
+      continue;
+    }
+
+    if (trimmedLine === '[[item]]') {
+      currentItem = {};
+      rawItems.push(currentItem);
+      continue;
+    }
+
+    if (!currentItem) {
+      throw new Error(`[content:news] Expected [[item]] before properties at line ${lineNumber}.`);
+    }
+
+    const fieldMatch = trimmedLine.match(/^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*(.+)$/u);
+
+    if (!fieldMatch) {
+      throw new Error(`[content:news] Could not parse line ${lineNumber}: ${trimmedLine}`);
+    }
+
+    const [, fieldName, rawValueLiteral] = fieldMatch;
+
+    if (!/^"(?:[^"\\]|\\.)*"$/u.test(rawValueLiteral)) {
+      throw new Error(
+        `[content:news] Only single-line quoted string values are supported for ${fieldName} at line ${lineNumber}.`,
+      );
+    }
+
+    try {
+      currentItem[fieldName] = JSON.parse(rawValueLiteral) as string;
+    } catch {
+      throw new Error(`[content:news] Invalid string value for ${fieldName} at line ${lineNumber}.`);
+    }
+  }
+
+  if (rawItems.length === 0) {
+    throw new Error('[content:news] Expected src/content/news/index.toml to define at least one [[item]] entry.');
+  }
+
+  const seenIds = new Map<string, number>();
+
+  return Object.fromEntries(
+    rawItems.map((rawItem, index) => {
+      const item = toRecord(rawItem);
+      const rawDate = item.date;
+      const rawTitle = item.title;
+
+      if (typeof rawDate !== 'string' || rawDate.trim().length === 0) {
+        throw new Error(`[content:news] [[item]] #${index + 1} is missing a non-empty string date field.`);
+      }
+
+      if (typeof rawTitle !== 'string' || rawTitle.trim().length === 0) {
+        throw new Error(`[content:news] [[item]] #${index + 1} is missing a non-empty string title field.`);
+      }
+
+      const baseId = inferNewsEntryIdBase(rawDate, rawTitle);
+      const nextCollisionCount = (seenIds.get(baseId) ?? 0) + 1;
+      seenIds.set(baseId, nextCollisionCount);
+
+      const id = nextCollisionCount === 1 ? baseId : `${baseId}-${nextCollisionCount}`;
+
+      return [
+        id,
+        {
+          ...item,
+          sequence: index,
+        },
+      ];
+    }),
+  );
 };
 
 const site = defineCollection({
@@ -275,40 +372,19 @@ const publications = defineCollection({
 });
 
 const news = defineCollection({
-  loader: withDuplicateIdentifierValidation(file('src/content/news/index.toml'), ['localeKey', 'slug']),
+  loader: file('src/content/news/index.toml', {
+    parser: parseCompactNewsItems,
+  }),
   schema: z
     .object({
-      localeKey: canonicalId(),
-      slug: canonicalId(),
-      sortOrder: positiveSortOrder,
-      publishedAt: isoDateSchema,
-      displayDate: trimmedString(),
+      date: isoDateSchema,
+      sequence: nonNegativeIntegerSchema,
       title: trimmedString(),
       summary: trimmedString(),
       image: assetPathSchema,
-      links: z.array(linkSchema).min(1),
-      primaryUrl: destinationSchema,
-      featuredOnHome: z.boolean().optional(),
-      featuredOrder: positiveSortOrder.optional(),
+      link: destinationSchema,
     })
-    .strict()
-    .superRefine((value, ctx) => {
-      enforceCanonicalSlug(value, ctx);
-      if (value.featuredOnHome && !value.featuredOrder) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Featured news entries must declare a featuredOrder.',
-          path: ['featuredOrder'],
-        });
-      }
-      if (!value.links.some((link) => link.url === value.primaryUrl)) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'primaryUrl must also exist inside the links array.',
-          path: ['primaryUrl'],
-        });
-      }
-    }),
+    .strict(),
 });
 
 const research = defineCollection({
