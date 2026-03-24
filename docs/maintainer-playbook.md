@@ -93,7 +93,7 @@ Edit these files:
 
 - `src/content/site/research-route.md` for route-level header copy
 - `src/content/research/overview.md` for overview copy and support lists
-- `src/content/research/topics/*.md` for research pillars and topic cards
+- `src/content/research/topics/*.md` for research areas and topic cards
 - `src/content/research/benchmarks/*.md` for benchmark and dataset spotlight entries
 
 Important constraints:

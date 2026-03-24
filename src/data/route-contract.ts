@@ -40,7 +40,7 @@ export const publicRouteContract: PublicRouteContractEntry[] = [
     path: '/research/',
     kind: 'landing',
     title: 'Research',
-    summary: 'Canonical standalone route for research pillars, topics, and benchmark overviews.',
+    summary: 'Canonical standalone route for research areas, topics, and benchmark overviews.',
   },
   {
     id: 'publications',
