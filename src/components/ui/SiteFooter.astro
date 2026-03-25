@@ -1,4 +1,6 @@
 ---
+import SiteBrandLogo from './SiteBrandLogo.astro';
+
 interface FooterNavItem {
   label: string;
   href: string;
@@ -42,14 +44,7 @@ const {
 <footer class="border-t border-gray-800 bg-gray-900 px-6 pt-24 pb-12 text-white" id="site-footer" data-testid="site-footer">
   <div class="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 lg:grid-cols-4">
     <div class="lg:col-span-2">
-      <a href={logoHref} class="mb-8 inline-flex items-center gap-3" data-testid="site-footer-brand">
-        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white">
-          <span class="text-sm font-extrabold text-black">VL</span>
-        </div>
-        <span class="text-2xl font-black uppercase tracking-tighter">
-          VL4AI <span class="font-light text-gray-500">Research</span>
-        </span>
-      </a>
+      <SiteBrandLogo href={logoHref} variant="footer" testId="site-footer-brand" />
       {description && <p class="max-w-md leading-relaxed font-light text-gray-400">{description}</p>}
       {
         actionLinks.length > 0 && (

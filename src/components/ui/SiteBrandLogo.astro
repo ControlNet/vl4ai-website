@@ -1,0 +1,37 @@
+---
+/**
+ * VL4AI wordmark: rounded mark ("VL") + title line. Styling differs for light nav vs dark footer.
+ */
+interface Props {
+  href?: string;
+  /** `nav`: dark mark on light chrome (hover scale). `footer`: light mark on dark footer. */
+  variant?: 'nav' | 'footer';
+  class?: string;
+  testId?: string;
+}
+
+const { href = '/', variant = 'nav', class: className, testId } = Astro.props;
+
+const markShell =
+  variant === 'nav'
+    ? 'flex h-10 w-10 items-center justify-center rounded-lg bg-black transition-transform group-hover:scale-110'
+    : 'flex h-10 w-10 items-center justify-center rounded-lg bg-white';
+const markText = variant === 'nav' ? 'text-sm font-extrabold text-white' : 'text-sm font-extrabold text-black';
+---
+
+<a
+  href={href}
+  class:list={[
+    variant === 'nav' && 'group flex items-center gap-3',
+    variant === 'footer' && 'mb-8 inline-flex items-center gap-3',
+    className,
+  ]}
+  data-testid={testId}
+>
+  <div class={markShell}>
+    <span class={markText} aria-hidden="true">VL</span>
+  </div>
+  <span class="text-2xl font-black uppercase tracking-tighter">
+    VL4AI <span class="font-light text-gray-500">Research</span>
+  </span>
+</a>

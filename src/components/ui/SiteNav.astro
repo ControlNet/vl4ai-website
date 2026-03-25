@@ -1,4 +1,6 @@
 ---
+import SiteBrandLogo from './SiteBrandLogo.astro';
+
 interface NavItem {
   key?: string;
   label: string;
@@ -31,14 +33,7 @@ const isItemActive = (item: NavItem) =>
   data-testid="site-nav"
 >
   <div class="relative z-10 flex items-center gap-3">
-    <a href={logoHref} class="group flex items-center gap-3" data-testid="site-nav-home">
-      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-black transition-transform group-hover:scale-110">
-        <span class="text-sm font-extrabold text-white">VL</span>
-      </div>
-      <span class="text-2xl font-black uppercase tracking-tighter">
-        VL4AI <span class="font-light text-gray-500">Research</span>
-      </span>
-    </a>
+    <SiteBrandLogo href={logoHref} variant="nav" testId="site-nav-home" />
   </div>
 
   <div
