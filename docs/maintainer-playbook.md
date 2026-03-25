@@ -205,7 +205,7 @@ Edit these files:
 
 - `src/content/site/contact-route.md` for page header copy
 - `src/content/site/contact.toml` for phone, email, office hours, address lines, map URL, and map embed URL
-- `src/content/site/lab.toml` for the lab name, institution, department, location, and logo metadata reused on the contact page and shared shell
+- `src/content/site/lab.toml` for the lab name, description, location, and logo metadata reused on the contact page and shared shell
 
 ### Shared site metadata
 
@@ -216,7 +216,7 @@ The following file supports shared lab identity outside a single page:
 Use it when you need to update:
 
 - lab short and full names
-- institution and department labels
+- lab metadata such as name, description, location, and logo
 - primary location text
 - logo path and alternate names
 

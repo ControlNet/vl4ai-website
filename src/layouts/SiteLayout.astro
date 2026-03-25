@@ -21,7 +21,7 @@ interface NavItem {
 interface FooterActionLink {
   label: string;
   href: string;
-  icon: 'email' | 'map' | 'institution';
+  icon: 'email' | 'map';
   external?: boolean;
   testId?: string;
 }
@@ -172,7 +172,6 @@ const structuredData = [
     url: homepageUrl,
     logo: new URL(normalizeSitePath(toContentAssetUrl(labEntry.data.logo)), siteUrl).href,
     address: organizationAddress,
-    department: labEntry.data.department,
     telephone: contactEntry.data.phone,
     email: contactEntry.data.email,
     location: labEntry.data.primaryLocation,

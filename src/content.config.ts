@@ -630,8 +630,6 @@ const site = defineCollection({
         shortName: trimmedString(),
         fullName: trimmedString(),
         description: trimmedString(),
-        institution: trimmedString(),
-        department: trimmedString(),
         primaryLocation: trimmedString(),
         logo: assetPathSchema,
         alternateNames: z.array(trimmedString()).default([]),
