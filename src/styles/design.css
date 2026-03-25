@@ -8,8 +8,29 @@ body {
   scroll-behavior: smooth;
 }
 
+/*
+ * Use ::before instead of backdrop-filter on the element itself.
+ * This avoids creating a backdrop root that would trap child elements'
+ * (e.g. the mobile dropdown panel) backdrop-filter inside the nav's
+ * compositing group, preventing them from blurring the real page content.
+ */
 .glass-nav {
+  position: relative;
+}
+
+.glass-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.glass-panel {
+  background: rgb(255 255 255 / 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
