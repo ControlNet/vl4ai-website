@@ -30,7 +30,7 @@ const isItemActive = (item: NavItem) =>
   id="site-nav"
   data-testid="site-nav"
 >
-  <div class="flex items-center gap-3">
+  <div class="relative z-10 flex items-center gap-3">
     <a href={logoHref} class="group flex items-center gap-3" data-testid="site-nav-home">
       <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-black transition-transform group-hover:scale-110">
         <span class="text-sm font-extrabold text-white">VL</span>
@@ -43,7 +43,7 @@ const isItemActive = (item: NavItem) =>
 
   <div
     id="site-nav-mobile-panel"
-    class="absolute top-full left-6 right-6 hidden flex-col gap-5 rounded-3xl border border-gray-100 p-6 text-[11px] font-black uppercase tracking-widest shadow-2xl shadow-black/5 max-lg:bg-white/95 max-lg:backdrop-blur lg:static lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-10 lg:border-0 lg:p-0 lg:shadow-none"
+    class="absolute top-full right-0 left-0 z-10 mx-4 mt-2 hidden max-h-[min(70vh,calc(100dvh-5.5rem))] flex-col gap-0 overflow-y-auto overscroll-contain rounded-2xl border border-gray-200/80 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] text-[11px] font-black uppercase tracking-widest shadow-2xl shadow-black/10 max-lg:bg-white max-lg:backdrop-blur-md lg:static lg:mx-0 lg:mt-0 lg:max-h-none lg:max-w-none lg:overflow-visible lg:p-0 lg:pb-0 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-10 lg:border-0 lg:bg-transparent lg:shadow-none"
     aria-label="Primary navigation"
     aria-hidden="true"
     data-mobile-menu-panel
@@ -53,8 +53,8 @@ const isItemActive = (item: NavItem) =>
         <a
           href={item.href}
           class:list={[
-            'nav-link w-fit transition',
-            isItemActive(item) ? 'is-active text-black' : 'text-gray-500 hover:text-[#003087]',
+            'nav-link block rounded-xl px-4 py-3.5 text-sm transition max-lg:w-full max-lg:min-h-[2.75rem] max-lg:leading-snug max-lg:after:hidden lg:inline lg:w-fit lg:min-h-0 lg:px-0 lg:py-0 lg:text-[11px]',
+            isItemActive(item) ? 'is-active text-black max-lg:bg-gray-50' : 'text-gray-600 hover:text-[#003087] max-lg:active:bg-gray-100',
           ]}
           aria-current={isItemActive(item) ? 'page' : undefined}
           data-mobile-menu-link
@@ -67,7 +67,7 @@ const isItemActive = (item: NavItem) =>
   </div>
 
   <button
-    class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-blue-50 hover:text-[#003087] lg:hidden"
+    class="relative z-10 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-gray-900 transition hover:bg-blue-50 hover:text-[#003087] lg:hidden"
     type="button"
     aria-label="Open navigation menu"
     aria-expanded="false"
@@ -75,10 +75,32 @@ const isItemActive = (item: NavItem) =>
     data-mobile-menu-button
     data-testid="site-nav-menu-button"
   >
-    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <svg
+      class="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      aria-hidden="true"
+      data-mobile-menu-icon-open
+    >
       <path d="M4 7h16"></path>
       <path d="M7 12h13"></path>
       <path d="M10 17h10"></path>
+    </svg>
+    <svg
+      class="absolute h-5 w-5 hidden"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      aria-hidden="true"
+      data-mobile-menu-icon-close
+    >
+      <path d="M6 6l12 12"></path>
+      <path d="M18 6L6 18"></path>
     </svg>
   </button>
 
@@ -95,6 +117,8 @@ const isItemActive = (item: NavItem) =>
     const mobileMenuButton = mobileNav.querySelector('[data-mobile-menu-button]');
     const mobileMenuPanel = mobileNav.querySelector('[data-mobile-menu-panel]');
     const mobileMenuLinks = mobileNav.querySelectorAll('[data-mobile-menu-link]');
+    const menuIconOpen = mobileMenuButton?.querySelector('[data-mobile-menu-icon-open]');
+    const menuIconClose = mobileMenuButton?.querySelector('[data-mobile-menu-icon-close]');
 
     if (!(mobileMenuButton instanceof HTMLButtonElement) || !(mobileMenuPanel instanceof HTMLElement)) {
       return;
@@ -110,6 +134,11 @@ const isItemActive = (item: NavItem) =>
       mobileMenuButton.setAttribute('aria-label', menuIsOpen ? 'Close navigation menu' : 'Open navigation menu');
       mobileMenuPanel.setAttribute('aria-hidden', desktopMediaQuery.matches ? 'false' : String(!menuIsOpen));
       mobileMenuPanel.classList.toggle('hidden', !menuIsOpen && !desktopMediaQuery.matches);
+
+      if (menuIconOpen instanceof SVGElement && menuIconClose instanceof SVGElement) {
+        menuIconOpen.classList.toggle('hidden', Boolean(menuIsOpen));
+        menuIconClose.classList.toggle('hidden', !menuIsOpen);
+      }
     };
 
     const closeMenu = () => {
