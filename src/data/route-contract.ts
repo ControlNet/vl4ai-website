@@ -103,7 +103,7 @@ export const navContactCta: NavContractCta = {
 };
 
 export const footerUtilityLink: NavContractCta = {
-  label: 'Contact the lab',
+  label: 'Contact VL4AI Research',
   href: '/contact/',
   testId: 'footer-contact-link',
 };

@@ -8,4 +8,4 @@ image: images/slider/MOT20.png
 primaryUrl: https://motchallenge.net/data/MOT20/
 ---
 
-MOT20 was preserved on the legacy research page as the benchmark anchor for the lab's crowded-scene multi-object tracking work.
+MOT20 was preserved on the legacy research page as the benchmark anchor for VL4AI's crowded-scene multi-object tracking work.

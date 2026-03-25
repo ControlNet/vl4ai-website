@@ -28,9 +28,9 @@ We are always looking for highly motivated and outstanding candidates who are ea
 
 The legacy positions page kept two layers of content:
 
-1. General lab-wide recruitment expectations and important administrative links.
+1. General recruitment expectations and important administrative links.
 2. A mixture of currently available, recently closed, and archived opportunities, some of which linked out to detailed standalone pages.
 
 The collection entries in this directory preserve both forms so later UI work can render a single recruitment section without losing the old descriptions.
 
-The legacy page also made the lab's diversity statement explicit: the group welcomes culturally and linguistically diverse applicants of all genders.
+The legacy page also made the research group's diversity statement explicit: the group welcomes culturally and linguistically diverse applicants of all genders.

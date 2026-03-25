@@ -5,7 +5,7 @@ sortOrder: 1
 title: Introduction
 ---
 
-This section captures the lab's active research projects together with its public datasets and benchmarks.
+This section captures the VL4AI's active research projects together with its public datasets and benchmarks.
 
 The legacy site grouped the program around three persistent themes:
 

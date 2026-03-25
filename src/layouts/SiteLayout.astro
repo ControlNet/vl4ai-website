@@ -49,7 +49,7 @@ interface Props {
 
 const {
   title,
-  description = 'The static VL4AI website for Vision & Language for Autonomous AI at Monash University.',
+  description = 'The static website for Vision & Language for Autonomous AI Research.',
   canonicalPath,
   socialImage,
   socialImageAlt = 'VL4AI logo',
@@ -126,11 +126,11 @@ const footerRegionLine = [localityMatch?.[2], localityMatch?.[3]].filter(Boolean
 const footerCountry = contactEntry.data.addressLines.at(-1) ?? '';
 const footerAddressLines = [
   footerStreetLine,
-  [labEntry.data.institution, footerLocality].filter(Boolean).join(' '),
+  footerLocality,
   [footerRegionLine, footerCountry].filter(Boolean).join(', '),
 ].filter((line): line is string => line.length > 0);
 const footerDescription =
-  'Vision & Language for Autonomous AI Lab at Monash University. Dedicated to pushing the boundaries of machine perception and embodied intelligence.';
+  'Vision & Language for Autonomous AI Research. Dedicated to pushing the boundaries of machine perception and embodied intelligence.';
 const footerActionLinks: FooterActionLink[] = [
   {
     label: 'Email the lab',
@@ -139,18 +139,11 @@ const footerActionLinks: FooterActionLink[] = [
     testId: 'site-footer-action-email',
   },
   {
-    label: 'Open the campus map',
+    label: 'Open the location map',
     href: contactEntry.data.mapUrl,
     icon: 'map',
     external: true,
     testId: 'site-footer-action-map',
-  },
-  {
-    label: labEntry.data.institution,
-    href: 'https://www.monash.edu/',
-    icon: 'institution',
-    external: true,
-    testId: 'site-footer-action-monash',
   },
 ];
 const footerMetaLinks: FooterMetaLink[] = [
@@ -158,12 +151,6 @@ const footerMetaLinks: FooterMetaLink[] = [
     label: canonicalNavContactCta.label,
     href: canonicalNavContactCta.href,
     testId: 'site-footer-meta-contact',
-  },
-  {
-    label: labEntry.data.institution,
-    href: 'https://www.monash.edu/',
-    external: true,
-    testId: 'site-footer-meta-monash',
   },
 ];
 const organizationAddress = {
@@ -186,10 +173,6 @@ const structuredData = [
     logo: new URL(normalizeSitePath(toContentAssetUrl(labEntry.data.logo)), siteUrl).href,
     address: organizationAddress,
     department: labEntry.data.department,
-    parentOrganization: {
-      '@type': 'CollegeOrUniversity',
-      name: labEntry.data.institution,
-    },
     telephone: contactEntry.data.phone,
     email: contactEntry.data.email,
     location: labEntry.data.primaryLocation,

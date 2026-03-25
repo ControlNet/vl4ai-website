@@ -9,7 +9,7 @@ highlightLabel: Perception
 image: images/slider/JRMOT.png
 ---
 
-The lab's legacy description focused on perception systems that let social robots understand static environments while also perceiving and predicting human behaviour under physical and social constraints. This stream spans low-level perception through high-level reasoning and includes the creation of large-scale robotic datasets for training and evaluation.
+The VL4AI's legacy description focused on perception systems that let social robots understand static environments while also perceiving and predicting human behaviour under physical and social constraints. This stream spans low-level perception through high-level reasoning and includes the creation of large-scale robotic datasets for training and evaluation.
 
 Representative legacy publication links preserved from the old research page:
 

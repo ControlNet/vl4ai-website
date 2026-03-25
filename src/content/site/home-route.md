@@ -3,7 +3,7 @@ kind: route-copy
 localeKey: route-home
 sortOrder: 10
 route: /
-eyebrow: Monash University
+eyebrow: VL4AI Research
 title: Vision & Language for
 highlight: Autonomous AI
 lede: Advancing the theoretical foundations and practical applications of computer vision and machine learning for embodied agents.

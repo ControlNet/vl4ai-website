@@ -9,7 +9,7 @@ highlightLabel: Perception
 image: images/slider/MOT2.png
 ---
 
-Multi-object tracking is treated by the lab as a foundational vision problem for surveillance, robotics, autonomous driving, health, and biology. The legacy research page emphasized reliable end-to-end tracking without heuristic post-processing, including track initiation, termination, occlusion handling, and uncertain measurement-to-object association.
+Multi-object tracking is treated within VL4AI Research as a foundational vision problem for surveillance, robotics, autonomous driving, health, and biology. The legacy research page emphasized reliable end-to-end tracking without heuristic post-processing, including track initiation, termination, occlusion handling, and uncertain measurement-to-object association.
 
 Representative legacy publication links preserved from the old research page:
 

@@ -12,6 +12,7 @@ import {
   publicRouteContract,
   unsupportedLegacyRoutePaths,
 } from '../../src/data/route-contract';
+import { routeSeo } from '../../src/lib/page-seo';
 
 const previewOrigin = 'http://127.0.0.1:4321';
 const astroConfigPath = fileURLToPath(new URL('../../astro.config.ts', import.meta.url));
@@ -290,9 +291,8 @@ test('defines the canonical public route matrix and exposes it on the not-found 
   await page.goto('/404.html', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Route Not Found | VL4AI at Monash University',
-    description:
-      'The requested VL4AI route is unavailable or retired. Use the homepage, People, Research, Publications, News, Positions, or Contact pages to continue on the supported public site.',
+    title: routeSeo.notFound.title,
+    description: routeSeo.notFound.description,
     canonical: `${siteOrigin}/404.html`,
     robots: 'noindex,follow',
   });
@@ -321,9 +321,8 @@ test('serves the currently implemented canonical routes with stable metadata', a
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Vision & Language for Autonomous AI | VL4AI at Monash University',
-    description:
-      'Explore VL4AI at Monash University, including people, research, selected publications, latest news, positions, and contact details for the Vision & Language for Autonomous AI lab.',
+    title: routeSeo.home.title,
+    description: routeSeo.home.description,
     canonical: `${siteOrigin}/`,
   });
 
@@ -409,9 +408,8 @@ test('serves the currently implemented canonical routes with stable metadata', a
   await page.goto('/news/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'News Archive | VL4AI at Monash University',
-    description:
-      'Browse the VL4AI news archive for lab updates, paper acceptances, grants, benchmarks, and community milestones from the Vision & Language for Autonomous AI lab.',
+    title: routeSeo.newsArchive.title,
+    description: routeSeo.newsArchive.description,
     canonical: `${siteOrigin}/news/`,
   });
 
@@ -424,9 +422,8 @@ test('serves the currently implemented canonical routes with stable metadata', a
   await page.goto('/publications/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Publications Archive | VL4AI at Monash University',
-    description:
-      'Browse the VL4AI publications archive spanning conference papers, journal articles, and benchmark releases from the Vision & Language for Autonomous AI lab at Monash University.',
+    title: routeSeo.publicationsArchive.title,
+    description: routeSeo.publicationsArchive.description,
     canonical: `${siteOrigin}/publications/`,
   });
 
@@ -439,9 +436,8 @@ test('serves the currently implemented canonical routes with stable metadata', a
   await page.goto('/404.html', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Route Not Found | VL4AI at Monash University',
-    description:
-      'The requested VL4AI route is unavailable or retired. Use the homepage, People, Research, Publications, News, Positions, or Contact pages to continue on the supported public site.',
+    title: routeSeo.notFound.title,
+    description: routeSeo.notFound.description,
     canonical: `${siteOrigin}/404.html`,
     robots: 'noindex,follow',
   });
@@ -462,7 +458,7 @@ test('unsupported legacy html routes stay retired and render the canonical 404 s
     expect(response?.status(), `${legacyPath} should remain unsupported.`).toBe(404);
     expect(new URL(page.url()).pathname, `${legacyPath} should not redirect to a live canonical page.`).toBe(legacyPath);
 
-    await expect(page).toHaveTitle('Route Not Found | VL4AI at Monash University');
+    await expect(page).toHaveTitle(routeSeo.notFound.title);
     await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `${siteOrigin}/404.html`);
     await expect(page.getByTestId('not-found-header')).toBeVisible();
     await expect(page.getByTestId('not-found-action-people')).toHaveAttribute('href', '/people/');
@@ -491,8 +487,8 @@ test('navigates from the homepage to the standalone people route and preserves s
 
   await expect(page).toHaveURL('/people/');
   await expectSeoMetadata(page, {
-    title: 'People | VL4AI at Monash University',
-    description: 'Meet the VL4AI team at Monash University, including current lab members, collaborators, and alumni.',
+    title: routeSeo.people.title,
+    description: routeSeo.people.description,
     canonical: `${siteOrigin}/people/`,
   });
 
@@ -546,9 +542,8 @@ test('Research route renders from local content and the research CTA resolves to
 
   await expect(page).toHaveURL('/research/');
   await expectSeoMetadata(page, {
-    title: 'Research | VL4AI at Monash University',
-    description:
-      'Explore the VL4AI research areas spanning perception, forecasting, navigation, and embodied AI systems.',
+    title: routeSeo.research.title,
+    description: routeSeo.research.description,
     canonical: `${siteOrigin}/research/`,
   });
 
@@ -587,9 +582,8 @@ test('publications route renders descending year dividers, scholar CTA, and comp
   await page.goto('/publications/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Publications Archive | VL4AI at Monash University',
-    description:
-      'Browse the VL4AI publications archive spanning conference papers, journal articles, and benchmark releases from the Vision & Language for Autonomous AI lab at Monash University.',
+    title: routeSeo.publicationsArchive.title,
+    description: routeSeo.publicationsArchive.description,
     canonical: `${siteOrigin}/publications/`,
   });
 
@@ -658,9 +652,8 @@ test('news archive route renders a descending timeline with thumbnails and captu
   await page.goto('/news/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'News Archive | VL4AI at Monash University',
-    description:
-      'Browse the VL4AI news archive for lab updates, paper acceptances, grants, benchmarks, and community milestones from the Vision & Language for Autonomous AI lab.',
+    title: routeSeo.newsArchive.title,
+    description: routeSeo.newsArchive.description,
     canonical: `${siteOrigin}/news/`,
   });
 
@@ -739,8 +732,8 @@ test('positions route renders collection-backed recruitment sections and capture
   await page.goto('/positions/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Positions | VL4AI at Monash University',
-    description: 'View current VL4AI recruitment information, openings, and hiring pathways for students and research staff.',
+    title: routeSeo.positions.title,
+    description: routeSeo.positions.description,
     canonical: `${siteOrigin}/positions/`,
   });
 
@@ -818,9 +811,8 @@ test('contact route renders collection-backed location blocks, canonical chrome,
   await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
 
   await expectSeoMetadata(page, {
-    title: 'Contact | VL4AI at Monash University',
-    description:
-      'Find the VL4AI lab address, contact details, and contact pathway for the Vision & Language for Autonomous AI lab.',
+    title: routeSeo.contact.title,
+    description: routeSeo.contact.description,
     canonical: `${siteOrigin}/contact/`,
   });
 
@@ -844,7 +836,7 @@ test('contact route renders collection-backed location blocks, canonical chrome,
 
   const mapBlock = page.getByTestId('contact-map-block');
   await expect(mapBlock).toBeVisible();
-  await expect(mapBlock.getByTestId('contact-map-embed')).toHaveAttribute('src', /google\.com\/maps\/embed/u);
+  await expect(mapBlock.getByTestId('contact-map-embed')).toHaveAttribute('src', /google\.com\/maps(?:\/embed|\?)/u);
   await expect(mapBlock.getByRole('link', { name: 'Open in Google Maps' })).toHaveAttribute(
     'href',
     expectedContactMapHref,
