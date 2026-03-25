@@ -5,12 +5,6 @@ interface FooterNavItem {
   testId?: string;
 }
 
-interface FooterUtilityLink {
-  label: string;
-  href: string;
-  testId?: string;
-}
-
 interface FooterActionLink {
   label: string;
   href: string;
@@ -28,7 +22,6 @@ interface FooterMetaLink {
 
 interface Props {
   navItems?: readonly FooterNavItem[];
-  utilityLink?: FooterUtilityLink;
   logoHref?: string;
   description?: string;
   addressLines?: readonly string[];
@@ -38,7 +31,6 @@ interface Props {
 
 const {
   navItems = [],
-  utilityLink,
   logoHref = '/',
   description = '',
   addressLines = [],
@@ -47,7 +39,7 @@ const {
 } = Astro.props;
 ---
 
-<footer class="border-t border-gray-800 bg-gray-900 px-6 py-24 text-white" id="site-footer" data-testid="site-footer">
+<footer class="border-t border-gray-800 bg-gray-900 px-6 pt-24 pb-12 text-white" id="site-footer" data-testid="site-footer">
   <div class="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 lg:grid-cols-4">
     <div class="lg:col-span-2">
       <a href={logoHref} class="mb-8 inline-flex items-center gap-3" data-testid="site-footer-brand">
@@ -120,19 +112,10 @@ const {
           ))}
         </p>
       )}
-      {utilityLink && (
-        <a
-          href={utilityLink.href}
-          class="mt-5 inline-flex text-[10px] font-black uppercase tracking-widest text-gray-500 transition hover:text-blue-300"
-          data-testid={utilityLink.testId ?? 'footer-utility-link'}
-        >
-          {utilityLink.label}
-        </a>
-      )}
     </div>
   </div>
 
-  <div class="mx-auto mt-24 max-w-7xl border-t border-gray-800 pt-8 text-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
+  <div class="mx-auto mt-12 max-w-7xl border-t border-gray-800 pt-6 text-center text-[10px] font-bold uppercase tracking-widest text-gray-500">
     <p>© 2026 Vision &amp; Language for Autonomous AI Research.</p>
     {
       metaLinks.length > 0 && (

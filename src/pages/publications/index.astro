@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
+import { publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { toContentAssetUrl } from '../../lib/content-assets';
 import { routeSeo } from '../../lib/page-seo';
@@ -39,7 +39,6 @@ interface PublicationRow {
   venue: string;
   year: number;
   archiveGroup: string;
-  badgeLabel: string;
   image: string;
   links: PublicationActionLink[];
 }
@@ -64,22 +63,6 @@ if (!publicationsRouteCopy) {
 const sortPublicationEntries = (left: PublicationEntry, right: PublicationEntry) =>
   right.data.year - left.data.year || left.data.sequence - right.data.sequence || left.id.localeCompare(right.id);
 
-const extractVenueBadgeLabel = (venue: string) => {
-  const acronym = Array.from(venue.matchAll(/\(([A-Z0-9./& -]{2,})\)/gu))
-    .map((match) => match[1]?.trim())
-    .find((candidate): candidate is string => Boolean(candidate && /[A-Z]/u.test(candidate)));
-
-  if (acronym) {
-    return acronym.replace(/\s+/gu, ' ');
-  }
-
-  if (/^arxiv/iu.test(venue)) {
-    return 'ARXIV';
-  }
-
-  return venue.split(',')[0]?.trim() ?? venue;
-};
-
 const isExternalLink = (value: string) => /^https?:\/\//iu.test(value) || value.startsWith('mailto:');
 
 const publicationRows: PublicationRow[] = publicationEntries.slice().sort(sortPublicationEntries).map((entry) => ({
@@ -89,7 +72,6 @@ const publicationRows: PublicationRow[] = publicationEntries.slice().sort(sortPu
   venue: entry.data.venue,
   year: entry.data.year,
   archiveGroup: entry.data.archiveGroup,
-  badgeLabel: extractVenueBadgeLabel(entry.data.venue),
   image: toContentAssetUrl(entry.data.image),
   links: entry.data.links.map((link) => ({
     kind: link.kind,
@@ -132,7 +114,6 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
   activeNav="publications"
   navItems={publicNavItems}
   footerNavItems={publicNavItems}
-  footerUtilityLink={footerUtilityLink}
 >
   <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="publications-archive-header">
     <div class="mx-auto flex max-w-7xl flex-col items-end justify-between gap-8 md:flex-row">
@@ -195,23 +176,18 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
 
                 <div class="flex min-w-0 flex-1 flex-col justify-between gap-3">
                   <div class="min-w-0 space-y-2">
-                    <div class="flex items-center gap-3">
-                      <span class="rounded-[4px] bg-blue-50 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest text-[#003087] ring-1 ring-blue-100/50">
-                        {item.badgeLabel}
-                      </span>
-                    </div>
                     <h4 class="text-sm font-bold leading-snug text-gray-900 transition group-hover:text-[#003087] sm:text-base">
                       {item.title}
                     </h4>
                     <p class="text-sm font-medium text-gray-500/80">{item.authorLine}</p>
-                    <p class="text-xs font-light tracking-wide text-gray-400">{item.venue}</p>
+                    <p class="text-xs font-light tracking-wide text-[#003087]">{item.venue}</p>
                   </div>
 
                   <div class="flex flex-wrap gap-2" data-testid="publication-row-actions">
                     {item.links.map((link) => (
                       <a
                         href={link.href}
-                        class="flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50/50 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest text-gray-400 transition-all hover:border-[#003087] hover:bg-[#003087] hover:text-white"
+                        class="flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-blue-700 transition-all hover:border-[#003087] hover:bg-[#003087] hover:text-white hover:shadow-md active:scale-95"
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noreferrer' : undefined}
                         aria-label={`${item.title} ${link.label}`}
@@ -246,11 +222,5 @@ const headerActions = publicationsRouteCopy.data.actions.filter(
         </div>
       ))
     }
-
-    <div class="rounded-[3rem] border-2 border-dashed border-gray-200 bg-gray-50 py-20 text-center shadow-lg">
-      <p class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-300">
-        Complete archive loaded: {publicationRows.length} records
-      </p>
-    </div>
   </section>
 </SiteLayout>

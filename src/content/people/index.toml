@@ -19,7 +19,7 @@ name = "Zhixi Cai"
 group = "postdocs"
 image = "images/team/zhixi.png"
 details = [
-  "Postdoc (DARPA-ANSR), Monash University, 2024-now",
+  "Research Fellow (DARPA-ANSR), Monash University, 2024-now",
   "Working on Neuro-symbolic visual reasoning",
 ]
 links = [
@@ -36,7 +36,7 @@ name = "Sukai Huang"
 group = "postdocs"
 image = "images/team/sukai_avatar.jpg"
 details = [
-  "Postdoc (DARPA-ANSR), Monash University, 2025-now",
+  "Research Fellow (DARPA-ANSR), Monash University, 2025-now",
   "Working on LLMs for Planning & LLMs for embodied agents",
 ]
 links = [
@@ -52,8 +52,8 @@ name = "Fucai Ke"
 group = "postdocs"
 image = "images/team/Fucai-Ke.jpg"
 details = [
-  "PhD student, Monash University, 2026-now",
-  "Working on Visual reasoning",
+  "Research Fellow (ONR), Monash University, 2026-now",
+  "Working on visual reasoning",
 ]
 links = [
   { kind = "email", label = "Email", url = "mailto:fucai.ke1@monash.edu" },
@@ -66,7 +66,7 @@ name = "Boying Li"
 group = "postdocs"
 image = "images/team/Boying.jpg"
 details = [
-  "Postdoc (DARPA-ANSR), Monash University, 2023-now",
+  "Research Fellow (DARPA-ANSR), Monash University, 2023-now",
   "Working on 3D Computer vision and robotics",
 ]
 links = [
@@ -84,7 +84,7 @@ image = "images/team/Chris.png"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Dr. Fabbrizio Horta (From UNSW)",
-  "PhD student, Monash University, 2023-now",
+  "Monash University, 2023-now",
   "Working on AI based clinical decision support system for IVF using time-lapse data.",
 ]
 links = [
@@ -100,7 +100,7 @@ image = "images/team/sandika.jpg"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Prof. Subhasis Chaudhuri and Prof. Biplab Banerjee",
-  "PhD student, Monash University - IIT Bombay, 2022-now",
+  "Monash University - IIT Bombay, 2022-now",
   "Working on Holistic 3D human & scene reconstruction from monocular video",
 ]
 links = [
@@ -118,7 +118,7 @@ image = "images/team/cristian.jpg"
 details = [
   "Primary supervisor: Dr. Buser Say",
   "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi",
-  "PhD student, Monash University, 2025-now",
+  "Monash University, 2025-now",
   "Working on Robust neuro-symbolic planning",
 ]
 links = [
@@ -134,7 +134,7 @@ image = "images/team/stavya.jpeg"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Prof. Pamela Carreno and Prof. Dana Kulic",
-  "PhD student, Monash University, 2025-now",
+  "Monash University, 2025-now",
   "Working on Robot-human interaction using computer vision techniques and large language models.",
 ]
 links = [
@@ -149,7 +149,7 @@ image = "images/team/saikat.jpg"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Prof. Biplab Banerjee",
-  "PhD student, Monash University - IIT Bombay, 2023-now",
+  "Monash University - IIT Bombay, 2023-now",
   "Working on Self-supervised approaches for dense prediction tasks from images",
 ]
 links = [
@@ -166,7 +166,7 @@ image = "images/team/Chenhui.png"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Prof. Jianfei Cai",
-  "PhD student, Monash University, 2023-now",
+  "Monash University, 2023-now",
   "Working on Visual perception and Reasoning for AI agent.",
 ]
 links = [
@@ -181,7 +181,7 @@ group = "phd-students"
 image = "images/team/Simin.jpg"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
-  "PhD student, Monash University, 2022-now",
+  "Monash University, 2022-now",
   "Working on Human social group and activity undrestanding",
 ]
 links = [
@@ -197,7 +197,7 @@ image = "images/team/Tho.jpeg"
 details = [
   "Primary supervisor: Prof. Hamid Rezatofighi",
   "Co-supervisor(s): Prof. Jianfei Cai",
-  "PhD student, Monash University, 2022-now",
+  "Monash University, 2022-now",
   "Working on Multi-modal object detection, tracking, and navigation",
 ]
 links = [
@@ -213,7 +213,7 @@ image = "images/team/Mahyar.JPG"
 details = [
   "Primary supervisor: Dr. Buser Say",
   "Co-supervisor(s): Dr. Mor Vered and Prof. Hamid Rezatofighi",
-  "PhD student, Monash University, 2025-now",
+  "Monash University, 2025-now",
   "Working on Assured Neuro-symbolic Sequential Decision Making with Physics Informed Neural Networks",
 ]
 links = [
@@ -231,7 +231,7 @@ image = "images/team/Hassan.jpg"
 details = [
   "Primary supervisor: Dr. Mahsa Salehi",
   "Co-supervisor(s): Prof. Hamid Rezatofighi",
-  "PhD student, Monash University, 2025-now",
+  "Monash University, 2025-now",
   "Working on Time Series Analysis with Deep Learning",
 ]
 links = [
@@ -247,7 +247,7 @@ image = "images/team/meng.jpg"
 details = [
   "Primary supervisor: Prof. Jianfei Cai",
   "Co-supervisor(s): Prof. Hamid Rezatofighi",
-  "PhD student, Monash University, 2024-now",
+  "Monash University, 2024-now",
   "Working on Neural rendering & 3D reconstruction",
 ]
 links = [

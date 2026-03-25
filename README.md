@@ -25,7 +25,7 @@ Read [`docs/maintainer-playbook.md`](docs/maintainer-playbook.md) before making 
 
 ## Content ownership at a glance
 
-- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, the director entry from `src/content/people/index.toml`, featured items from `src/content/publications/index.toml`, and the newest three news entries from `src/content/news/index.toml`
+- Homepage `/`: `src/content/site/home.md`, `src/content/site/home-route.md`, the director entry from `src/content/people/index.toml`, featured items from `src/content/publications/index.toml`, and the newest six news entries from `src/content/news/index.toml`
 - People `/people/`: `src/content/site/people-route.md` and `src/content/people/index.toml`
 - Research `/research/`: `src/content/site/research-route.md` and `src/content/research/**`
 - Publications `/publications/`: `src/content/site/publications-route.md` and `src/content/publications/index.toml`
@@ -46,7 +46,7 @@ link = "https://arxiv.org/pdf/2601.19204"
 image = "images/news/mata.png"
 ```
 
-Maintain only those five fields. The site now derives the news entry id automatically from `date + title`, keeps the homepage to the newest three items by date, and generates archive date labels from the stored date.
+Maintain only those five fields. The site now derives the news entry id automatically from `date + title`, keeps the homepage to the newest six items by date, and generates archive date labels from the stored date.
 
 ## People authoring format
 

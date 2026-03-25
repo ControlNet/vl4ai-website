@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
+import { publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { routeSeo } from '../../lib/page-seo';
 
@@ -57,7 +57,6 @@ const addressLines = addressBodyLines.length > 0 ? addressBodyLines : contactEnt
   activeNav="contact"
   navItems={publicNavItems}
   footerNavItems={publicNavItems}
-  footerUtilityLink={footerUtilityLink}
 >
   <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="contact-page-header">
     <div class="mx-auto max-w-7xl">

@@ -103,17 +103,11 @@ export const publicNavItems: NavContractItem[] = [
   { key: 'contact', label: 'Contact', href: '/contact/', testId: 'site-nav-link-contact' },
 ];
 
-/** Canonical contact href/label (footer meta, redirects). Nav uses `publicNavItems` entry `key: 'contact'`. */
+/** Canonical contact href/label. Nav uses `publicNavItems` entry `key: 'contact'`. */
 export const navContactCta: NavContractCta = {
   label: 'Contact',
   href: '/contact/',
   testId: 'site-nav-link-contact',
-};
-
-export const footerUtilityLink: NavContractCta = {
-  label: 'Contact VL4AI Research',
-  href: '/contact/',
-  testId: 'footer-contact-link',
 };
 
 export const unsupportedLegacyRoutePaths = [

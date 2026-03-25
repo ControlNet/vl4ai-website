@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
+import { publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { routeSeo } from '../../lib/page-seo';
 
@@ -54,32 +54,6 @@ if (!positionsOverview) {
   throw new Error('Expected a positions overview entry in the positions collection.');
 }
 
-const stripMarkdownToPlainText = (value: string) =>
-  value
-    .replace(/!\[[^\]]*\]\([^)]+\)/gu, '')
-    .replace(/\[([^\]]+)\]\([^)]+\)/gu, '$1')
-    .replace(/^#{1,6}\s+/gmu, '')
-    .replace(/^>\s?/gmu, '')
-    .replace(/[*_`]/gu, '')
-    .replace(/\s+/gu, ' ')
-    .trim();
-
-const getNonListParagraphs = (body: string) =>
-  body
-    .split(/\n\s*\n/gu)
-    .map((block) => block.trim())
-    .filter((block) => block.length > 0)
-    .filter((block) => {
-      const lines = block
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean);
-
-      return lines.length > 0 && !lines.every((line) => /^(?:[-*+]|\d+\.)\s/u.test(line));
-    })
-    .map(stripMarkdownToPlainText)
-    .filter((paragraph) => paragraph.length > 0);
-
 const statusCopy: Record<PositionOpeningEntry['data']['status'], string> = {
   open: 'Available',
   closed: 'Filled',
@@ -115,10 +89,6 @@ const staffOpenings = openings.filter((entry) => entry.data.positionType !== 'ph
 const openPhdOpenings = phdOpenings.filter((opening) => opening.status === 'open');
 const preservedPhdOpening = phdOpenings.find((opening) => opening.status !== 'open');
 const featuredStaffOpening = staffOpenings.find((opening) => opening.status === 'open') ?? staffOpenings[0];
-const inclusiveStatementSource = getNonListParagraphs(positionsOverview.body ?? '').at(-1) ?? '';
-const inclusiveStatement = inclusiveStatementSource
-  ? `“${inclusiveStatementSource.replace(/\.$/u, '')}.”`
-  : '“The group welcomes culturally and linguistically diverse applicants of all genders.”';
 ---
 
 <SiteLayout
@@ -130,7 +100,6 @@ const inclusiveStatement = inclusiveStatementSource
   activeNav="positions"
   navItems={publicNavItems}
   footerNavItems={publicNavItems}
-  footerUtilityLink={footerUtilityLink}
 >
   <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="positions-page-header">
     <div class="mx-auto max-w-7xl">
@@ -230,24 +199,9 @@ const inclusiveStatement = inclusiveStatementSource
         Research <span class="text-gray-300">Staff</span>
       </h2>
 
-      <div class="grid gap-16 lg:grid-cols-2">
-        <div class="space-y-8 lg:order-2">
-          <div class="rounded-3xl border border-blue-100 bg-blue-50/50 p-8 shadow-lg">
-            <p class="mb-8 text-lg font-light italic text-blue-900" data-testid="positions-inclusion-statement">
-              {inclusiveStatement}
-            </p>
-            <div class="flex items-center gap-4">
-              <svg class="h-6 w-6 text-blue-800" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="m12 1.75 2.36 4.78 5.27.77-3.81 3.71.9 5.24L12 13.78 7.28 16.25l.9-5.24-3.81-3.71 5.27-.77Z"></path>
-              </svg>
-              <span class="text-[10px] font-black uppercase tracking-widest text-blue-800">Inclusive Research Environment</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4 lg:order-1">
-          <h3 class="mb-8 text-2xl font-bold">Current Available Staff Positions</h3>
-          {featuredStaffOpening ? (
+      <div class="space-y-4">
+        <h3 class="mb-8 text-2xl font-bold">Current Available Staff Positions</h3>
+        {featuredStaffOpening ? (
             <a
               href={featuredStaffOpening.primaryUrl ?? '#'}
               class:list={[
@@ -273,12 +227,11 @@ const inclusiveStatement = inclusiveStatementSource
               <h4 class="text-lg font-bold transition group-hover:text-blue-800">{featuredStaffOpening.title}</h4>
               <p class="mt-2 text-sm leading-relaxed text-gray-500">{featuredStaffOpening.shortDescription}</p>
             </a>
-          ) : (
+        ) : (
             <p class="pb-10 text-xs font-black uppercase tracking-widest text-gray-400">
               We are currently at capacity for staff roles. Check back later.
             </p>
-          )}
-        </div>
+        )}
       </div>
     </div>
   </section>

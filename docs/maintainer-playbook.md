@@ -42,7 +42,7 @@ Edit these files:
 Notes:
 
 - Homepage publications are selected from `src/content/publications/index.toml` items that declare `homeRank`.
-- Homepage news items are now selected automatically as the newest three entries in `src/content/news/index.toml`.
+- Homepage news items are now selected automatically as the newest six entries in `src/content/news/index.toml`.
 
 ### People `/people/`
 
@@ -170,7 +170,7 @@ Important constraints:
 - `date` must use `YYYY-MM-DD`
 - `image` should point to an asset under `public/`
 - the site derives the entry id automatically from `date + title` and adds a numeric suffix if a duplicate would collide
-- the homepage pulls the newest three items by date, and items with the same date stay in file order
+- the homepage pulls the newest six items by date, and items with the same date stay in file order
 
 Example:
 

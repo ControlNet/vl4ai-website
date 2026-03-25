@@ -5,7 +5,7 @@ import PageHeader from '../components/ui/PageHeader.astro';
 import SectionShell from '../components/ui/SectionShell.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { routeSeo } from '../lib/page-seo';
-import { footerUtilityLink, publicNavItems, publicRouteContract } from '../data/route-contract';
+import { publicNavItems, publicRouteContract } from '../data/route-contract';
 
 const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.html');
 ---
@@ -19,7 +19,6 @@ const routesToKeep = publicRouteContract.filter((route) => route.path !== '/404.
   robots="noindex,follow"
   navItems={publicNavItems}
   footerNavItems={publicNavItems}
-  footerUtilityLink={footerUtilityLink}
 >
   <PageHeader
     title="Route"

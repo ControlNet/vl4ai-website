@@ -5,5 +5,5 @@ sortOrder: 60
 route: /positions/
 title: Join Our
 highlight: Team
-lede: We are always looking for highly motivated and outstanding candidates to get involved in cutting-edge research.
+lede: "The legacy page also made the research group's diversity statement explicit: the group welcomes culturally and linguistically diverse applicants of all genders."
 ---

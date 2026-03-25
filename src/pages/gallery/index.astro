@@ -1,5 +1,5 @@
 ---
-import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
+import { publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { routeSeo } from '../../lib/page-seo';
 ---
@@ -13,7 +13,6 @@ import { routeSeo } from '../../lib/page-seo';
   activeNav="gallery"
   navItems={publicNavItems}
   footerNavItems={publicNavItems}
-  footerUtilityLink={footerUtilityLink}
 >
   <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="gallery-page-header">
     <div class="mx-auto max-w-7xl">

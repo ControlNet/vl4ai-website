@@ -6,7 +6,6 @@ import { fileURLToPath } from 'node:url';
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
 import {
-  footerUtilityLink,
   navContactCta,
   publicNavItems,
   publicRouteContract,
@@ -251,8 +250,6 @@ const expectContractDrivenChrome = async (page: Page) => {
     await expect(siteFooter.getByTestId(item.testId)).toHaveAttribute('href', item.href);
   }
 
-  await expect(siteFooter.getByTestId(footerUtilityLink.testId)).toHaveAttribute('href', footerUtilityLink.href);
-
   const internalNavAndFooterLinks = await page.locator('[data-testid="site-nav"] a, [data-testid="site-footer"] a').evaluateAll(
     (elements) =>
       elements
@@ -290,7 +287,6 @@ test('defines the canonical public route matrix and exposes it on the not-found 
     '/contact/',
   ]);
   expect(navContactCta.href).toBe('/contact/');
-  expect(footerUtilityLink.href).toBe('/contact/');
 
   await page.goto('/404.html', { waitUntil: 'domcontentloaded' });
 
@@ -751,7 +747,6 @@ test('positions route renders collection-backed recruitment sections and capture
   await expect(page.getByTestId('positions-opportunities-block')).toBeVisible();
   await expect(page.getByTestId('positions-separator')).toBeVisible();
   await expect(page.getByTestId('positions-staff-section')).toBeVisible();
-  await expectNonEmptyText(page.getByTestId('positions-inclusion-statement'));
   expect(await page.getByTestId('positions-important-link').count()).toBeGreaterThan(0);
 
   const phdCards = page.locator('[data-testid="positions-opening-card"][data-position-type="phd"]');
