@@ -14,7 +14,13 @@ import {
 } from '../../src/data/route-contract';
 
 const previewOrigin = 'http://127.0.0.1:4321';
-const siteOrigin = 'https://vl4ai.erc.monash.edu';
+const astroConfigPath = fileURLToPath(new URL('../../astro.config.ts', import.meta.url));
+const astroConfigSource = readFileSync(astroConfigPath, 'utf8');
+const siteOrigin =
+  astroConfigSource.match(/^\s*site:\s*'([^'\n]+)'\s*,?\s*$/mu)?.[1] ??
+  (() => {
+    throw new Error('Expected astro.config.ts to declare a site URL.');
+  })();
 const task7PublicationsScreenshotPath = fileURLToPath(
   new URL('../../.sisyphus/evidence/task-7-publications-desktop.png', import.meta.url),
 );
@@ -94,6 +100,8 @@ const expectedContactMapHref =
   (() => {
     throw new Error('Expected src/content/site/contact.toml to declare a mapUrl.');
   })();
+const escapedSiteOriginPattern = siteOrigin.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&');
+const absoluteSiteAssetPattern = new RegExp(`^${escapedSiteOriginPattern}/`, 'u');
 
 test.describe.configure({ mode: 'serial' });
 
@@ -118,11 +126,11 @@ const expectSeoMetadata = async (
   await expect(page.locator('head meta[property="og:description"]')).toHaveAttribute('content', expected.description);
   await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', expected.canonical);
   await expect(page.locator('head meta[property="og:type"]')).toHaveAttribute('content', 'website');
-  await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute('content', /^https:\/\/vl4ai\.github\.io\//);
+  await expect(page.locator('head meta[property="og:image"]')).toHaveAttribute('content', absoluteSiteAssetPattern);
   await expect(page.locator('head meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
   await expect(page.locator('head meta[name="twitter:title"]')).toHaveAttribute('content', expected.title);
   await expect(page.locator('head meta[name="twitter:description"]')).toHaveAttribute('content', expected.description);
-  await expect(page.locator('head meta[name="twitter:image"]')).toHaveAttribute('content', /^https:\/\/vl4ai\.github\.io\//);
+  await expect(page.locator('head meta[name="twitter:image"]')).toHaveAttribute('content', absoluteSiteAssetPattern);
 };
 
 const toPreviewRelativeUrl = (value: string) => value.replace(previewOrigin, '');

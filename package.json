@@ -8,9 +8,10 @@
     "dev": "astro dev",
     "lint": "pnpm exec tsc --noEmit && node scripts/validate-source-links.mjs",
     "check": "astro check",
-    "build": "astro build",
+    "build": "pnpm sync:robots && astro build",
     "preview": "node scripts/preview-dist.mjs",
     "e2e": "pnpm test:e2e",
+    "sync:robots": "node scripts/sync-robots-txt.mjs",
     "verify:dist-links": "node scripts/validate-dist-links.mjs",
     "test:e2e": "pnpm verify:dist-links && playwright test",
     "verify": "pnpm lint && pnpm astro check && pnpm build && pnpm test:e2e"

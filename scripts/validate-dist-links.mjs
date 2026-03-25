@@ -1,10 +1,16 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { readdir, readFile } from 'node:fs/promises';
 import { extname, relative, resolve } from 'node:path';
 
 const repoRoot = process.cwd();
 const distRoot = resolve(repoRoot, 'dist');
-const siteOrigin = 'https://vl4ai.erc.monash.edu';
+const astroConfigPath = resolve(repoRoot, 'astro.config.ts');
+const astroConfigSource = readFileSync(astroConfigPath, 'utf8');
+const siteOrigin =
+  astroConfigSource.match(/^\s*site:\s*'([^'\n]+)'\s*,?\s*$/mu)?.[1] ??
+  (() => {
+    throw new Error('Expected astro.config.ts to declare a site URL.');
+  })();
 
 const attributePatterns = [
   { attribute: 'href', regex: /\bhref\s*=\s*["']([^"']+)["']/gu },
