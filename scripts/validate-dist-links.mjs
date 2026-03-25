@@ -18,7 +18,17 @@ const attributePatterns = [
   { attribute: 'srcset', regex: /\bsrcset\s*=\s*["']([^"']+)["']/gu },
 ];
 
-const requiredPublicRoutes = ['/', '/people/', '/research/', '/publications/', '/news/', '/positions/', '/contact/', '/404.html'];
+const requiredPublicRoutes = [
+  '/',
+  '/people/',
+  '/research/',
+  '/publications/',
+  '/news/',
+  '/gallery/',
+  '/positions/',
+  '/contact/',
+  '/404.html',
+];
 const disallowedGeneratedRoutes = new Set([
   '/people.html',
   '/research.html',

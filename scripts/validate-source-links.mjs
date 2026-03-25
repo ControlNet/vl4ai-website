@@ -12,6 +12,7 @@ const allowedInternalRoutes = new Set([
   '/research/',
   '/publications/',
   '/news/',
+  '/gallery/',
   '/positions/',
   '/contact/',
   '/404.html',
@@ -72,7 +73,7 @@ const validateReference = (reference, filePath, content, matchIndex, errors) => 
 
   errors.push(
     `${relative(repoRoot, filePath)}:${lineNumberForIndex(content, matchIndex)} uses unresolved internal href "${reference}". ` +
-      'Use one of the approved public routes (/ , /people/, /research/, /publications/, /news/, /positions/, /contact/, /404.html) or a file that exists under public/.',
+      'Use one of the approved public routes (/ , /people/, /research/, /publications/, /news/, /gallery/, /positions/, /contact/, /404.html) or a file that exists under public/.',
   );
 };
 

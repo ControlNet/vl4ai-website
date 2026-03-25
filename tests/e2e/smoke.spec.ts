@@ -75,6 +75,7 @@ const expectedCanonicalPublicPaths = [
   '/research/',
   '/publications/',
   '/news/',
+  '/gallery/',
   '/positions/',
   '/contact/',
   '/404.html',
@@ -85,6 +86,7 @@ const parityCriticalRoutes = [
   { id: 'research', path: '/research/', title: 'Research', screenshotKey: 'research' },
   { id: 'publications', path: '/publications/', title: 'Publications', screenshotKey: 'publications' },
   { id: 'news', path: '/news/', title: 'News', screenshotKey: 'news' },
+  { id: 'gallery', path: '/gallery/', title: 'Gallery', screenshotKey: 'gallery' },
   { id: 'positions', path: '/positions/', title: 'Positions', screenshotKey: 'positions' },
   { id: 'contact', path: '/contact/', title: 'Contact', screenshotKey: 'contact' },
 ] as const;
@@ -273,6 +275,7 @@ test('defines the canonical public route matrix and exposes it on the not-found 
     'research',
     'publications',
     'news',
+    'gallery',
     'positions',
     'contact',
     'not-found',
@@ -282,6 +285,7 @@ test('defines the canonical public route matrix and exposes it on the not-found 
     '/research/',
     '/publications/',
     '/news/',
+    '/gallery/',
     '/positions/',
     '/contact/',
   ]);
@@ -465,6 +469,7 @@ test('unsupported legacy html routes stay retired and render the canonical 404 s
     await expect(page.getByTestId('not-found-action-research')).toHaveAttribute('href', '/research/');
     await expect(page.getByTestId('not-found-action-publications')).toHaveAttribute('href', '/publications/');
     await expect(page.getByTestId('not-found-action-news')).toHaveAttribute('href', '/news/');
+    await expect(page.getByTestId('not-found-action-gallery')).toHaveAttribute('href', '/gallery/');
     await expect(page.getByTestId('not-found-action-positions')).toHaveAttribute('href', '/positions/');
     await expect(page.getByTestId('not-found-action-contact')).toHaveAttribute('href', '/contact/');
 

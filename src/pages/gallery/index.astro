@@ -1,0 +1,24 @@
+---
+import { footerUtilityLink, publicNavItems } from '../../data/route-contract';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { routeSeo } from '../../lib/page-seo';
+---
+
+<SiteLayout
+  title={routeSeo.gallery.title}
+  description={routeSeo.gallery.description}
+  canonicalPath="/gallery/"
+  socialImage={routeSeo.gallery.socialImage}
+  socialImageAlt={routeSeo.gallery.socialImageAlt}
+  activeNav="gallery"
+  navItems={publicNavItems}
+  footerNavItems={publicNavItems}
+  footerUtilityLink={footerUtilityLink}
+>
+  <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="gallery-page-header">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="mb-6 text-6xl font-[900] uppercase tracking-tighter md:text-8xl">Gallery</h1>
+      <p class="max-w-2xl text-xl font-light text-gray-500">{routeSeo.gallery.description}</p>
+    </div>
+  </section>
+</SiteLayout>

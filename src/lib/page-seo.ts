@@ -37,6 +37,12 @@ export const routeSeo = {
     socialImage: '/images/news/zhixi_neusis.png',
     socialImageAlt: 'VL4AI news archive artwork',
   },
+  gallery: {
+    title: 'Gallery | Vision & Language for Autonomous AI (VL4AI) Research',
+    description: 'Visual highlights from VL4AI Research.',
+    socialImage: defaultSocialImage,
+    socialImageAlt: 'VL4AI gallery route artwork',
+  },
   publicationsArchive: {
     title: 'Publications | Vision & Language for Autonomous AI (VL4AI) Research',
     description:
@@ -61,7 +67,7 @@ export const routeSeo = {
   notFound: {
     title: 'Route Not Found | Vision & Language for Autonomous AI (VL4AI) Research',
     description:
-      'The requested route is unavailable or retired. Use the homepage, People, Research, Publications, News, Positions, or Contact pages to continue on the supported public site.',
+      'The requested route is unavailable or retired. Use the homepage, People, Research, Publications, News, Gallery, Positions, or Contact pages to continue on the supported public site.',
     socialImage: logoSocialImage,
     socialImageAlt: 'VL4AI logo',
   },

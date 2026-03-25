@@ -1,6 +1,6 @@
 export interface PublicRouteContractEntry {
-  id: 'home' | 'people' | 'research' | 'publications' | 'news' | 'positions' | 'contact' | 'not-found';
-  path: '/' | '/people/' | '/research/' | '/publications/' | '/news/' | '/positions/' | '/contact/' | '/404.html';
+  id: 'home' | 'people' | 'research' | 'publications' | 'news' | 'gallery' | 'positions' | 'contact' | 'not-found';
+  path: '/' | '/people/' | '/research/' | '/publications/' | '/news/' | '/gallery/' | '/positions/' | '/contact/' | '/404.html';
   kind: 'landing' | 'archive' | 'system';
   title: string;
   summary: string;
@@ -58,6 +58,13 @@ export const publicRouteContract: PublicRouteContractEntry[] = [
     summary: 'Canonical standalone archive route backed by the local news collection.',
   },
   {
+    id: 'gallery',
+    path: '/gallery/',
+    kind: 'landing',
+    title: 'Gallery',
+    summary: 'Standalone route for visual highlights and media.',
+  },
+  {
     id: 'positions',
     path: '/positions/',
     kind: 'landing',
@@ -91,6 +98,7 @@ export const publicNavItems: NavContractItem[] = [
     testId: 'site-nav-link-publications',
   },
   { key: 'news', label: 'News', href: '/news/', testId: 'site-nav-link-news' },
+  { key: 'gallery', label: 'Gallery', href: '/gallery/', testId: 'site-nav-link-gallery' },
   { key: 'positions', label: 'Join us', href: '/positions/', testId: 'site-nav-link-positions' },
   { key: 'contact', label: 'Contact', href: '/contact/', testId: 'site-nav-link-contact' },
 ];
@@ -127,7 +135,7 @@ export const unsupportedLegacyRoutePaths = [
 ] as const;
 
 export const staticGenerationAssumptions = [
-  'The canonical public IA targets the slash-route matrix /, /people/, /research/, /publications/, /news/, /positions/, /contact/, and /404.html.',
+  'The canonical public IA targets the slash-route matrix /, /people/, /research/, /publications/, /news/, /gallery/, /positions/, /contact/, and /404.html.',
   'News and publications are archive index routes only. No /news/[slug]/ or /publications/[slug]/ detail pages are supported in the canonical contract.',
   'Primary navigation, footer navigation, and parity checks should target slash routes instead of homepage hash anchors.',
   'If a later task introduces year, pagination, or detail routes, getStaticPaths() must derive every emitted path from local content collections only and may not assume host-side rewrites or runtime routing.',
