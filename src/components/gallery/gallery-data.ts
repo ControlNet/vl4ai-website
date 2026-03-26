@@ -4,18 +4,45 @@ export type GalleryAspectRatio = 'square' | 'portrait' | 'landscape' | 'feature'
 export interface GalleryCollectionItem {
   id: string;
   sequence: number;
-  eyebrow: string;
   title: string;
   description: string;
-  alt: string;
   mediaType: GalleryMediaType;
   media: string[];
-  aspectRatio: GalleryAspectRatio;
-  poster?: string;
-  chip?: string;
-  ctaLabel?: string;
-  ctaUrl?: string;
+  feature: boolean;
 }
+
+const galleryAspectCycle: readonly GalleryAspectRatio[] = [
+  'portrait',
+  'landscape',
+  'landscape',
+  'portrait',
+  'square',
+  'square',
+  'landscape',
+  'portrait',
+];
+
+export const inferGalleryAspectRatio = ({
+  feature,
+  mediaType,
+  denseIndex,
+}: {
+  feature: boolean;
+  mediaType: GalleryMediaType;
+  denseIndex: number;
+}): GalleryAspectRatio => {
+  if (feature) {
+    return 'feature';
+  }
+
+  if (mediaType === 'video') {
+    return 'landscape';
+  }
+
+  return galleryAspectCycle[denseIndex % galleryAspectCycle.length] ?? 'square';
+};
+
+export const inferGalleryAlt = (title: string) => `${title} gallery media.`;
 
 export const getGallerySpanClasses = (aspectRatio: GalleryAspectRatio) => {
   switch (aspectRatio) {

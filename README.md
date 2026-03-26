@@ -41,28 +41,21 @@ Gallery items now live in a compact `[[item]]` list in `src/content/gallery/inde
 
 ```toml
 [[item]]
-eyebrow = "Motion"
 title = "Embodied Motion Study"
 description = "A moving-media tile for the gallery route."
-alt = "VL4AI motion study poster artwork."
-mediaType = "video"
 media = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-poster = "images/slider/JRDB-teaser.png"
-aspectRatio = "feature"
-chip = "Mixed Media"
-ctaLabel = "Explore Research Areas"
-ctaUrl = "/research/"
+feature = true
 ```
 
 Important rules:
 
 - keep one `[[item]]` per gallery tile in `src/content/gallery/index.toml`
-- required fields are `eyebrow`, `title`, `description`, `alt`, `mediaType`, `media`, and `aspectRatio`
-- optional fields are `poster`, `chip`, `ctaLabel`, and `ctaUrl`
-- `mediaType = "images"` must include at least two `media` items; `image` and `video` must include exactly one
+- required fields are `title`, `description`, and `media`
+- optional `feature = true` marks a tile as the larger hero-style panel in the mosaic rhythm
+- use a single string `media` for one image or video item, or an array for a rotating image sequence
 - `media` values may point to local assets under `public/` or to absolute `https://` URLs for reference media
-- when used, `ctaLabel` and `ctaUrl` must be provided together
-- the site derives each internal gallery id automatically from `title` and preserves TOML order for rendered layout sequencing
+- the site derives each internal gallery id automatically from `title`, preserves TOML order for rendered layout sequencing, infers media type, derives alt text from `title`, and assigns dense-grid spans automatically
+- compact Gallery parsing here is intentionally limited to quoted strings, booleans, and arrays rather than full TOML features
 
 ## News authoring format
 

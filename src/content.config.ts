@@ -80,6 +80,14 @@ const isAbsoluteHttpUrl = (value: string) => {
   }
 };
 
+const isAbsoluteHttpsUrl = (value: string) => {
+  try {
+    return new URL(value).protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 const destinationSchema = trimmedString().refine((value) => {
   if (value.startsWith('mailto:')) {
     return /^mailto:[^@\s]+@[^@\s]+\.[^@\s]+$/u.test(value);
@@ -170,6 +178,14 @@ const inferPeopleEntryIdBase = (tableType: 'member' | 'alumni', name: string) =>
 const inferPublicationEntryIdBase = (year: number, title: string) => `${String(year)}-${canonicalizeIdentifierSegment(title.trim())}`;
 
 const inferGalleryEntryIdBase = (title: string) => canonicalizeIdentifierSegment(title.trim());
+const galleryVideoMediaPattern = /\.(?:mp4|webm|mov|m4v|ogv)(?:[?#].*)?$/iu;
+const inferGalleryMediaType = (mediaValues: string[]) => {
+  if (mediaValues.length > 1) {
+    return 'images' as const;
+  }
+
+  return galleryVideoMediaPattern.test(mediaValues[0] ?? '') ? ('video' as const) : ('image' as const);
+};
 
 const getCompactTomlNestingDepth = (value: string) => {
   let squareBracketDepth = 0;
@@ -237,6 +253,10 @@ const parseCompactTomlValue = (collectionName: string, fieldName: string, rawVal
     return Number.parseInt(rawValueLiteral, 10);
   }
 
+  if (rawValueLiteral === 'true' || rawValueLiteral === 'false') {
+    return rawValueLiteral === 'true';
+  }
+
   if (rawValueLiteral.startsWith('[')) {
     const jsonLikeLiteral = rawValueLiteral
       .replace(/(^|[{,]\s*)([A-Za-z][A-Za-z0-9_-]*)\s*=/gmu, '$1"$2":')
@@ -250,7 +270,7 @@ const parseCompactTomlValue = (collectionName: string, fieldName: string, rawVal
   }
 
   throw new Error(
-    `[content:${collectionName}] Only quoted strings, integers, and arrays are supported for ${fieldName} at line ${lineNumber}.`,
+    `[content:${collectionName}] Only quoted strings, integers, booleans, and arrays are supported for ${fieldName} at line ${lineNumber}.`,
   );
 };
 
@@ -361,17 +381,10 @@ type RawCompactPublicationEntry = {
 };
 
 const compactGalleryFieldNames = [
-  'eyebrow',
   'title',
   'description',
-  'alt',
-  'mediaType',
   'media',
-  'aspectRatio',
-  'poster',
-  'chip',
-  'ctaLabel',
-  'ctaUrl',
+  'feature',
 ] as const;
 
 type RawCompactGalleryEntry = {
@@ -568,11 +581,18 @@ const parseCompactGalleryEntries = (text: string): Record<string, Record<string,
 
       const id = nextCollisionCount === 1 ? baseId : `${baseId}-${nextCollisionCount}`;
 
+      const rawMedia = entry.media;
+      const normalizedMedia = Array.isArray(rawMedia) ? rawMedia : [rawMedia];
+
       return [
         id,
         {
-          ...entry,
           sequence,
+          title: rawTitle,
+          description: entry.description,
+          media: normalizedMedia,
+          mediaType: inferGalleryMediaType(normalizedMedia.filter((value): value is string => typeof value === 'string')),
+          feature: entry.feature === undefined ? false : entry.feature,
         },
       ];
     }),
@@ -844,7 +864,7 @@ const publications = defineCollection({
 });
 
 const galleryMediaSourceSchema = trimmedString().superRefine((value, ctx) => {
-  if (isAbsoluteHttpUrl(value)) {
+  if (isAbsoluteHttpsUrl(value)) {
     return;
   }
 
@@ -879,43 +899,35 @@ const gallery = defineCollection({
   schema: z
     .object({
       sequence: nonNegativeIntegerSchema,
-      eyebrow: trimmedString(),
       title: trimmedString(),
       description: trimmedString(),
-      alt: trimmedString(),
+      media: z.array(galleryMediaSourceSchema).min(1),
       mediaType: z.enum(['image', 'images', 'video']),
-      media: z.union([galleryMediaSourceSchema, z.array(galleryMediaSourceSchema).min(1)]),
-      aspectRatio: z.enum(['square', 'portrait', 'landscape', 'feature']),
-      poster: assetPathSchema.optional(),
-      chip: trimmedString().optional(),
-      ctaLabel: trimmedString().optional(),
-      ctaUrl: z.union([destinationSchema, siteRoutePathSchema]).optional(),
+      feature: z.boolean(),
     })
     .strict()
     .superRefine((value, ctx) => {
-      const mediaItems = Array.isArray(value.media) ? value.media : [value.media];
-
-      if (value.mediaType === 'images' && mediaItems.length < 2) {
+      if (value.mediaType === 'images' && value.media.length < 2) {
         ctx.addIssue({
           code: 'custom',
-          message: 'mediaType "images" must include at least two media entries.',
+          message: 'Use an array only for rotating image sequences with at least two media entries.',
           path: ['media'],
         });
       }
 
-      if (value.mediaType !== 'images' && mediaItems.length !== 1) {
+      if (value.mediaType !== 'images' && value.media.length !== 1) {
         ctx.addIssue({
           code: 'custom',
-          message: `mediaType "${value.mediaType}" must include exactly one media entry.`,
+          message: `Inferred mediaType "${value.mediaType}" must resolve to exactly one media entry.`,
           path: ['media'],
         });
       }
 
-      if ((value.ctaLabel && !value.ctaUrl) || (!value.ctaLabel && value.ctaUrl)) {
+      if (value.mediaType === 'images' && value.media.some((entry) => galleryVideoMediaPattern.test(entry))) {
         ctx.addIssue({
           code: 'custom',
-          message: 'ctaLabel and ctaUrl must either both be present or both be omitted.',
-          path: value.ctaLabel ? ['ctaUrl'] : ['ctaLabel'],
+          message: 'Gallery media arrays currently support image sequences only; use a single video source for video tiles.',
+          path: ['media'],
         });
       }
     }),

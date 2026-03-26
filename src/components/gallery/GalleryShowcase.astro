@@ -1,14 +1,7 @@
 ---
 import { toContentAssetUrl } from '../../lib/content-assets';
-import { resolveRouteDestination } from '../../lib/route-destination';
 import GalleryMediaFrame from './GalleryMediaFrame.astro';
-import { getGallerySpanClasses, type GalleryCollectionItem } from './gallery-data';
-
-interface GalleryCallToAction {
-  label: string;
-  href: string;
-  external: boolean;
-}
+import { getGallerySpanClasses, inferGalleryAlt, inferGalleryAspectRatio, type GalleryCollectionItem } from './gallery-data';
 
 interface PreparedGalleryItem {
   id: string;
@@ -17,9 +10,7 @@ interface PreparedGalleryItem {
   alt: string;
   mediaType: GalleryCollectionItem['mediaType'];
   mediaUrls: string[];
-  posterUrl?: string;
   spanClass: string;
-  cta?: GalleryCallToAction;
 }
 
 interface Props {
@@ -29,23 +20,24 @@ interface Props {
 const { items: sourceItems } = Astro.props as Props;
 const toMediaUrl = (value: string) => (/^https?:\/\//u.test(value) ? value : toContentAssetUrl(value));
 
-const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
-  id: item.id,
-  title: item.title,
-  description: item.description,
-  alt: item.alt,
-  mediaType: item.mediaType,
-  mediaUrls: item.media.map(toMediaUrl),
-  posterUrl: item.poster ? toMediaUrl(item.poster) : undefined,
-  spanClass: getGallerySpanClasses(item.aspectRatio),
-  cta:
-    item.ctaLabel && item.ctaUrl
-      ? {
-          label: item.ctaLabel,
-          ...resolveRouteDestination(item.ctaUrl),
-        }
-      : undefined,
-}));
+let denseIndex = 0;
+const items: PreparedGalleryItem[] = sourceItems.map((item) => {
+  const aspectRatio = inferGalleryAspectRatio({
+    feature: item.feature,
+    mediaType: item.mediaType,
+    denseIndex: item.feature ? denseIndex : denseIndex++,
+  });
+
+  return {
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    alt: inferGalleryAlt(item.title),
+    mediaType: item.mediaType,
+    mediaUrls: item.media.map(toMediaUrl),
+    spanClass: getGallerySpanClasses(aspectRatio),
+  };
+});
 ---
 
 <section class="mx-auto max-w-7xl px-6 pt-12 pb-24" data-testid="gallery-showcase">
@@ -71,7 +63,6 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
               alt={item.alt}
               mediaType={item.mediaType}
               mediaUrls={item.mediaUrls}
-              posterUrl={item.posterUrl}
               mode="card"
             />
           </div>
@@ -82,16 +73,16 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
           >
           </div>
 
-          <div class="relative z-[2] flex h-full flex-col justify-end p-5 sm:p-6 md:p-8">
-            <div class="gallery-card__meta w-full translate-y-8 transform transition-transform duration-500 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0">
-              <h3 class="mb-2 max-w-[22rem] text-2xl leading-tight font-black tracking-tight text-white md:text-3xl">
+          <div class="relative z-[2] flex h-full flex-col justify-end px-5 pt-5 pb-3 sm:px-6 sm:pt-6 sm:pb-3.5 md:px-8 md:pt-8 md:pb-4">
+            <div class="gallery-card__meta flex w-full flex-col gap-0 transition-all duration-500 ease-out group-hover:gap-3 group-focus-visible:gap-3">
+              <h3 class="w-full min-w-0 text-2xl leading-tight font-black tracking-tight text-white md:text-3xl">
                 {item.title}
               </h3>
               <div
-                class="grid grid-rows-[0fr] transition-all duration-500 group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr]"
+                class="grid min-h-0 grid-rows-[0fr] transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr]"
               >
                 <div class="min-h-0 overflow-hidden">
-                  <div class="mt-3 flex w-full items-end justify-between gap-3">
+                  <div class="flex w-full items-end justify-between gap-3">
                     <p class="max-w-[22rem] min-w-0 flex-1 line-clamp-2 text-sm leading-relaxed text-white/82">
                       {item.description}
                     </p>
@@ -125,7 +116,6 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
                 alt={item.alt}
                 mediaType={item.mediaType}
                 mediaUrls={item.mediaUrls}
-                posterUrl={item.posterUrl}
                 mode="modal"
               />
             </div>
@@ -140,23 +130,6 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
                 </h2>
                 <p class="text-base leading-relaxed text-gray-500 md:text-lg">{item.description}</p>
               </div>
-
-              {item.cta && (
-                <div class="mt-auto pt-2">
-                  <a
-                    href={item.cta.href}
-                    class="inline-flex items-center gap-2 rounded-full bg-[var(--color-monash-blue)] px-6 py-3 text-[0.6875rem] font-black uppercase tracking-[0.24em] text-white transition hover:bg-[var(--color-accent-blue)]"
-                    target={item.cta.external ? '_blank' : undefined}
-                    rel={item.cta.external ? 'noreferrer' : undefined}
-                  >
-                    {item.cta.label}
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z"></path>
-                      <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
-                    </svg>
-                  </a>
-                </div>
-              )}
             </div>
           </div>
         </div>

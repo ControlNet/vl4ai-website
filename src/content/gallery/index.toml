@@ -1,120 +1,57 @@
 [[item]]
-eyebrow = "Motion"
 title = "Embodied Motion Study"
 description = "A moving-media tile for the gallery route, framed with VL4AI benchmark artwork to represent the lab’s interest in motion, interaction, and dynamic perception."
-alt = "VL4AI motion study poster artwork."
-mediaType = "video"
 media = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-poster = "images/slider/JRDB-teaser.png"
-aspectRatio = "feature"
-chip = "Mixed Media"
-ctaLabel = "Explore Research Areas"
-ctaUrl = "/research/"
+feature = true
 
 [[item]]
-eyebrow = "Navigation"
 title = "Zero-Shot Wayfinding"
 description = "Language-conditioned navigation and embodied decision making, cropped as a tall column to keep the mosaic feeling dense and editorial."
-alt = "Embodied navigation artwork with scene context and trajectory overlays."
-mediaType = "image"
 media = "images/slider/VN.png"
-aspectRatio = "portrait"
-chip = "Embodied AI"
-ctaLabel = "See Navigation Research"
-ctaUrl = "/research/"
 
 [[item]]
-eyebrow = "Forecasting"
 title = "Trajectory Atlas"
 description = "A rotating sequence spanning human motion forecasting artifacts, benchmark posters, and long-horizon prediction imagery from the lab."
-alt = "Forecasting benchmark artwork from VL4AI."
-mediaType = "images"
 media = [
   "images/slider/SoMoF-Benchmark.png",
   "images/slider/TRiPOD-SoPhie.png",
   "images/slider/MOT20.png",
 ]
-aspectRatio = "landscape"
-chip = "Sequence"
-ctaLabel = "Browse Publications"
-ctaUrl = "/publications/"
 
 [[item]]
-eyebrow = "Perception"
 title = "Collective Activity Reasoning"
 description = "Dense pedestrian scenes and social activity cues presented as a wide benchmark panel to balance the grid and invite a closer read in the modal."
-alt = "JRDB-ACT benchmark artwork featuring people and activity cues."
-mediaType = "image"
 media = "images/slider/JRDB-ACT.png"
-aspectRatio = "landscape"
-chip = "Benchmark"
-ctaLabel = "Open JRDB"
-ctaUrl = "https://jrdb.stanford.edu/"
 
 [[item]]
-eyebrow = "Field Systems"
 title = "Autonomy in Layers"
 description = "A rotating still sequence mixing aerial, navigation, and systems artwork so the gallery can showcase multi-image cards without adding client frameworks."
-alt = "Aerial and robotics artwork from VL4AI systems research."
-mediaType = "images"
 media = [
   "images/slider/ANSR.png",
   "images/slider/UAV.jpg",
   "images/slider/VN.png",
 ]
-aspectRatio = "portrait"
-chip = "Sequence"
-ctaLabel = "View Systems Research"
-ctaUrl = "/research/"
 
 [[item]]
-eyebrow = "Papers"
 title = "Publication Wall"
 description = "Selected publication visuals arranged as a compact square tile, bringing the site’s paper archive into the gallery without duplicating the archive page."
-alt = "Selected VL4AI publication cover art arranged as a rotating sequence."
-mediaType = "images"
 media = [
   "images/pub/tho_iccv.png",
   "images/pub/vqa_chenhui.png",
   "images/pub/sandika_neurips.png",
 ]
-aspectRatio = "square"
-chip = "Archive"
-ctaLabel = "Browse Publications"
-ctaUrl = "/publications/"
 
 [[item]]
-eyebrow = "3D"
 title = "Reconstruction Surfaces"
 description = "Mapping, reconstruction, and spatial reasoning rendered as a clean square panel that holds the center of the mosaic."
-alt = "3D reconstruction and mapping artwork from VL4AI."
-mediaType = "image"
 media = "images/slider/3Drec.png"
-aspectRatio = "square"
-chip = "Spatial AI"
-ctaLabel = "Explore Research Areas"
-ctaUrl = "/research/"
 
 [[item]]
-eyebrow = "Geometry"
 title = "Completion and Depth"
 description = "An angular landscape tile highlighting geometry-heavy work, tuned to keep the grid from settling into a predictable rhythm."
-alt = "Geometry and completion benchmark artwork from VL4AI."
-mediaType = "image"
 media = "images/slider/completion3d.png"
-aspectRatio = "landscape"
-chip = "Benchmark"
-ctaLabel = "Read Related Publications"
-ctaUrl = "/publications/"
 
 [[item]]
-eyebrow = "Aerial"
 title = "Aerial Observation"
 description = "A final tall crop drawn from UAV research imagery, giving the route a strong vertical cadence at larger breakpoints."
-alt = "UAV perception artwork with landscape and aerial context."
-mediaType = "image"
 media = "images/slider/UAV.jpg"
-aspectRatio = "portrait"
-chip = "Robotics"
-ctaLabel = "See Navigation Research"
-ctaUrl = "/research/"
