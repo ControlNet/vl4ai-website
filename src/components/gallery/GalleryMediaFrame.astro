@@ -12,99 +12,112 @@ interface Props {
 
 const { title, alt, mediaType, mediaUrls, posterUrl, mode = 'card' } = Astro.props;
 const isCard = mode === 'card';
-const sequenceStepSeconds = 3.4;
-const sequenceDurationSeconds = Math.max(mediaUrls.length, 1) * sequenceStepSeconds;
-const sharedMediaClasses = [
-  'absolute inset-0 h-full w-full transition duration-700 ease-out',
-  isCard ? 'object-cover group-hover:scale-[1.05] group-focus-visible:scale-[1.05]' : 'object-contain',
-];
+const sequenceIntervalMs = 3000;
+
+const cardFill = 'absolute inset-0 h-full w-full';
+const modalMediaClasses = 'block h-auto w-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[85vh] max-w-full object-contain';
 ---
 
 {
   mediaType === 'video' ? (
-    <video
-      class:list={sharedMediaClasses}
-      src={mediaUrls[0]}
-      poster={posterUrl}
-      autoplay
-      loop
-      muted
-      playsinline
-      controls={mode === 'modal'}
-      preload={mode === 'modal' ? 'metadata' : 'none'}
-      aria-label={title}
-    />
+    isCard ? (
+      <video
+        class={`${cardFill} object-cover`}
+        src={mediaUrls[0]}
+        poster={posterUrl}
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="none"
+        aria-label={title}
+      />
+    ) : (
+      <video
+        class={modalMediaClasses}
+        src={mediaUrls[0]}
+        poster={posterUrl}
+        autoplay
+        loop
+        muted
+        playsinline
+        controls
+        preload="metadata"
+        aria-label={title}
+      />
+    )
   ) : mediaType === 'images' ? (
-    <div class="absolute inset-0 overflow-hidden bg-gray-950">
-      {mediaUrls.map((mediaUrl, index) => (
-        <img
-          src={mediaUrl}
-          alt={`${alt} (${index + 1} of ${mediaUrls.length})`}
-          class:list={[
-            ...sharedMediaClasses,
-            'gallery-sequence-frame',
-            index === 0 && 'opacity-100',
-            index > 0 && 'opacity-0',
-          ]}
-          loading={isCard ? 'lazy' : undefined}
-          decoding={isCard ? 'async' : undefined}
-          style={`animation-duration:${sequenceDurationSeconds}s;animation-delay:${index * sequenceStepSeconds}s;`}
-        />
-      ))}
-      {mediaUrls.length > 1 && (
-        <div
-          class:list={[
-            'absolute right-4 bottom-4 z-[1] inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.28em]',
-            isCard
-              ? 'border-white/25 bg-black/25 text-white/80 backdrop-blur-md'
-              : 'border-gray-200 bg-white/90 text-gray-500',
-          ]}
-          aria-hidden="true"
-        >
-          <span class="inline-flex gap-1.5">
-            {mediaUrls.map((_, index) => (
-              <span
-                class:list={[
-                  'h-1.5 rounded-full',
-                  index === 0 ? 'w-5' : 'w-1.5',
-                  isCard ? 'bg-white/80' : 'bg-[var(--color-monash-blue)]/70',
-                ]}
-              ></span>
-            ))}
-          </span>
-          <span>Series</span>
-        </div>
-      )}
-    </div>
+    isCard ? (
+      <div
+        class="absolute inset-0 overflow-hidden bg-gray-950"
+        data-gallery-image-sequence
+        data-gallery-sequence-interval={String(sequenceIntervalMs)}
+      >
+        {mediaUrls.map((mediaUrl, index) => (
+          <img
+            src={mediaUrl}
+            alt={`${alt} (${index + 1} of ${mediaUrls.length})`}
+            data-gallery-sequence-slide
+            class:list={[
+              `${cardFill} object-cover transition-opacity duration-1000 ease-in-out`,
+              index === 0 ? 'opacity-100' : 'opacity-0',
+            ]}
+            loading={mediaUrls.length > 1 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ))}
+      </div>
+    ) : (
+      <div
+        class="relative grid place-items-center"
+        data-gallery-image-sequence
+        data-gallery-sequence-interval={String(sequenceIntervalMs)}
+      >
+        {mediaUrls.map((mediaUrl, index) => (
+          <img
+            src={mediaUrl}
+            alt={`${alt} (${index + 1} of ${mediaUrls.length})`}
+            data-gallery-sequence-slide
+            class:list={[`col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out ${modalMediaClasses}`, index === 0 ? 'opacity-100' : 'opacity-0']}
+            loading={mediaUrls.length > 1 ? 'eager' : undefined}
+            decoding="async"
+          />
+        ))}
+        {mediaUrls.length > 1 && (
+          <div
+            class="pointer-events-none absolute right-4 bottom-4 z-[1] inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/90 px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.28em] text-gray-500"
+            aria-hidden="true"
+          >
+            <span class="inline-flex gap-1.5">
+              {mediaUrls.map((_, index) => (
+                <span
+                  data-gallery-sequence-dot
+                  class:list={[
+                    'h-1.5 rounded-full transition-all duration-500',
+                    index === 0 ? 'w-5 bg-[var(--color-monash-blue)]' : 'w-1.5 bg-[var(--color-monash-blue)]/45',
+                  ]}
+                ></span>
+              ))}
+            </span>
+            <span>Series</span>
+          </div>
+        )}
+      </div>
+    )
+  ) : isCard ? (
+    <img
+      src={mediaUrls[0]}
+      alt={alt}
+      class={`${cardFill} object-cover`}
+      loading="lazy"
+      decoding="async"
+    />
   ) : (
     <img
       src={mediaUrls[0]}
       alt={alt}
-      class:list={sharedMediaClasses}
-      loading={isCard ? 'lazy' : undefined}
-      decoding={isCard ? 'async' : undefined}
+      class={modalMediaClasses}
+      decoding="async"
     />
   )
 }
-
-<style>
-  @keyframes gallery-sequence-frame {
-    0%,
-    24% {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    32%,
-    100% {
-      opacity: 0;
-      transform: scale(1.06);
-    }
-  }
-
-  .gallery-sequence-frame {
-    animation-name: gallery-sequence-frame;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-  }
-  </style>

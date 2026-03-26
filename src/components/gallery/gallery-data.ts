@@ -30,17 +30,3 @@ export const getGallerySpanClasses = (aspectRatio: GalleryAspectRatio) => {
       return 'sm:col-span-1 sm:row-span-1';
   }
 };
-
-export const getGalleryTileRatioLabel = (aspectRatio: GalleryAspectRatio) => {
-  switch (aspectRatio) {
-    case 'feature':
-      return 'Feature panel';
-    case 'portrait':
-      return 'Portrait panel';
-    case 'landscape':
-      return 'Landscape panel';
-    case 'square':
-    default:
-      return 'Square panel';
-  }
-};

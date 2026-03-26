@@ -766,7 +766,7 @@ test('gallery route renders a dense media mosaic and opens modal details', async
   await expect(galleryModal.getByTestId('gallery-modal-details')).toBeVisible();
   await expectNonEmptyText(galleryModal.getByTestId('gallery-modal-details').locator('h2'));
 
-  await galleryModal.getByRole('button', { name: 'Close gallery dialog' }).click();
+  await page.keyboard.press('Escape');
   await expect(galleryModal).not.toHaveAttribute('open', '');
 
   expectNoPageIssues(monitor);

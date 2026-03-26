@@ -2,7 +2,7 @@
 import { toContentAssetUrl } from '../../lib/content-assets';
 import { resolveRouteDestination } from '../../lib/route-destination';
 import GalleryMediaFrame from './GalleryMediaFrame.astro';
-import { getGallerySpanClasses, getGalleryTileRatioLabel, type GalleryCollectionItem } from './gallery-data';
+import { getGallerySpanClasses, type GalleryCollectionItem } from './gallery-data';
 
 interface GalleryCallToAction {
   label: string;
@@ -12,17 +12,14 @@ interface GalleryCallToAction {
 
 interface PreparedGalleryItem {
   id: string;
-  eyebrow: string;
   title: string;
   description: string;
   alt: string;
   mediaType: GalleryCollectionItem['mediaType'];
   mediaUrls: string[];
   posterUrl?: string;
-  chip?: string;
   spanClass: string;
   cta?: GalleryCallToAction;
-  tileRatioLabel: string;
 }
 
 interface Props {
@@ -34,16 +31,13 @@ const toMediaUrl = (value: string) => (/^https?:\/\//u.test(value) ? value : toC
 
 const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
   id: item.id,
-  eyebrow: item.eyebrow,
   title: item.title,
   description: item.description,
   alt: item.alt,
   mediaType: item.mediaType,
   mediaUrls: item.media.map(toMediaUrl),
   posterUrl: item.poster ? toMediaUrl(item.poster) : undefined,
-  chip: item.chip,
   spanClass: getGallerySpanClasses(item.aspectRatio),
-  tileRatioLabel: getGalleryTileRatioLabel(item.aspectRatio),
   cta:
     item.ctaLabel && item.ctaUrl
       ? {
@@ -52,33 +46,11 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
         }
       : undefined,
 }));
-
-const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(0, 4);
 ---
 
 <section class="mx-auto max-w-7xl px-6 pt-12 pb-24" data-testid="gallery-showcase">
-  <div class="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between" data-testid="gallery-intro-strip">
-    <div class="max-w-3xl">
-      <p class="mb-3 text-[0.6875rem] font-black uppercase tracking-[0.28em] text-[var(--color-monash-blue)]">
-        Dense Mosaic Layout
-      </p>
-      <p class="text-base leading-relaxed text-gray-500 md:text-lg">
-        Selected frames, posters, and motion studies arranged as an editorial mosaic from VL4AI assets and reference media.
-        Hover a tile for context, then open it for a larger view.
-      </p>
-    </div>
-
-    <div class="flex flex-wrap gap-2 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-500" data-testid="gallery-chip-list">
-      {
-        introChips.map((chip) => (
-          <span class="rounded-full border border-gray-200 bg-white px-4 py-2">{chip}</span>
-        ))
-      }
-    </div>
-  </div>
-
   <div
-    class="grid grid-cols-1 auto-rows-[11rem] grid-flow-dense gap-3 sm:grid-cols-2 sm:auto-rows-[13rem] lg:grid-cols-4 lg:auto-rows-[12rem]"
+    class="grid grid-cols-1 auto-rows-[11rem] grid-flow-dense gap-3 sm:grid-cols-2 sm:auto-rows-[13rem] lg:grid-cols-3 lg:auto-rows-[12rem]"
     data-testid="gallery-grid"
   >
     {
@@ -104,49 +76,33 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
             />
           </div>
 
-          <div class="gallery-card__veil absolute inset-0"></div>
+          <div
+            class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[42%] bg-gradient-to-t from-black/75 via-black/35 to-transparent transition-all duration-500 ease-out group-hover:h-[70%] group-hover:from-black/90 group-hover:via-black/55 group-focus-visible:h-[70%] group-focus-visible:from-black/90 group-focus-visible:via-black/55"
+            aria-hidden="true"
+          >
+          </div>
 
-          <div class="relative z-[1] flex h-full flex-col justify-between p-5 sm:p-6">
-            <div class="flex items-start justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.24em] text-white/80 backdrop-blur-md">
-                  {item.eyebrow}
-                </span>
-                {item.chip && (
-                  <span class="rounded-full border border-white/20 bg-black/15 px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.24em] text-white/65 backdrop-blur-md">
-                    {item.chip}
-                  </span>
-                )}
-              </div>
-
-              <span class="gallery-card__expand flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/12 text-white/90 backdrop-blur-md">
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                  <path d="M8 3H3v5"></path>
-                  <path d="M16 3h5v5"></path>
-                  <path d="M21 16v5h-5"></path>
-                  <path d="M8 21H3v-5"></path>
-                  <path d="M8 3 3 8"></path>
-                  <path d="m16 3 5 5"></path>
-                  <path d="m21 16-5 5"></path>
-                  <path d="m8 21-5-5"></path>
-                </svg>
-              </span>
-            </div>
-
-            <div class="gallery-card__meta max-w-[22rem]">
-              <p class="mb-3 text-[0.6875rem] font-black uppercase tracking-[0.32em] text-white/68">Tap for detail</p>
-              <h3 class="text-2xl leading-tight font-black tracking-tight text-white md:text-3xl">{item.title}</h3>
-              <div class="gallery-card__details">
-                <p class="text-sm leading-relaxed text-white/82">{item.description}</p>
-                {item.cta && (
-                  <span class="mt-4 inline-flex items-center gap-2 text-[0.6875rem] font-black uppercase tracking-[0.26em] text-white">
-                    {item.cta.label}
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z"></path>
-                      <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
-                    </svg>
-                  </span>
-                )}
+          <div class="relative z-[2] flex h-full flex-col justify-end p-5 sm:p-6 md:p-8">
+            <div class="gallery-card__meta w-full translate-y-8 transform transition-transform duration-500 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0">
+              <h3 class="mb-2 max-w-[22rem] text-2xl leading-tight font-black tracking-tight text-white md:text-3xl">
+                {item.title}
+              </h3>
+              <div
+                class="grid grid-rows-[0fr] transition-all duration-500 group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr]"
+              >
+                <div class="min-h-0 overflow-hidden">
+                  <div class="mt-3 flex w-full items-end justify-between gap-3">
+                    <p class="max-w-[22rem] min-w-0 flex-1 line-clamp-2 text-sm leading-relaxed text-white/82">
+                      {item.description}
+                    </p>
+                    <p
+                      class="pointer-events-none shrink-0 max-w-[9.5rem] text-right text-xs leading-snug font-medium text-white/80"
+                      aria-hidden="true"
+                    >
+                      Click to view details
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -159,8 +115,11 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
     {
       items.map((item) => (
         <div data-gallery-template={item.id}>
-          <div class="gallery-modal__panel grid overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-2xl lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.85fr)]">
-            <div class="relative min-h-[18rem] bg-gray-950 sm:min-h-[24rem]" data-testid="gallery-modal-media">
+          <div class="gallery-modal__panel flex w-full max-w-full flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-2xl lg:w-auto lg:flex-row lg:max-h-[85vh]">
+            <div
+              class="relative flex min-h-0 min-w-0 shrink items-center justify-center bg-gray-950"
+              data-testid="gallery-modal-media"
+            >
               <GalleryMediaFrame
                 title={item.title}
                 alt={item.alt}
@@ -171,29 +130,16 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
               />
             </div>
 
-            <div class="flex flex-col gap-6 p-6 sm:p-8 lg:p-10" data-testid="gallery-modal-details">
+            <div
+              class="flex w-full shrink-0 flex-col gap-6 overflow-y-auto p-6 sm:p-8 lg:w-[24rem] lg:p-10 xl:w-[28rem]"
+              data-testid="gallery-modal-details"
+            >
               <div class="space-y-4">
-                <div class="flex flex-wrap gap-2 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-500">
-                  <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5">{item.eyebrow}</span>
-                  {item.chip && <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5">{item.chip}</span>}
-                </div>
-
                 <h2 id="gallery-dialog-title" class="text-3xl leading-tight font-black tracking-tight text-gray-900 md:text-5xl">
                   {item.title}
                 </h2>
                 <p class="text-base leading-relaxed text-gray-500 md:text-lg">{item.description}</p>
               </div>
-
-              <dl class="grid gap-4 border-t border-gray-100 pt-6 text-sm text-gray-500 sm:grid-cols-2">
-                <div>
-                  <dt class="mb-1 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-400">Media</dt>
-                  <dd class="font-medium text-gray-900">{item.mediaType === 'images' ? 'Rotating image sequence' : item.mediaType === 'video' ? 'Video loop' : 'Still image'}</dd>
-                </div>
-                <div>
-                  <dt class="mb-1 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-400">Tile ratio</dt>
-                  <dd class="font-medium text-gray-900">{item.tileRatioLabel}</dd>
-                </div>
-              </dl>
 
               {item.cta && (
                 <div class="mt-auto pt-2">
@@ -220,27 +166,82 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
 
   <dialog id="gallery-lightbox" class="gallery-modal m-0 h-full max-h-none w-full max-w-none bg-transparent p-4 md:p-10" data-gallery-modal data-testid="gallery-modal">
     <div class="mx-auto flex min-h-full max-w-6xl items-center justify-center">
-      <div class="relative w-full">
-        <button
-          type="button"
-          class="absolute top-4 right-4 z-[2] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur-md transition hover:bg-black/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:top-5 md:right-5"
-          data-gallery-close
-          aria-label="Close gallery dialog"
-        >
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M6 6l12 12"></path>
-            <path d="M18 6 6 18"></path>
-          </svg>
-        </button>
-
-        <div class="pointer-events-auto" data-gallery-modal-content></div>
-      </div>
+      <div class="pointer-events-auto flex w-full justify-center" data-gallery-modal-content></div>
     </div>
   </dialog>
 </section>
 
 <script is:inline>
   (() => {
+    const updateGallerySequenceDots = (root, activeIndex) => {
+      root.querySelectorAll('[data-gallery-sequence-dot]').forEach((dot, idx) => {
+        const on = idx === activeIndex;
+        dot.classList.toggle('w-5', on);
+        dot.classList.toggle('w-1.5', !on);
+        dot.classList.toggle('bg-[var(--color-monash-blue)]', on);
+        dot.classList.toggle('bg-[var(--color-monash-blue)]/45', !on);
+      });
+    };
+
+    const stopGalleryImageSequence = (root) => {
+      const raw = root.dataset.gallerySequenceTimerId;
+      if (raw) {
+        window.clearInterval(Number.parseInt(raw, 10));
+        delete root.dataset.gallerySequenceTimerId;
+      }
+    };
+
+    const startGalleryImageSequence = (root) => {
+      const slides = root.querySelectorAll('[data-gallery-sequence-slide]');
+      if (slides.length < 2) {
+        return;
+      }
+
+      stopGalleryImageSequence(root);
+
+      const intervalMs = Number.parseInt(root.dataset.gallerySequenceInterval || '3000', 10);
+      let i = 0;
+
+      const id = window.setInterval(() => {
+        const next = (i + 1) % slides.length;
+        slides[i].classList.remove('opacity-100');
+        slides[i].classList.add('opacity-0');
+        slides[next].classList.remove('opacity-0');
+        slides[next].classList.add('opacity-100');
+        updateGallerySequenceDots(root, next);
+        i = next;
+      }, intervalMs);
+
+      root.dataset.gallerySequenceTimerId = String(id);
+    };
+
+    const startGallerySequencesInDocument = (scope) => {
+      scope.querySelectorAll('[data-gallery-image-sequence]').forEach((node) => {
+        if (!(node instanceof HTMLElement)) {
+          return;
+        }
+        if (node.closest('[data-gallery-template]')) {
+          return;
+        }
+        startGalleryImageSequence(node);
+      });
+    };
+
+    const stopGallerySequencesUnder = (root) => {
+      root.querySelectorAll('[data-gallery-image-sequence]').forEach((node) => {
+        if (node instanceof HTMLElement) {
+          stopGalleryImageSequence(node);
+        }
+      });
+    };
+
+    const runSequenceInit = () => startGallerySequencesInDocument(document);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runSequenceInit);
+    } else {
+      runSequenceInit();
+    }
+
     const dialog = document.querySelector('[data-gallery-modal]');
     const contentHost = dialog?.querySelector('[data-gallery-modal-content]');
     const openButtons = document.querySelectorAll('[data-gallery-open]');
@@ -277,7 +278,10 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
           return;
         }
 
+        stopGallerySequencesUnder(contentHost);
         contentHost.replaceChildren(panel);
+        startGallerySequencesInDocument(panel);
+
         lastTrigger = button instanceof HTMLElement ? button : null;
 
         if (typeof dialog.showModal === 'function') {
@@ -289,23 +293,26 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
         setScrollLock(true);
 
         window.requestAnimationFrame(() => {
-          const closeButton = dialog.querySelector('[data-gallery-close]');
-          if (closeButton instanceof HTMLElement) {
-            closeButton.focus();
+          const title = contentHost.querySelector('#gallery-dialog-title');
+          if (title instanceof HTMLElement) {
+            title.setAttribute('tabindex', '-1');
+            title.focus({ preventScroll: true });
           }
         });
       });
     });
 
     dialog.addEventListener('click', (event) => {
-      if (event.target === dialog) {
-        closeModal();
+      const target = event.target;
+      if (!(target instanceof Element)) {
+        return;
       }
 
-      const closeTrigger = event.target instanceof Element ? event.target.closest('[data-gallery-close]') : null;
-      if (closeTrigger) {
-        closeModal();
+      if (target.closest('.gallery-modal__panel')) {
+        return;
       }
+
+      closeModal();
     });
 
     dialog.addEventListener('cancel', (event) => {
@@ -314,6 +321,7 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
     });
 
     dialog.addEventListener('close', () => {
+      stopGallerySequencesUnder(contentHost);
       setScrollLock(false);
       contentHost.replaceChildren();
 
@@ -354,54 +362,6 @@ const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(
   .gallery-card:hover::after,
   .gallery-card:focus-visible::after {
     opacity: 1;
-  }
-
-  .gallery-card__veil {
-    background:
-      linear-gradient(180deg, rgb(17 24 39 / 0.06) 0%, rgb(17 24 39 / 0.16) 44%, rgb(17 24 39 / 0.94) 100%),
-      linear-gradient(135deg, rgb(0 48 135 / 0.25) 0%, rgb(0 0 0 / 0.05) 58%, rgb(0 0 0 / 0.3) 100%);
-  }
-
-  .gallery-card__meta {
-    transform: translateY(var(--space-6));
-    transition: transform var(--duration-base) var(--ease-emphasized);
-  }
-
-  .gallery-card:hover .gallery-card__meta,
-  .gallery-card:focus-visible .gallery-card__meta {
-    transform: translateY(0);
-  }
-
-  .gallery-card__details {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition:
-      max-height var(--duration-base) var(--ease-emphasized),
-      opacity var(--duration-fast) var(--ease-standard),
-      margin-top var(--duration-fast) var(--ease-standard);
-  }
-
-  .gallery-card:hover .gallery-card__details,
-  .gallery-card:focus-visible .gallery-card__details {
-    max-height: 11rem;
-    margin-top: var(--space-4);
-    opacity: 1;
-  }
-
-  .gallery-card__expand {
-    opacity: 0;
-    transform: translateY(calc(var(--space-2) * -1));
-    transition:
-      opacity var(--duration-fast) var(--ease-standard),
-      transform var(--duration-fast) var(--ease-emphasized),
-      background-color var(--duration-fast) var(--ease-standard);
-  }
-
-  .gallery-card:hover .gallery-card__expand,
-  .gallery-card:focus-visible .gallery-card__expand {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   .gallery-modal::backdrop {
