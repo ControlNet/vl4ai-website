@@ -11,7 +11,4 @@ actions:
   - label: Explore Research
     style: primary
     url: /research/
-  - label: Browse Publications
-    style: secondary
-    url: /publications/
 ---
