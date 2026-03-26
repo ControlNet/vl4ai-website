@@ -727,6 +727,51 @@ test('homepage news CTA resolves to /news/ without hash anchors and writes news 
   expectNoPageIssues(monitor);
 });
 
+test('gallery route renders a dense media mosaic and opens modal details', async ({ page }) => {
+  const monitor = createPageIssueMonitor(page);
+
+  await page.goto('/gallery/', { waitUntil: 'domcontentloaded' });
+
+  await expectSeoMetadata(page, {
+    title: routeSeo.gallery.title,
+    description: routeSeo.gallery.description,
+    canonical: `${siteOrigin}/gallery/`,
+  });
+
+  await expectContractDrivenChrome(page);
+  await expect(page.getByTestId('site-nav').getByTestId('site-nav-link-gallery')).toHaveClass(/is-active/);
+  await expect(page.getByTestId('gallery-page-header')).toBeVisible();
+  await expectNonEmptyText(page.getByTestId('gallery-page-header').locator('h1'));
+  await expectNonEmptyText(page.getByTestId('gallery-page-header').locator('p').last());
+  await expect(page.getByTestId('gallery-showcase')).toBeVisible();
+  await expect(page.getByTestId('gallery-grid')).toBeVisible();
+
+  const galleryCards = page.getByTestId('gallery-card');
+  await expect(galleryCards.first()).toBeVisible();
+  expect(await galleryCards.count()).toBeGreaterThanOrEqual(6);
+
+  const mediaTypes = await page.locator('[data-gallery-media-type]').evaluateAll((elements) =>
+    elements.map((element) => element.getAttribute('data-gallery-media-type') ?? ''),
+  );
+
+  expect(mediaTypes).toContain('image');
+  expect(mediaTypes).toContain('images');
+  expect(mediaTypes).toContain('video');
+
+  await galleryCards.first().click();
+  const galleryModal = page.getByTestId('gallery-modal');
+  await expect(galleryModal).toBeVisible();
+  await expect(galleryModal).toHaveAttribute('open', '');
+  await expect(galleryModal.getByTestId('gallery-modal-media')).toBeVisible();
+  await expect(galleryModal.getByTestId('gallery-modal-details')).toBeVisible();
+  await expectNonEmptyText(galleryModal.getByTestId('gallery-modal-details').locator('h2'));
+
+  await galleryModal.getByRole('button', { name: 'Close gallery dialog' }).click();
+  await expect(galleryModal).not.toHaveAttribute('open', '');
+
+  expectNoPageIssues(monitor);
+});
+
 test('positions route renders collection-backed recruitment sections and captures positions desktop evidence', async ({ page }) => {
   const monitor = createPageIssueMonitor(page);
 

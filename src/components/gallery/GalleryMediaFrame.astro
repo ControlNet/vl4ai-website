@@ -1,0 +1,110 @@
+---
+import type { GalleryMediaType } from './gallery-data';
+
+interface Props {
+  title: string;
+  alt: string;
+  mediaType: GalleryMediaType;
+  mediaUrls: string[];
+  posterUrl?: string;
+  mode?: 'card' | 'modal';
+}
+
+const { title, alt, mediaType, mediaUrls, posterUrl, mode = 'card' } = Astro.props;
+const isCard = mode === 'card';
+const sequenceStepSeconds = 3.4;
+const sequenceDurationSeconds = Math.max(mediaUrls.length, 1) * sequenceStepSeconds;
+const sharedMediaClasses = [
+  'absolute inset-0 h-full w-full transition duration-700 ease-out',
+  isCard ? 'object-cover group-hover:scale-[1.05] group-focus-visible:scale-[1.05]' : 'object-contain',
+];
+---
+
+{
+  mediaType === 'video' ? (
+    <video
+      class:list={sharedMediaClasses}
+      src={mediaUrls[0]}
+      poster={posterUrl}
+      autoplay
+      loop
+      muted
+      playsinline
+      controls={mode === 'modal'}
+      preload={mode === 'modal' ? 'metadata' : 'none'}
+      aria-label={title}
+    />
+  ) : mediaType === 'images' ? (
+    <div class="absolute inset-0 overflow-hidden bg-gray-950">
+      {mediaUrls.map((mediaUrl, index) => (
+        <img
+          src={mediaUrl}
+          alt={`${alt} (${index + 1} of ${mediaUrls.length})`}
+          class:list={[
+            ...sharedMediaClasses,
+            'gallery-sequence-frame',
+            index === 0 && 'opacity-100',
+            index > 0 && 'opacity-0',
+          ]}
+          loading={isCard ? 'lazy' : undefined}
+          decoding={isCard ? 'async' : undefined}
+          style={`animation-duration:${sequenceDurationSeconds}s;animation-delay:${index * sequenceStepSeconds}s;`}
+        />
+      ))}
+      {mediaUrls.length > 1 && (
+        <div
+          class:list={[
+            'absolute right-4 bottom-4 z-[1] inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.28em]',
+            isCard
+              ? 'border-white/25 bg-black/25 text-white/80 backdrop-blur-md'
+              : 'border-gray-200 bg-white/90 text-gray-500',
+          ]}
+          aria-hidden="true"
+        >
+          <span class="inline-flex gap-1.5">
+            {mediaUrls.map((_, index) => (
+              <span
+                class:list={[
+                  'h-1.5 rounded-full',
+                  index === 0 ? 'w-5' : 'w-1.5',
+                  isCard ? 'bg-white/80' : 'bg-[var(--color-monash-blue)]/70',
+                ]}
+              ></span>
+            ))}
+          </span>
+          <span>Series</span>
+        </div>
+      )}
+    </div>
+  ) : (
+    <img
+      src={mediaUrls[0]}
+      alt={alt}
+      class:list={sharedMediaClasses}
+      loading={isCard ? 'lazy' : undefined}
+      decoding={isCard ? 'async' : undefined}
+    />
+  )
+}
+
+<style>
+  @keyframes gallery-sequence-frame {
+    0%,
+    24% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    32%,
+    100% {
+      opacity: 0;
+      transform: scale(1.06);
+    }
+  }
+
+  .gallery-sequence-frame {
+    animation-name: gallery-sequence-frame;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  </style>

@@ -11,6 +11,7 @@ The canonical public information architecture is now:
 - `/research/`
 - `/publications/`
 - `/news/`
+- `/gallery/`
 - `/positions/`
 - `/contact/`
 - `/404.html`
@@ -181,6 +182,41 @@ title = "Our work MATA published in ICLR."
 summary = "Congrats to Zhixi. Read paper here."
 link = "https://arxiv.org/pdf/2601.19204"
 image = "images/news/mata.png"
+```
+
+### Gallery `/gallery/`
+
+Edit these files:
+
+- `src/content/site/gallery-route.md` for page header copy and header CTA text
+- `src/content/gallery/index.toml` for the gallery tile records themselves
+
+Important constraints:
+
+- use a compact `[[item]]` list in `src/content/gallery/index.toml`
+- required fields are `eyebrow`, `title`, `description`, `alt`, `mediaType`, `media`, and `aspectRatio`
+- optional fields are `poster`, `chip`, `ctaLabel`, and `ctaUrl`
+- `mediaType` must stay within `image`, `images`, or `video`
+- `mediaType = "images"` must include at least two media entries; `image` and `video` must include exactly one
+- local media should point to assets under `public/`; reference media may use absolute `https://` URLs
+- `ctaLabel` and `ctaUrl` must either both be present or both be omitted
+- the site derives each gallery item id automatically from `title` and preserves TOML file order for layout sequencing
+
+Example:
+
+```toml
+[[item]]
+eyebrow = "Motion"
+title = "Embodied Motion Study"
+description = "A moving-media tile for the gallery route."
+alt = "VL4AI motion study poster artwork."
+mediaType = "video"
+media = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+poster = "images/slider/JRDB-teaser.png"
+aspectRatio = "feature"
+chip = "Mixed Media"
+ctaLabel = "Explore Research Areas"
+ctaUrl = "/research/"
 ```
 
 ### Positions `/positions/`

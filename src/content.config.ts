@@ -169,6 +169,8 @@ const inferPeopleEntryIdBase = (tableType: 'member' | 'alumni', name: string) =>
 
 const inferPublicationEntryIdBase = (year: number, title: string) => `${String(year)}-${canonicalizeIdentifierSegment(title.trim())}`;
 
+const inferGalleryEntryIdBase = (title: string) => canonicalizeIdentifierSegment(title.trim());
+
 const getCompactTomlNestingDepth = (value: string) => {
   let squareBracketDepth = 0;
   let curlyBracketDepth = 0;
@@ -358,6 +360,25 @@ type RawCompactPublicationEntry = {
   fields: Record<string, unknown>;
 };
 
+const compactGalleryFieldNames = [
+  'eyebrow',
+  'title',
+  'description',
+  'alt',
+  'mediaType',
+  'media',
+  'aspectRatio',
+  'poster',
+  'chip',
+  'ctaLabel',
+  'ctaUrl',
+] as const;
+
+type RawCompactGalleryEntry = {
+  lineNumber: number;
+  fields: Record<string, unknown>;
+};
+
 const parseCompactPublicationEntries = (text: string): Record<string, Record<string, unknown>> => {
   const rawEntries: RawCompactPublicationEntry[] = [];
   let currentEntry: RawCompactPublicationEntry | undefined;
@@ -456,6 +477,102 @@ const parseCompactPublicationEntries = (text: string): Record<string, Record<str
           sequence,
           year,
           archiveGroup: typeof entry.archiveGroup === 'string' ? entry.archiveGroup : String(year),
+        },
+      ];
+    }),
+  );
+};
+
+const parseCompactGalleryEntries = (text: string): Record<string, Record<string, unknown>> => {
+  const rawEntries: RawCompactGalleryEntry[] = [];
+  let currentEntry: RawCompactGalleryEntry | undefined;
+  const lines = text.split(/\r?\n/u);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const lineNumber = index + 1;
+    const line = lines[index] ?? '';
+    const trimmedLine = line.trim();
+
+    if (trimmedLine.length === 0 || trimmedLine.startsWith('#')) {
+      continue;
+    }
+
+    if (trimmedLine === '[[item]]') {
+      currentEntry = {
+        lineNumber,
+        fields: {},
+      };
+      rawEntries.push(currentEntry);
+      continue;
+    }
+
+    if (!currentEntry) {
+      throw new Error(`[content:gallery] Expected [[item]] before properties at line ${lineNumber}.`);
+    }
+
+    const fieldMatch = trimmedLine.match(/^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*(.+)$/u);
+
+    if (!fieldMatch) {
+      throw new Error(`[content:gallery] Could not parse line ${lineNumber}: ${trimmedLine}`);
+    }
+
+    const [, fieldName, initialRawValueLiteral] = fieldMatch;
+
+    if (!(compactGalleryFieldNames as readonly string[]).includes(fieldName)) {
+      throw new Error(
+        `[content:gallery] Unsupported field "${fieldName}" in [[item]] at line ${lineNumber}. ` +
+          `Allowed fields: ${compactGalleryFieldNames.join(', ')}.`,
+      );
+    }
+
+    if (fieldName in currentEntry.fields) {
+      throw new Error(`[content:gallery] Duplicate field "${fieldName}" in [[item]] at line ${lineNumber}.`);
+    }
+
+    let rawValueLiteral = initialRawValueLiteral;
+    let nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+
+    while (nestingDepth > 0) {
+      index += 1;
+      const continuationLine = lines[index];
+
+      if (continuationLine === undefined) {
+        throw new Error(`[content:gallery] Unterminated value for ${fieldName} in [[item]] starting at line ${lineNumber}.`);
+      }
+
+      rawValueLiteral += `\n${continuationLine.trim()}`;
+      nestingDepth = getCompactTomlNestingDepth(rawValueLiteral);
+    }
+
+    currentEntry.fields[fieldName] = parseCompactTomlValue('gallery', fieldName, rawValueLiteral, lineNumber);
+  }
+
+  if (rawEntries.length === 0) {
+    throw new Error('[content:gallery] Expected src/content/gallery/index.toml to define at least one [[item]] entry.');
+  }
+
+  const seenIds = new Map<string, number>();
+
+  return Object.fromEntries(
+    rawEntries.map((rawEntry, sequence) => {
+      const entry = toRecord(rawEntry.fields);
+      const rawTitle = entry.title;
+
+      if (typeof rawTitle !== 'string' || rawTitle.trim().length === 0) {
+        throw new Error(`[content:gallery] [[item]] starting at line ${rawEntry.lineNumber} is missing a non-empty string title field.`);
+      }
+
+      const baseId = inferGalleryEntryIdBase(rawTitle);
+      const nextCollisionCount = (seenIds.get(baseId) ?? 0) + 1;
+      seenIds.set(baseId, nextCollisionCount);
+
+      const id = nextCollisionCount === 1 ? baseId : `${baseId}-${nextCollisionCount}`;
+
+      return [
+        id,
+        {
+          ...entry,
+          sequence,
         },
       ];
     }),
@@ -726,6 +843,84 @@ const publications = defineCollection({
     .strict(),
 });
 
+const galleryMediaSourceSchema = trimmedString().superRefine((value, ctx) => {
+  if (isAbsoluteHttpUrl(value)) {
+    return;
+  }
+
+  if (!localAssetPattern.test(value)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Use a local asset path rooted in images/, img/, public/, or files/, or an absolute https:// media URL.',
+    });
+    return;
+  }
+
+  if (!isNormalizedContentAssetReference(value)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Use a normalized local asset path with forward slashes and no relative segments.',
+    });
+    return;
+  }
+
+  if (!contentAssetExists(value)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Referenced gallery media asset file does not exist in the public asset pipeline.',
+    });
+  }
+});
+
+const gallery = defineCollection({
+  loader: file('src/content/gallery/index.toml', {
+    parser: parseCompactGalleryEntries,
+  }),
+  schema: z
+    .object({
+      sequence: nonNegativeIntegerSchema,
+      eyebrow: trimmedString(),
+      title: trimmedString(),
+      description: trimmedString(),
+      alt: trimmedString(),
+      mediaType: z.enum(['image', 'images', 'video']),
+      media: z.union([galleryMediaSourceSchema, z.array(galleryMediaSourceSchema).min(1)]),
+      aspectRatio: z.enum(['square', 'portrait', 'landscape', 'feature']),
+      poster: assetPathSchema.optional(),
+      chip: trimmedString().optional(),
+      ctaLabel: trimmedString().optional(),
+      ctaUrl: z.union([destinationSchema, siteRoutePathSchema]).optional(),
+    })
+    .strict()
+    .superRefine((value, ctx) => {
+      const mediaItems = Array.isArray(value.media) ? value.media : [value.media];
+
+      if (value.mediaType === 'images' && mediaItems.length < 2) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'mediaType "images" must include at least two media entries.',
+          path: ['media'],
+        });
+      }
+
+      if (value.mediaType !== 'images' && mediaItems.length !== 1) {
+        ctx.addIssue({
+          code: 'custom',
+          message: `mediaType "${value.mediaType}" must include exactly one media entry.`,
+          path: ['media'],
+        });
+      }
+
+      if ((value.ctaLabel && !value.ctaUrl) || (!value.ctaLabel && value.ctaUrl)) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'ctaLabel and ctaUrl must either both be present or both be omitted.',
+          path: value.ctaLabel ? ['ctaUrl'] : ['ctaLabel'],
+        });
+      }
+    }),
+});
+
 const news = defineCollection({
   loader: file('src/content/news/index.toml', {
     parser: parseCompactNewsItems,
@@ -837,6 +1032,7 @@ export const collections = {
   site,
   people,
   publications,
+  gallery,
   news,
   research,
   positions,

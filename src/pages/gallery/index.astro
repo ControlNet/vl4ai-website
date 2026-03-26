@@ -1,7 +1,69 @@
 ---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import type { GalleryCollectionItem } from '../../components/gallery/gallery-data';
+import GalleryShowcase from '../../components/gallery/GalleryShowcase.astro';
 import { publicNavItems } from '../../data/route-contract';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { resolveRouteDestination } from '../../lib/route-destination';
 import { routeSeo } from '../../lib/page-seo';
+
+interface SiteRouteCopyData {
+  kind: 'route-copy';
+  localeKey: string;
+  sortOrder: number;
+  route: string;
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  lede: string;
+  actions: Array<{
+    label: string;
+    style: 'primary' | 'secondary';
+    url?: string;
+  }>;
+}
+
+type SiteRouteCopyEntry = CollectionEntry<'site'> & { data: SiteRouteCopyData };
+type GalleryEntry = CollectionEntry<'gallery'>;
+
+const siteEntries = await getCollection('site');
+const galleryEntries = await getCollection('gallery');
+
+const galleryRouteCopy = siteEntries.find(
+  (entry): entry is SiteRouteCopyEntry => entry.data.kind === 'route-copy' && entry.data.route === '/gallery/',
+);
+
+if (!galleryRouteCopy) {
+  throw new Error('Expected a route-copy entry for /gallery/ in the site collection.');
+}
+
+const headerActions = galleryRouteCopy.data.actions
+  .filter((action): action is SiteRouteCopyData['actions'][number] & { url: string } => Boolean(action.url))
+  .map((action) => ({
+    label: action.label,
+    style: action.style,
+    ...resolveRouteDestination(action.url),
+  }));
+
+const galleryItems: GalleryCollectionItem[] = galleryEntries
+  .slice()
+  .sort((left: GalleryEntry, right: GalleryEntry) => left.data.sequence - right.data.sequence || left.id.localeCompare(right.id))
+  .map((entry: GalleryEntry) => ({
+    id: entry.id,
+    sequence: entry.data.sequence,
+    eyebrow: entry.data.eyebrow,
+    title: entry.data.title,
+    description: entry.data.description,
+    alt: entry.data.alt,
+    mediaType: entry.data.mediaType,
+    media: Array.isArray(entry.data.media) ? entry.data.media : [entry.data.media],
+    aspectRatio: entry.data.aspectRatio,
+    poster: entry.data.poster,
+    chip: entry.data.chip,
+    ctaLabel: entry.data.ctaLabel,
+    ctaUrl: entry.data.ctaUrl,
+  }));
 ---
 
 <SiteLayout
@@ -15,9 +77,42 @@ import { routeSeo } from '../../lib/page-seo';
   footerNavItems={publicNavItems}
 >
   <section class="bg-gray-50 px-6 pt-40 pb-20" data-testid="gallery-page-header">
-    <div class="mx-auto max-w-7xl">
-      <h1 class="mb-6 text-6xl font-[900] uppercase tracking-tighter md:text-8xl">Gallery</h1>
-      <p class="max-w-2xl text-xl font-light text-gray-500">{routeSeo.gallery.description}</p>
+    <div class="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl">
+        {galleryRouteCopy.data.eyebrow && (
+          <p class="mb-4 text-[0.6875rem] font-black uppercase tracking-[0.32em] text-[var(--color-monash-blue)]">
+            {galleryRouteCopy.data.eyebrow}
+          </p>
+        )}
+        <h1 class="mb-6 text-6xl font-[900] uppercase tracking-tighter md:text-8xl">
+          {galleryRouteCopy.data.title}
+          {galleryRouteCopy.data.highlight && <span class="text-gray-300"> {galleryRouteCopy.data.highlight}</span>}
+        </h1>
+        <p class="max-w-2xl text-xl font-light text-gray-500">{galleryRouteCopy.data.lede}</p>
+      </div>
+
+      {headerActions.length > 0 && (
+        <div class="flex flex-wrap gap-3" data-testid="gallery-header-actions">
+          {headerActions.map((action) => (
+            <a
+              href={action.href}
+              class:list={[
+                'inline-flex items-center gap-2 rounded-full px-6 py-3 text-[0.6875rem] font-black uppercase tracking-[0.24em] transition',
+                action.style === 'primary'
+                  ? 'bg-[var(--color-monash-blue)] text-white hover:bg-[var(--color-accent-blue)]'
+                  : 'border border-gray-200 bg-white text-gray-900 hover:border-[var(--color-monash-blue)] hover:text-[var(--color-monash-blue)]',
+              ]}
+              target={action.external ? '_blank' : undefined}
+              rel={action.external ? 'noreferrer' : undefined}
+              data-testid="gallery-header-action"
+            >
+              {action.label}
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   </section>
+
+  <GalleryShowcase items={galleryItems} />
 </SiteLayout>

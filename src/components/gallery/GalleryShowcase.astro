@@ -1,0 +1,442 @@
+---
+import { toContentAssetUrl } from '../../lib/content-assets';
+import { resolveRouteDestination } from '../../lib/route-destination';
+import GalleryMediaFrame from './GalleryMediaFrame.astro';
+import { getGallerySpanClasses, getGalleryTileRatioLabel, type GalleryCollectionItem } from './gallery-data';
+
+interface GalleryCallToAction {
+  label: string;
+  href: string;
+  external: boolean;
+}
+
+interface PreparedGalleryItem {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  alt: string;
+  mediaType: GalleryCollectionItem['mediaType'];
+  mediaUrls: string[];
+  posterUrl?: string;
+  chip?: string;
+  spanClass: string;
+  cta?: GalleryCallToAction;
+  tileRatioLabel: string;
+}
+
+interface Props {
+  items: GalleryCollectionItem[];
+}
+
+const { items: sourceItems } = Astro.props as Props;
+const toMediaUrl = (value: string) => (/^https?:\/\//u.test(value) ? value : toContentAssetUrl(value));
+
+const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
+  id: item.id,
+  eyebrow: item.eyebrow,
+  title: item.title,
+  description: item.description,
+  alt: item.alt,
+  mediaType: item.mediaType,
+  mediaUrls: item.media.map(toMediaUrl),
+  posterUrl: item.poster ? toMediaUrl(item.poster) : undefined,
+  chip: item.chip,
+  spanClass: getGallerySpanClasses(item.aspectRatio),
+  tileRatioLabel: getGalleryTileRatioLabel(item.aspectRatio),
+  cta:
+    item.ctaLabel && item.ctaUrl
+      ? {
+          label: item.ctaLabel,
+          ...resolveRouteDestination(item.ctaUrl),
+        }
+      : undefined,
+}));
+
+const introChips = Array.from(new Set(items.map((item) => item.eyebrow))).slice(0, 4);
+---
+
+<section class="mx-auto max-w-7xl px-6 pt-12 pb-24" data-testid="gallery-showcase">
+  <div class="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between" data-testid="gallery-intro-strip">
+    <div class="max-w-3xl">
+      <p class="mb-3 text-[0.6875rem] font-black uppercase tracking-[0.28em] text-[var(--color-monash-blue)]">
+        Dense Mosaic Layout
+      </p>
+      <p class="text-base leading-relaxed text-gray-500 md:text-lg">
+        Selected frames, posters, and motion studies arranged as an editorial mosaic from VL4AI assets and reference media.
+        Hover a tile for context, then open it for a larger view.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-2 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-500" data-testid="gallery-chip-list">
+      {
+        introChips.map((chip) => (
+          <span class="rounded-full border border-gray-200 bg-white px-4 py-2">{chip}</span>
+        ))
+      }
+    </div>
+  </div>
+
+  <div
+    class="grid grid-cols-1 auto-rows-[11rem] grid-flow-dense gap-3 sm:grid-cols-2 sm:auto-rows-[13rem] lg:grid-cols-4 lg:auto-rows-[12rem]"
+    data-testid="gallery-grid"
+  >
+    {
+      items.map((item) => (
+        <button
+          type="button"
+          class:list={['gallery-card group relative isolate overflow-hidden rounded-[1.75rem] border border-gray-100 bg-gray-100 text-left shadow-sm', item.spanClass]}
+          data-gallery-open={item.id}
+          data-gallery-media-type={item.mediaType}
+          data-testid="gallery-card"
+          aria-label={`Open gallery details for ${item.title}`}
+          aria-haspopup="dialog"
+          aria-controls="gallery-lightbox"
+        >
+          <div class="absolute inset-0 bg-gray-950">
+            <GalleryMediaFrame
+              title={item.title}
+              alt={item.alt}
+              mediaType={item.mediaType}
+              mediaUrls={item.mediaUrls}
+              posterUrl={item.posterUrl}
+              mode="card"
+            />
+          </div>
+
+          <div class="gallery-card__veil absolute inset-0"></div>
+
+          <div class="relative z-[1] flex h-full flex-col justify-between p-5 sm:p-6">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/25 bg-white/10 px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.24em] text-white/80 backdrop-blur-md">
+                  {item.eyebrow}
+                </span>
+                {item.chip && (
+                  <span class="rounded-full border border-white/20 bg-black/15 px-3 py-1 text-[0.6rem] font-black uppercase tracking-[0.24em] text-white/65 backdrop-blur-md">
+                    {item.chip}
+                  </span>
+                )}
+              </div>
+
+              <span class="gallery-card__expand flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/12 text-white/90 backdrop-blur-md">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path d="M8 3H3v5"></path>
+                  <path d="M16 3h5v5"></path>
+                  <path d="M21 16v5h-5"></path>
+                  <path d="M8 21H3v-5"></path>
+                  <path d="M8 3 3 8"></path>
+                  <path d="m16 3 5 5"></path>
+                  <path d="m21 16-5 5"></path>
+                  <path d="m8 21-5-5"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div class="gallery-card__meta max-w-[22rem]">
+              <p class="mb-3 text-[0.6875rem] font-black uppercase tracking-[0.32em] text-white/68">Tap for detail</p>
+              <h3 class="text-2xl leading-tight font-black tracking-tight text-white md:text-3xl">{item.title}</h3>
+              <div class="gallery-card__details">
+                <p class="text-sm leading-relaxed text-white/82">{item.description}</p>
+                {item.cta && (
+                  <span class="mt-4 inline-flex items-center gap-2 text-[0.6875rem] font-black uppercase tracking-[0.26em] text-white">
+                    {item.cta.label}
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z"></path>
+                      <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
+                    </svg>
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="hidden" aria-hidden="true">
+    {
+      items.map((item) => (
+        <div data-gallery-template={item.id}>
+          <div class="gallery-modal__panel grid overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-2xl lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.85fr)]">
+            <div class="relative min-h-[18rem] bg-gray-950 sm:min-h-[24rem]" data-testid="gallery-modal-media">
+              <GalleryMediaFrame
+                title={item.title}
+                alt={item.alt}
+                mediaType={item.mediaType}
+                mediaUrls={item.mediaUrls}
+                posterUrl={item.posterUrl}
+                mode="modal"
+              />
+            </div>
+
+            <div class="flex flex-col gap-6 p-6 sm:p-8 lg:p-10" data-testid="gallery-modal-details">
+              <div class="space-y-4">
+                <div class="flex flex-wrap gap-2 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-500">
+                  <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5">{item.eyebrow}</span>
+                  {item.chip && <span class="rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5">{item.chip}</span>}
+                </div>
+
+                <h2 id="gallery-dialog-title" class="text-3xl leading-tight font-black tracking-tight text-gray-900 md:text-5xl">
+                  {item.title}
+                </h2>
+                <p class="text-base leading-relaxed text-gray-500 md:text-lg">{item.description}</p>
+              </div>
+
+              <dl class="grid gap-4 border-t border-gray-100 pt-6 text-sm text-gray-500 sm:grid-cols-2">
+                <div>
+                  <dt class="mb-1 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-400">Media</dt>
+                  <dd class="font-medium text-gray-900">{item.mediaType === 'images' ? 'Rotating image sequence' : item.mediaType === 'video' ? 'Video loop' : 'Still image'}</dd>
+                </div>
+                <div>
+                  <dt class="mb-1 text-[0.625rem] font-black uppercase tracking-[0.24em] text-gray-400">Tile ratio</dt>
+                  <dd class="font-medium text-gray-900">{item.tileRatioLabel}</dd>
+                </div>
+              </dl>
+
+              {item.cta && (
+                <div class="mt-auto pt-2">
+                  <a
+                    href={item.cta.href}
+                    class="inline-flex items-center gap-2 rounded-full bg-[var(--color-monash-blue)] px-6 py-3 text-[0.6875rem] font-black uppercase tracking-[0.24em] text-white transition hover:bg-[var(--color-accent-blue)]"
+                    target={item.cta.external ? '_blank' : undefined}
+                    rel={item.cta.external ? 'noreferrer' : undefined}
+                  >
+                    {item.cta.label}
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M13 5h6v6h-2V8.414l-8.293 8.293-1.414-1.414L15.586 7H13z"></path>
+                      <path d="M5 5h6v2H7v10h10v-4h2v6H5z"></path>
+                    </svg>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <dialog id="gallery-lightbox" class="gallery-modal m-0 h-full max-h-none w-full max-w-none bg-transparent p-4 md:p-10" data-gallery-modal data-testid="gallery-modal">
+    <div class="mx-auto flex min-h-full max-w-6xl items-center justify-center">
+      <div class="relative w-full">
+        <button
+          type="button"
+          class="absolute top-4 right-4 z-[2] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white backdrop-blur-md transition hover:bg-black/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:top-5 md:right-5"
+          data-gallery-close
+          aria-label="Close gallery dialog"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M6 6l12 12"></path>
+            <path d="M18 6 6 18"></path>
+          </svg>
+        </button>
+
+        <div class="pointer-events-auto" data-gallery-modal-content></div>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script is:inline>
+  (() => {
+    const dialog = document.querySelector('[data-gallery-modal]');
+    const contentHost = dialog?.querySelector('[data-gallery-modal-content]');
+    const openButtons = document.querySelectorAll('[data-gallery-open]');
+    let lastTrigger = null;
+
+    if (!(dialog instanceof HTMLDialogElement) || !(contentHost instanceof HTMLDivElement)) {
+      return;
+    }
+
+    const setScrollLock = (isLocked) => {
+      document.documentElement.classList.toggle('overflow-hidden', isLocked);
+      document.body.classList.toggle('overflow-hidden', isLocked);
+    };
+
+    const closeModal = () => {
+      if (!dialog.open) {
+        return;
+      }
+
+      dialog.close();
+    };
+
+    openButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const itemId = button.getAttribute('data-gallery-open');
+        const template = itemId ? document.querySelector(`[data-gallery-template="${itemId}"]`) : null;
+
+        if (!(template instanceof HTMLDivElement)) {
+          return;
+        }
+
+        const panel = template.firstElementChild?.cloneNode(true);
+        if (!(panel instanceof HTMLElement)) {
+          return;
+        }
+
+        contentHost.replaceChildren(panel);
+        lastTrigger = button instanceof HTMLElement ? button : null;
+
+        if (typeof dialog.showModal === 'function') {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute('open', '');
+        }
+
+        setScrollLock(true);
+
+        window.requestAnimationFrame(() => {
+          const closeButton = dialog.querySelector('[data-gallery-close]');
+          if (closeButton instanceof HTMLElement) {
+            closeButton.focus();
+          }
+        });
+      });
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) {
+        closeModal();
+      }
+
+      const closeTrigger = event.target instanceof Element ? event.target.closest('[data-gallery-close]') : null;
+      if (closeTrigger) {
+        closeModal();
+      }
+    });
+
+    dialog.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeModal();
+    });
+
+    dialog.addEventListener('close', () => {
+      setScrollLock(false);
+      contentHost.replaceChildren();
+
+      if (lastTrigger instanceof HTMLElement) {
+        lastTrigger.focus();
+      }
+
+      lastTrigger = null;
+    });
+  })();
+</script>
+
+<style>
+  .gallery-card {
+    transition:
+      transform var(--duration-base) var(--ease-emphasized),
+      box-shadow var(--duration-base) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .gallery-card:hover,
+  .gallery-card:focus-visible {
+    transform: translateY(calc(var(--space-1) * -1));
+    box-shadow: var(--shadow-2xl);
+    border-color: rgb(255 255 255 / 0.24);
+  }
+
+  .gallery-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+    pointer-events: none;
+  }
+
+  .gallery-card:hover::after,
+  .gallery-card:focus-visible::after {
+    opacity: 1;
+  }
+
+  .gallery-card__veil {
+    background:
+      linear-gradient(180deg, rgb(17 24 39 / 0.06) 0%, rgb(17 24 39 / 0.16) 44%, rgb(17 24 39 / 0.94) 100%),
+      linear-gradient(135deg, rgb(0 48 135 / 0.25) 0%, rgb(0 0 0 / 0.05) 58%, rgb(0 0 0 / 0.3) 100%);
+  }
+
+  .gallery-card__meta {
+    transform: translateY(var(--space-6));
+    transition: transform var(--duration-base) var(--ease-emphasized);
+  }
+
+  .gallery-card:hover .gallery-card__meta,
+  .gallery-card:focus-visible .gallery-card__meta {
+    transform: translateY(0);
+  }
+
+  .gallery-card__details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height var(--duration-base) var(--ease-emphasized),
+      opacity var(--duration-fast) var(--ease-standard),
+      margin-top var(--duration-fast) var(--ease-standard);
+  }
+
+  .gallery-card:hover .gallery-card__details,
+  .gallery-card:focus-visible .gallery-card__details {
+    max-height: 11rem;
+    margin-top: var(--space-4);
+    opacity: 1;
+  }
+
+  .gallery-card__expand {
+    opacity: 0;
+    transform: translateY(calc(var(--space-2) * -1));
+    transition:
+      opacity var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-emphasized),
+      background-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .gallery-card:hover .gallery-card__expand,
+  .gallery-card:focus-visible .gallery-card__expand {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-modal::backdrop {
+    background: rgb(17 24 39 / 0.72);
+    backdrop-filter: blur(var(--nav-blur));
+    -webkit-backdrop-filter: blur(var(--nav-blur));
+  }
+
+  .gallery-modal[open] {
+    animation: gallery-modal-fade-in var(--duration-base) var(--ease-standard);
+  }
+
+  .gallery-modal__panel {
+    animation: gallery-modal-panel-enter var(--duration-base) var(--ease-emphasized);
+  }
+
+  @keyframes gallery-modal-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes gallery-modal-panel-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(var(--space-4));
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  </style>

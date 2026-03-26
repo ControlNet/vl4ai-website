@@ -1,12 +1,13 @@
 # VL4AI Website
 
-This repository contains the restored VL4AI lab website as an Astro 6 static site. The canonical public information architecture now consists of seven content routes plus the not-found route:
+This repository contains the restored VL4AI lab website as an Astro 6 static site. The canonical public information architecture now consists of eight content routes plus the not-found route:
 
 - `/`
 - `/people/`
 - `/research/`
 - `/publications/`
 - `/news/`
+- `/gallery/`
 - `/positions/`
 - `/contact/`
 - `/404.html`
@@ -17,7 +18,7 @@ Legacy top-level `.html` aliases and `/pages/*.html` compatibility routes are re
 
 Read [`docs/maintainer-playbook.md`](docs/maintainer-playbook.md) before making content updates. It covers:
 
-- the restored seven-page route surface and the retired legacy paths
+- the restored eight-page route surface and the retired legacy paths
 - the exact content ownership per page under `src/content/**`
 - the maintainer verification order
 - the parity evidence workflow under `.sisyphus/evidence/` and `.sisyphus/evidence/parity/`
@@ -30,8 +31,38 @@ Read [`docs/maintainer-playbook.md`](docs/maintainer-playbook.md) before making 
 - Research `/research/`: `src/content/site/research-route.md` and `src/content/research/**`
 - Publications `/publications/`: `src/content/site/publications-route.md` and `src/content/publications/index.toml`
 - News `/news/`: `src/content/site/news-route.md` and `src/content/news/index.toml`
+- Gallery `/gallery/`: `src/content/site/gallery-route.md` and `src/content/gallery/index.toml`
 - Positions `/positions/`: `src/content/site/positions-route.md` and `src/content/positions/**`
 - Contact `/contact/`: `src/content/site/contact-route.md`, `src/content/site/contact.toml`, and `src/content/site/lab.toml`
+
+## Gallery authoring format
+
+Gallery items now live in a compact `[[item]]` list in `src/content/gallery/index.toml`.
+
+```toml
+[[item]]
+eyebrow = "Motion"
+title = "Embodied Motion Study"
+description = "A moving-media tile for the gallery route."
+alt = "VL4AI motion study poster artwork."
+mediaType = "video"
+media = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+poster = "images/slider/JRDB-teaser.png"
+aspectRatio = "feature"
+chip = "Mixed Media"
+ctaLabel = "Explore Research Areas"
+ctaUrl = "/research/"
+```
+
+Important rules:
+
+- keep one `[[item]]` per gallery tile in `src/content/gallery/index.toml`
+- required fields are `eyebrow`, `title`, `description`, `alt`, `mediaType`, `media`, and `aspectRatio`
+- optional fields are `poster`, `chip`, `ctaLabel`, and `ctaUrl`
+- `mediaType = "images"` must include at least two `media` items; `image` and `video` must include exactly one
+- `media` values may point to local assets under `public/` or to absolute `https://` URLs for reference media
+- when used, `ctaLabel` and `ctaUrl` must be provided together
+- the site derives each internal gallery id automatically from `title` and preserves TOML order for rendered layout sequencing
 
 ## News authoring format
 
