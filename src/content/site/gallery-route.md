@@ -3,10 +3,9 @@ kind: route-copy
 localeKey: route-gallery
 sortOrder: 55
 route: /gallery/
-eyebrow: VL4AI Research
-title: Visual
-highlight: Highlights
-lede: A dense field guide to VL4AI benchmarks, systems, and publication-ready scenes across perception, forecasting, navigation, and embodied AI.
+title: Gallery
+highlight: Visions
+lede: A dense field guide to VL4AI Research visions across media, research and photography.
 actions:
   - label: Explore Research
     style: primary
