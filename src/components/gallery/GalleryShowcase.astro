@@ -115,9 +115,9 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
     {
       items.map((item) => (
         <div data-gallery-template={item.id}>
-          <div class="gallery-modal__panel flex w-full max-w-full flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-2xl lg:w-auto lg:flex-row lg:max-h-[85vh]">
+          <div class="gallery-modal__panel flex w-full max-w-full flex-col overflow-hidden rounded-[2rem] border border-gray-100 bg-white shadow-2xl lg:flex-row lg:max-h-[85vh]">
             <div
-              class="relative flex min-h-0 min-w-0 shrink items-center justify-center bg-gray-950"
+              class="relative flex min-h-0 min-w-0 flex-1 flex-col items-center justify-center bg-gray-950"
               data-testid="gallery-modal-media"
             >
               <GalleryMediaFrame
@@ -235,6 +235,144 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
       });
     };
 
+    const stopGalleryModalCarouselsUnder = (root) => {
+      root.querySelectorAll('[data-gallery-modal-carousel]').forEach((node) => {
+        if (!(node instanceof HTMLElement)) {
+          return;
+        }
+        const raw = node.dataset.galleryModalCarouselTimerId;
+        if (raw) {
+          window.clearInterval(Number.parseInt(raw, 10));
+          delete node.dataset.galleryModalCarouselTimerId;
+        }
+      });
+    };
+
+    const startGalleryModalCarousel = (root) => {
+      if (!(root instanceof HTMLElement)) {
+        return;
+      }
+
+      const track = root.querySelector('[data-gmc-track]');
+      const slideEls = root.querySelectorAll('[data-gmc-slide]');
+      const prevBtn = root.querySelector('[data-gmc-prev]');
+      const nextBtn = root.querySelector('[data-gmc-next]');
+      const dotBtns = root.querySelectorAll('[data-gmc-dot]');
+
+      const total = slideEls.length;
+      if (!(track instanceof HTMLElement) || total === 0 || !prevBtn || !nextBtn) {
+        return;
+      }
+
+      const existingTimer = root.dataset.galleryModalCarouselTimerId;
+      if (existingTimer) {
+        window.clearInterval(Number.parseInt(existingTimer, 10));
+        delete root.dataset.galleryModalCarouselTimerId;
+      }
+
+      const prefersReduced =
+        typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const intervalMs = 5000;
+
+      let index = 0;
+
+      const setIndex = (next) => {
+        index = ((next % total) + total) % total;
+        track.style.transform = `translateX(calc(-${index} * 100% / ${total}))`;
+
+        slideEls.forEach((el, i) => {
+          if (el instanceof HTMLElement) {
+            el.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+          }
+        });
+
+        dotBtns.forEach((btn, i) => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          const active = i === index;
+          btn.classList.toggle('w-6', active);
+          btn.classList.toggle('w-2', !active);
+          btn.classList.toggle('bg-white', active);
+          btn.classList.toggle('bg-white/40', !active);
+          btn.classList.toggle('hover:bg-white/70', !active);
+          if (active) {
+            btn.setAttribute('aria-current', 'true');
+          } else {
+            btn.removeAttribute('aria-current');
+          }
+        });
+      };
+
+      const goPrev = () => setIndex(index - 1);
+      const goNext = () => setIndex(index + 1);
+
+      const stopTimer = () => {
+        const raw = root.dataset.galleryModalCarouselTimerId;
+        if (raw) {
+          window.clearInterval(Number.parseInt(raw, 10));
+          delete root.dataset.galleryModalCarouselTimerId;
+        }
+      };
+
+      const startTimer = () => {
+        if (prefersReduced) {
+          return;
+        }
+
+        stopTimer();
+        const id = window.setInterval(() => {
+          setIndex(index + 1);
+        }, intervalMs);
+        root.dataset.galleryModalCarouselTimerId = String(id);
+      };
+
+      const restartTimer = () => {
+        stopTimer();
+        startTimer();
+      };
+
+      prevBtn.addEventListener('click', () => {
+        goPrev();
+        restartTimer();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        goNext();
+        restartTimer();
+      });
+
+      dotBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          const raw = btn.getAttribute('data-gmc-index');
+          const target = raw === null ? NaN : Number.parseInt(raw, 10);
+          if (Number.isFinite(target)) {
+            setIndex(target);
+            restartTimer();
+          }
+        });
+      });
+
+      root.addEventListener('mouseenter', stopTimer);
+      root.addEventListener('mouseleave', startTimer);
+
+      setIndex(0);
+      startTimer();
+    };
+
+    const startGalleryModalCarouselsIn = (scope) => {
+      scope.querySelectorAll('[data-gallery-modal-carousel]').forEach((node) => {
+        if (node instanceof HTMLElement) {
+          startGalleryModalCarousel(node);
+        }
+      });
+    };
+
     const runSequenceInit = () => startGallerySequencesInDocument(document);
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', runSequenceInit);
@@ -278,9 +416,11 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
           return;
         }
 
+        stopGalleryModalCarouselsUnder(contentHost);
         stopGallerySequencesUnder(contentHost);
         contentHost.replaceChildren(panel);
         startGallerySequencesInDocument(panel);
+        startGalleryModalCarouselsIn(panel);
 
         lastTrigger = button instanceof HTMLElement ? button : null;
 
@@ -321,6 +461,7 @@ const items: PreparedGalleryItem[] = sourceItems.map((item) => ({
     });
 
     dialog.addEventListener('close', () => {
+      stopGalleryModalCarouselsUnder(contentHost);
       stopGallerySequencesUnder(contentHost);
       setScrollLock(false);
       contentHost.replaceChildren();

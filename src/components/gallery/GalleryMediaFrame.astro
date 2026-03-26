@@ -15,7 +15,12 @@ const isCard = mode === 'card';
 const sequenceIntervalMs = 3000;
 
 const cardFill = 'absolute inset-0 h-full w-full';
-const modalMediaClasses = 'block h-auto w-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[85vh] max-w-full object-contain';
+const modalMediaClasses =
+  'mx-auto block h-auto w-auto max-h-[40vh] max-w-full object-contain md:max-h-[50vh] lg:max-h-[85vh]';
+
+const modalImageCount = mediaUrls.length;
+const modalCarouselTrackWidthPct = modalImageCount * 100;
+const modalCarouselSlideWidthPct = modalImageCount > 0 ? 100 / modalImageCount : 100;
 ---
 
 {
@@ -67,42 +72,95 @@ const modalMediaClasses = 'block h-auto w-auto max-h-[40vh] md:max-h-[50vh] lg:m
           />
         ))}
       </div>
-    ) : (
+    ) : modalImageCount > 1 ? (
       <div
-        class="relative grid place-items-center"
-        data-gallery-image-sequence
-        data-gallery-sequence-interval={String(sequenceIntervalMs)}
+        class="relative min-h-0 w-full min-w-0 flex-1 self-stretch overflow-hidden"
+        data-gallery-modal-carousel
+        data-testid="gallery-modal-carousel"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={title}
       >
-        {mediaUrls.map((mediaUrl, index) => (
-          <img
-            src={mediaUrl}
-            alt={`${alt} (${index + 1} of ${mediaUrls.length})`}
-            data-gallery-sequence-slide
-            class:list={[`col-start-1 row-start-1 transition-opacity duration-1000 ease-in-out ${modalMediaClasses}`, index === 0 ? 'opacity-100' : 'opacity-0']}
-            loading={mediaUrls.length > 1 ? 'eager' : undefined}
-            decoding="async"
-          />
-        ))}
-        {mediaUrls.length > 1 && (
+        <div class="absolute inset-0 overflow-hidden">
           <div
-            class="pointer-events-none absolute right-4 bottom-4 z-[1] inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white/90 px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.28em] text-gray-500"
-            aria-hidden="true"
+            class="flex h-full transition-transform duration-700 ease-out motion-reduce:transition-none"
+            style={{
+              width: `${modalCarouselTrackWidthPct}%`,
+              transform: 'translateX(0)',
+            }}
+            data-gmc-track
           >
-            <span class="inline-flex gap-1.5">
-              {mediaUrls.map((_, index) => (
-                <span
-                  data-gallery-sequence-dot
-                  class:list={[
-                    'h-1.5 rounded-full transition-all duration-500',
-                    index === 0 ? 'w-5 bg-[var(--color-monash-blue)]' : 'w-1.5 bg-[var(--color-monash-blue)]/45',
-                  ]}
-                ></span>
-              ))}
-            </span>
-            <span>Series</span>
+            {mediaUrls.map((mediaUrl, index) => (
+              <div
+                class="relative h-full min-h-0 shrink-0"
+                style={{ width: `${modalCarouselSlideWidthPct}%` }}
+                data-gmc-slide
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <img
+                  src={mediaUrl}
+                  alt={`${alt} (${index + 1} of ${modalImageCount})`}
+                  class="h-full w-full object-cover object-center"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2 md:px-3"
+        >
+          <button
+            type="button"
+            class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/55"
+            data-gmc-prev
+            aria-label="Previous slide"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6"></path>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/55"
+            data-gmc-next
+            aria-label="Next slide"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div
+          class="pointer-events-none absolute bottom-4 left-0 right-0 flex flex-wrap items-center justify-center gap-2 px-4"
+          data-gmc-dots
+        >
+          {mediaUrls.map((_, index) => (
+            <button
+              type="button"
+              class:list={[
+                'pointer-events-auto h-2 rounded-full transition-[width,background-color] duration-300',
+                index === 0 ? 'w-6 bg-white' : 'w-2 bg-white/40 hover:bg-white/70',
+              ]}
+              data-gmc-dot
+              data-gmc-index={index}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={index === 0 ? 'true' : undefined}
+            />
+          ))}
+        </div>
       </div>
+    ) : (
+      <img
+        src={mediaUrls[0]}
+        alt={alt}
+        class={modalMediaClasses}
+        decoding="async"
+      />
     )
   ) : isCard ? (
     <img
