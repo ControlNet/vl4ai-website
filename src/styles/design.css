@@ -24,15 +24,14 @@ body {
   inset: 0;
   z-index: -1;
   background: rgb(255 255 255 / 0.8);
+  /* Standard only: duplicate -webkit- + backdrop in source gets minified to webkit-only (breaks Firefox). */
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   pointer-events: none;
 }
 
 .glass-panel {
   background: rgb(255 255 255 / 0.82);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .hero-gradient {
