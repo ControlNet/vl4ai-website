@@ -40,9 +40,8 @@ interface FeaturedPublicationItemData {
   id: string;
   title: string;
   venueLabel: string;
-  highlightLabel?: string;
-  href: string;
-  external: boolean;
+  pdfHref?: string;
+  pdfExternal?: boolean;
 }
 
 interface NewsPreviewItemData {
@@ -122,22 +121,6 @@ const getMarkdownListItems = (body: string) =>
     .filter((item) => item.length > 0);
 
 const normalizeText = (value: string) => value.replace(/\s+/gu, ' ').trim();
-
-const extractVenueBadgeLabel = (venue: string) => {
-  const acronym = Array.from(venue.matchAll(/\(([A-Z0-9./& -]{2,})\)/gu))
-    .map((match) => match[1]?.trim())
-    .find((candidate): candidate is string => Boolean(candidate && /[A-Z]/u.test(candidate)));
-
-  if (acronym) {
-    return acronym.replace(/\s+/gu, ' ');
-  }
-
-  if (/^arxiv/iu.test(venue)) {
-    return 'ARXIV';
-  }
-
-  return venue.split(',')[0]?.trim() ?? venue;
-};
 
 const sortFeaturedPublicationEntries = (left: PublicationEntry, right: PublicationEntry) =>
   (left.data.homeRank ?? Number.MAX_SAFE_INTEGER) - (right.data.homeRank ?? Number.MAX_SAFE_INTEGER) ||
@@ -220,34 +203,34 @@ const aboutCarouselSlides: readonly AboutCarouselSlide[] = [
 ];
 
 const aboutCarouselSlideCount = aboutCarouselSlides.length;
-const aboutCarouselSlideWidthPct = 100 / aboutCarouselSlideCount;
+const aboutCarouselTrackItemCount = aboutCarouselSlideCount + 1;
+const aboutCarouselTrackItemWidthPct = 100 / aboutCarouselTrackItemCount;
 
 if (!researchHeroAction || !publicationsHeroAction) {
   throw new Error('Expected canonical /research/ and /publications/ hero actions in the / route-copy entry.');
 }
 
+/** Homepage Seminal Works: all publications that set `homeRank` (currently capped by content). */
 const featuredPublicationItems: FeaturedPublicationItemData[] = publicationEntries
   .filter((entry) => entry.data.homeRank !== undefined)
   .sort(sortFeaturedPublicationEntries)
-  .slice(0, 4)
+  .slice(0, 12)
   .map((entry) => {
-    const primaryLink = entry.data.links[0];
+    const pdfLink = entry.data.links.find((link) => link.kind === 'pdf');
+    const pdfDest = pdfLink ? resolveRouteDestination(pdfLink.url) : undefined;
 
     return {
       id: entry.id,
       title: normalizeText(entry.data.title),
-      venueLabel: `${extractVenueBadgeLabel(entry.data.venue)} ${entry.data.year}`,
-      highlightLabel: entry.data.note,
-      ...(primaryLink ? resolveRouteDestination(primaryLink.url) : { href: '/publications/', external: false }),
+      venueLabel: normalizeText(entry.data.venue),
+      ...(pdfDest ? { pdfHref: pdfDest.href, pdfExternal: pdfDest.external } : {}),
     };
   });
-
-const isCitedHighlight = (label: string | undefined) => Boolean(label && /highly\s*cited/i.test(label));
 
 const featuredNewsItems: NewsPreviewItemData[] = newsEntries
   .slice()
   .sort(sortFeaturedNewsEntries)
-  .slice(0, 3)
+  .slice(0, 6)
   .map((entry) => ({
     slug: entry.id,
     title: normalizeText(entry.data.title).replace(/\.$/u, ''),
@@ -304,14 +287,14 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       <div class="flex flex-wrap justify-center gap-4">
         <a
           href={researchHeroAction.url}
-          class="rounded-full bg-black px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-white shadow-xl shadow-black/10 transition duration-300 hover:bg-gray-800"
+          class="rounded-full bg-black px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-white shadow-xl shadow-black/10 transition duration-300 hover:bg-[#003087]"
           data-testid="home-hero-research-cta"
         >
           {researchHeroAction.label}
         </a>
         <a
           href={publicationsHeroAction.url}
-          class="rounded-full border border-gray-200 bg-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-gray-900 transition duration-300 hover:bg-gray-50"
+          class="rounded-full border border-gray-200 bg-white px-10 py-5 text-[11px] font-bold uppercase tracking-widest text-gray-900 transition duration-300 hover:border-[#003087] hover:bg-blue-50 hover:text-[#003087]"
           data-testid="home-hero-publications-cta"
         >
           {publicationsHeroAction.label}
@@ -330,7 +313,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
     <div class="mx-auto grid max-w-7xl items-start gap-24 lg:grid-cols-2">
       <div class="space-y-8">
         <div>
-          <h2 class="mb-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">About the lab</h2>
+          <h2 class="mb-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">About VL4AI Research</h2>
           <h3 class="mb-8 text-4xl leading-tight font-black tracking-tight md:text-5xl">
             Perceiving, Predicting, <br />&amp; Interacting.
           </h3>
@@ -357,7 +340,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
 
       <div class="relative">
         <div
-          class="relative aspect-[4/3] overflow-hidden rounded-3xl bg-gray-100 shadow-2xl"
+          class="relative aspect-[4/3] select-none overflow-hidden rounded-3xl bg-gray-100 shadow-2xl"
           data-testid="home-about-carousel"
           role="region"
           aria-roledescription="carousel"
@@ -367,7 +350,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
             <div
               class="flex h-full transition-transform duration-700 ease-out motion-reduce:transition-none"
               style={{
-                width: `${aboutCarouselSlideCount * 100}%`,
+                width: `${aboutCarouselTrackItemCount * 100}%`,
                 transform: 'translateX(0)',
               }}
               data-carousel-track
@@ -376,7 +359,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
                 aboutCarouselSlides.map((slide, index) => (
                   <div
                     class="relative h-full min-h-0 shrink-0"
-                    style={{ width: `${aboutCarouselSlideWidthPct}%` }}
+                    style={{ width: `${aboutCarouselTrackItemWidthPct}%` }}
                     data-carousel-slide
                     data-slide-title={slide.title}
                     aria-hidden={index === 0 ? 'false' : 'true'}
@@ -392,6 +375,21 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
                   </div>
                 ))
               }
+              <div
+                class="relative h-full min-h-0 shrink-0"
+                style={{ width: `${aboutCarouselTrackItemWidthPct}%` }}
+                aria-hidden="true"
+                data-carousel-clone
+              >
+                <img
+                  src={aboutCarouselSlides[0]?.imageSrc}
+                  alt=""
+                  class="h-full w-full object-cover object-center opacity-90"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
             </div>
           </div>
 
@@ -469,60 +467,49 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
     </div>
   </section>
 
-  <section class="bg-gray-50 px-6 py-32">
-    <div class="mx-auto mb-20 max-w-7xl text-center">
-      <h2 class="mb-4 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">Impact</h2>
-      <h3 class="text-4xl font-black tracking-tight md:text-5xl">Seminal Works</h3>
+  <section class="bg-gray-50 px-6 py-24">
+    <div class="mx-auto mb-10 max-w-7xl text-center">
+      <h2 class="mb-2 text-xs font-black uppercase tracking-[0.4em] text-[#003087]">Impact</h2>
+      <h3 class="text-3xl font-black tracking-tight md:text-4xl">Seminal Works</h3>
     </div>
 
-    <div class="mx-auto max-w-4xl space-y-4">
+    <div class="mx-auto max-w-5xl space-y-2.5">
       {
-        featuredPublicationItems.map((item, index) => (
-          <article class="seminal-work-item rounded-xl border border-gray-100 bg-white p-6 shadow-sm" data-publication-slug={item.id}>
-            <a
-              href={item.href}
-              class="block"
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noreferrer' : undefined}
-              data-testid="featured-publication"
-            >
-              <div class="flex items-start justify-between gap-6">
-                <div>
-                  <span
-                    class:list={[
-                      'text-[10px] font-black uppercase tracking-widest',
-                      item.highlightLabel
-                        ? isCitedHighlight(item.highlightLabel)
-                          ? 'text-red-600'
-                          : 'text-blue-700'
-                        : 'text-blue-700',
-                    ]}
-                  >
-                    {item.highlightLabel ?? item.venueLabel}
-                  </span>
-                  <h4 class="mt-1 text-xl font-bold">{item.title}</h4>
-                  {item.highlightLabel && (
-                    <p class="mt-1 text-xs font-bold uppercase tracking-widest text-gray-400">{item.venueLabel}</p>
-                  )}
-                </div>
-                {
-                  index === 0 && (
-                    <svg class="h-8 w-8 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="m12 1.75 3.02 6.12 6.76.98-4.89 4.77 1.15 6.73L12 17.19 5.96 20.35l1.15-6.73-4.89-4.77 6.76-.98Z"></path>
-                    </svg>
-                  )
-                }
-              </div>
-            </a>
+        featuredPublicationItems.map((item) => (
+          <article
+            class="group flex flex-row items-center gap-3 rounded-2xl border border-gray-100 bg-white px-4 py-3.5 shadow-md transition-colors duration-300 hover:border-blue-200 sm:gap-4 sm:px-5 sm:py-4"
+            data-publication-slug={item.id}
+            data-testid="featured-publication"
+          >
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-light leading-snug tracking-wide text-gray-500">{item.venueLabel}</p>
+              <h4 class="mt-1 text-base font-bold leading-snug text-gray-900 transition-colors group-hover:text-blue-900">{item.title}</h4>
+            </div>
+            {
+              item.pdfHref && (
+                <a
+                  href={item.pdfHref}
+                  class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-blue-100 bg-blue-50/50 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-blue-700 transition-all hover:border-[#003087] hover:bg-[#003087] hover:text-white hover:shadow-md active:scale-95"
+                  target={item.pdfExternal ? '_blank' : undefined}
+                  rel={item.pdfExternal ? 'noreferrer' : undefined}
+                  data-testid="featured-publication-pdf"
+                >
+                  <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M6 2.75A2.25 2.25 0 0 0 3.75 5v14A2.25 2.25 0 0 0 6 21.25h12A2.25 2.25 0 0 0 20.25 19V8.19a2.25 2.25 0 0 0-.66-1.59l-3.19-3.19a2.25 2.25 0 0 0-1.59-.66Zm8 .5v4.5h4.5Z" />
+                  </svg>
+                  PDF
+                </a>
+              )
+            }
           </article>
         ))
       }
     </div>
 
-    <div class="mt-12 text-center">
+    <div class="mt-8 text-center">
       <a
         href="/publications/"
-        class="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 transition hover:text-black"
+        class="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 transition hover:text-[#003087]"
         data-testid="home-publications-archive-cta"
       >
         View all publications
@@ -544,10 +531,10 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
         </div>
         <a
           href="/news/"
-          class="rounded-full border border-gray-100 px-8 py-4 text-xs font-black uppercase tracking-widest transition hover:border-black"
+          class="rounded-full border border-gray-100 px-8 py-4 text-xs font-black uppercase tracking-widest transition hover:border-[#003087] hover:text-[#003087]"
           data-testid="home-news-archive-cta"
         >
-          Explore Archive
+          More News
         </a>
       </div>
 
@@ -563,7 +550,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
                     class="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-110 group-hover:grayscale-0"
                     loading="lazy"
                   />
-                  <div class="absolute top-6 left-6 rounded-full bg-white px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+                  <div class="absolute top-6 left-6 rounded-full border border-white/60 bg-white/40 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-900 shadow-sm backdrop-blur-md">
                     {item.dateLabel}
                   </div>
                 </div>
@@ -592,9 +579,16 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
       const dotBtns = root.querySelectorAll('[data-carousel-dot]');
 
       const total = slideEls.length;
-      if (!(track instanceof HTMLElement) || total === 0 || !(titleEl instanceof HTMLElement) || !prevBtn || !nextBtn) {
+      if (
+        !(track instanceof HTMLElement) ||
+        total === 0 ||
+        !(titleEl instanceof HTMLElement) ||
+        !(prevBtn instanceof HTMLButtonElement) ||
+        !(nextBtn instanceof HTMLButtonElement)
+      ) {
         return;
       }
+      const trackItemCount = track.children.length;
 
       const prefersReduced =
         typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -604,18 +598,31 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
         el instanceof HTMLElement ? el.getAttribute('data-slide-title') ?? '' : '',
       );
 
-      let index = 0;
+      let activeIndex = 0;
+      let trackIndex = 0;
+      let isTransitioning = false;
       /** @type {number | null} */
       let timer = null;
 
-      const setIndex = (next) => {
-        index = ((next % total) + total) % total;
-        track.style.transform = `translateX(calc(-${index} * 100% / ${total}))`;
-        titleEl.textContent = titles[index] ?? '';
+      const getTransform = (nextTrackIndex) => `translateX(calc(-${nextTrackIndex} * 100% / ${trackItemCount}))`;
+
+      const setControlsDisabled = (disabled) => {
+        [prevBtn, nextBtn, ...dotBtns].forEach((btn) => {
+          if (!(btn instanceof HTMLButtonElement)) {
+            return;
+          }
+
+          btn.disabled = disabled;
+          btn.setAttribute('aria-disabled', String(disabled));
+        });
+      };
+
+      const syncUi = (nextActiveIndex) => {
+        titleEl.textContent = titles[nextActiveIndex] ?? '';
 
         slideEls.forEach((el, i) => {
           if (el instanceof HTMLElement) {
-            el.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+            el.setAttribute('aria-hidden', i === nextActiveIndex ? 'false' : 'true');
           }
         });
 
@@ -624,7 +631,7 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
             return;
           }
 
-          const active = i === index;
+          const active = i === nextActiveIndex;
           btn.classList.toggle('w-6', active);
           btn.classList.toggle('w-2', !active);
           btn.classList.toggle('bg-white', active);
@@ -638,8 +645,54 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
         });
       };
 
-      const goPrev = () => setIndex(index - 1);
-      const goNext = () => setIndex(index + 1);
+      const jumpToTrackIndex = (nextTrackIndex) => {
+        track.style.transition = 'none';
+        track.style.transform = getTransform(nextTrackIndex);
+        trackIndex = nextTrackIndex;
+        void track.offsetWidth;
+        track.style.transition = '';
+      };
+
+      const moveTo = (nextActiveIndex, nextTrackIndex) => {
+        activeIndex = ((nextActiveIndex % total) + total) % total;
+        syncUi(activeIndex);
+
+        if (prefersReduced) {
+          jumpToTrackIndex(nextTrackIndex === total ? 0 : nextTrackIndex);
+          return;
+        }
+
+        isTransitioning = true;
+        setControlsDisabled(true);
+        trackIndex = nextTrackIndex;
+        track.style.transition = '';
+        track.style.transform = getTransform(nextTrackIndex);
+      };
+
+      const goPrev = () => {
+        if (isTransitioning) {
+          return;
+        }
+
+        if (activeIndex === 0) {
+          activeIndex = total - 1;
+          syncUi(activeIndex);
+          jumpToTrackIndex(total - 1);
+          return;
+        }
+
+        moveTo(activeIndex - 1, trackIndex - 1);
+      };
+
+      const goNext = () => {
+        if (isTransitioning) {
+          return;
+        }
+
+        const nextActiveIndex = (activeIndex + 1) % total;
+        const nextTrackIndex = trackIndex + 1;
+        moveTo(nextActiveIndex, nextTrackIndex);
+      };
 
       const stopTimer = () => {
         if (timer !== null) {
@@ -662,6 +715,20 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
         startTimer();
       };
 
+      track.addEventListener('transitionend', (event) => {
+        if (event.target !== track || event.propertyName !== 'transform' || !isTransitioning) {
+          return;
+        }
+
+        isTransitioning = false;
+
+        if (trackIndex === total) {
+          jumpToTrackIndex(0);
+        }
+
+        setControlsDisabled(false);
+      });
+
       prevBtn.addEventListener('click', () => {
         goPrev();
         restartTimer();
@@ -680,16 +747,29 @@ const featuredNewsItems: NewsPreviewItemData[] = newsEntries
 
           const raw = btn.getAttribute('data-carousel-index');
           const target = raw === null ? NaN : Number.parseInt(raw, 10);
-          if (Number.isFinite(target)) {
-            setIndex(target);
+          if (!Number.isFinite(target) || target === activeIndex || isTransitioning) {
             restartTimer();
+            return;
           }
+
+          if (activeIndex === total - 1 && target === 0) {
+            moveTo(0, total);
+            restartTimer();
+            return;
+          }
+
+          activeIndex = target;
+          syncUi(activeIndex);
+          jumpToTrackIndex(target);
+          restartTimer();
         });
       });
 
       root.addEventListener('mouseenter', stopTimer);
       root.addEventListener('mouseleave', startTimer);
 
+      syncUi(activeIndex);
+      jumpToTrackIndex(0);
       startTimer();
     })();
   </script>
